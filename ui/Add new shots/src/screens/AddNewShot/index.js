@@ -1,0 +1,1 @@
+export { AddNewShot } from "./AddNewShot";

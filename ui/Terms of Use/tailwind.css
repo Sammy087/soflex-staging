@@ -1,0 +1,13 @@
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .all-\[unset\] {
+    all: unset;
+  }
+}
+
+:root {
+  --ccblack-00: rgba(0, 0, 0, 1);
+  --ccinput-bg: rgba(248, 248, 248, 1);
+}

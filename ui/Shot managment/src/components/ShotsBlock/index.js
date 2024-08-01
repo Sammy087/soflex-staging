@@ -1,0 +1,1 @@
+export { ShotsBlock } from "./ShotsBlock";

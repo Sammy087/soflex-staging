@@ -1,0 +1,33 @@
+.frame {
+  align-items: flex-start;
+  background-color: var(--ccinput-bg);
+  display: flex;
+  flex-direction: column;
+  gap: 19px;
+  justify-content: center;
+  padding: 16px 12px;
+  position: relative;
+}
+
+.frame .text-wrapper {
+  color: var(--ccblack-00);
+  font-family: "Montserrat", Helvetica;
+  font-size: 16px;
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: normal;
+  margin-top: -1px;
+  position: relative;
+  width: fit-content;
+}
+
+.frame .div {
+  color: var(--ccblack-00);
+  font-family: "Montserrat", Helvetica;
+  font-size: 16px;
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: normal;
+  position: relative;
+  width: fit-content;
+}

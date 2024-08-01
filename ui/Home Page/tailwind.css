@@ -1,0 +1,20 @@
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .all-\[unset\] {
+    all: unset;
+  }
+}
+
+:root {
+  --ccblack-00: rgba(0, 0, 0, 1);
+  --ccinput-bg: rgba(248, 248, 248, 1);
+  --ccwarning: rgba(255, 55, 55, 1);
+  --ccwhite-ff: rgba(255, 255, 255, 1);
+  --contrastblack: rgba(17, 16, 13, 1);
+  --greygrey-400: rgba(156, 156, 156, 1);
+  --main-shadesmain-color: rgba(80, 180, 152, 1);
+  --main-shadesmain-darker: rgba(70, 133, 133, 1);
+  --system-colors-grays-gray: rgba(142, 142, 147, 1);
+}
