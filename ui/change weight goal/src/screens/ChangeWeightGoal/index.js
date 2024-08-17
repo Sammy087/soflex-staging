@@ -1,1 +1,0 @@
-export { ChangeWeightGoal } from "./ChangeWeightGoal";
