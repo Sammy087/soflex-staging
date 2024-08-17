@@ -4,6 +4,7 @@ import UpdateWeightModal from "../../component/UpdateWeightModal/UpdateWeightMod
 import ShotsManagement from "../../component/ShotsManagement/ShotsManagement";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import AddMedicineModal from "../../component/AddMedicineModal/AddMedicineModal";
 
 const Management = () => {
   const navigate = useNavigate();
@@ -11,6 +12,15 @@ const Management = () => {
   const [startWeight, setStartWeight] = useState("102");
   const [dreamWeight, setDreamWeight] = useState("62");
   const [currentWeight, setCurrentWeight] = useState("70");
+  const [isAddMedicineModalOpen, setIsAddMedicineModalOpen] = useState(false);
+
+  const closeMedicineModal = () => {
+    setIsAddMedicineModalOpen(false);
+  };
+
+  const openMedicineModal = () => {
+    setIsAddMedicineModalOpen(true);
+  };
 
   const openModal = () => {
     setModalIsOpen(true);
@@ -19,10 +29,16 @@ const Management = () => {
   const closeModal = () => {
     setModalIsOpen(false);
   };
+  const handleMedicineConfirm = () => {
+    // handle the confirm action
+    setIsAddMedicineModalOpen(false);
+  };
+
   const handleConfirm = () => {
     // Handle the confirm action (e.g., send the updated weight to the backend)
     closeModal();
   };
+
   const [activeTab, setActiveTab] = useState("weight");
   const [weightData, setWeightData] = useState([
     { date: "2023-01-01", weight: 70 },
@@ -120,6 +136,7 @@ const Management = () => {
               daysLeft={9}
               medLog={medLog}
               shotscolumns={shotsColumns}
+              openMedicineModal={openMedicineModal}
             />
           )}
         </div>
@@ -206,6 +223,11 @@ const Management = () => {
         startWeight={startWeight}
         setStartWeight={setStartWeight}
         onConfirm={handleConfirm}
+      />
+      <AddMedicineModal
+        isOpen={isAddMedicineModalOpen}
+        onRequestClose={closeMedicineModal}
+        onConfirm={handleMedicineConfirm}
       />
     </div>
   );

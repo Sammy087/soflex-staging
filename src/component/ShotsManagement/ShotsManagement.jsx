@@ -1,13 +1,21 @@
 import React from "react";
 import Table from "../Table/Table";
 
-const ShotsManagement = ({ schedule, daysLeft, medLog, shotscolumns }) => {
+const ShotsManagement = ({
+  schedule,
+  daysLeft,
+  medLog,
+  shotscolumns,
+  openMedicineModal,
+}) => {
   return (
     <div>
       <h2 className="text-xl font-bold mb-4">Shots Management</h2>
       <div className="flex justify-between items-center mb-4">
         <h3 className="text-lg font-semibold">Edit schedule</h3>
-        <button className="text-sm text-[#50B498]">Edit schedule</button>
+        <button className="text-sm text-[#50B498]" onClick={openMedicineModal}>
+          Edit schedule
+        </button>
       </div>
       <div className="text-center text-sm text-gray-500 mb-4">
         Days Left for next Shot
