@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import UpdateWeightModal from "../../component/UpdateWeightModal/UpdateWeightModal";
-import AddMedicineModal from "../../component/AddMedicineModal/AddMedicineModal";
+import UpdateWeightModal from "../UpdateWeightModal/UpdateWeightModal";
+import AddMedicineModal from "../AddMedicineModal/AddMedicineModal";
 import { useNavigate } from "react-router-dom";
 
 const Summary = () => {
@@ -35,8 +35,8 @@ const Summary = () => {
   };
 
   return (
-    <div className="p-4 bg-gradient-to-b from-[#FEC180] via-[#F5F0F0] to-[#F5F0F0] min-h-screen">
-      <div className="flex flex-col items-start max-w-md mx-auto p-4mb-2">
+    <div>
+      <div className="flex flex-col items-start max-w-md mx-auto">
         <div className="flex justify-between items-center w-full mt-10">
           <h2 className="text-xl font-bold text-white">Summary</h2>
           <img alt="Frame" src="static/img/frame-932.svg" className="w-6 h-6" />
@@ -136,53 +136,6 @@ const Summary = () => {
               Mark as Taken
             </button>
           </div>
-        </div>
-      </div>
-      <div className="bg-white shadow-md rounded-lg">
-        <div className="flex justify-around py-2">
-          <button className="text-black font-bold ">
-            <div className="flex flex-col items-center">
-              <img
-                className="w-7 h-7"
-                alt="Heart icon"
-                src="static/img/heart-svgrepo-com.svg"
-              />
-              <span className="text-xs">Summary</span>
-            </div>
-          </button>
-          <button
-            className="text-gray-500"
-            onClick={() => navigate("/management")}
-          >
-            <div className="flex flex-col items-center">
-              <img
-                className="relative w-7 h-7"
-                alt="Weight svgrepo com"
-                src="static/img/weight-svgrepo-com.svg"
-              />
-              <span className="text-xs">Weight</span>
-            </div>
-          </button>
-          <button className="text-gray-500">
-            <div className="flex flex-col items-center">
-              <img
-                className="relative w-7 h-7"
-                alt="Medicine svgrepo"
-                src="static/img/medicine-10-svgrepo-com.svg"
-              />
-              <span className="text-xs">Shots</span>
-            </div>
-          </button>
-          <button className="text-gray-500">
-            <div className="flex flex-col items-center">
-              <img
-                className="relative w-7 h-7"
-                alt="More svgrepo com"
-                src="static/img/more-svgrepo-com.svg"
-              />
-              <span className="text-xs">More</span>
-            </div>
-          </button>
         </div>
       </div>
       <UpdateWeightModal

@@ -21,7 +21,6 @@ import LastShotScreen from "./pages/LastShotScreen/LastShotScreen";
 import ShotsFrequencyScreen from "./pages/ShotsFrequencyScreen/ShotsFrequencyScreen";
 import LastReminderScreen from "./pages/LastReminderScreen/LastReminderScreen";
 import ForgotPassword from "./pages/ForgotPassword/ForgotPassword";
-import Summary from "./pages/Summary/Summary";
 import Management from "./pages/Management/Management";
 import ChangePassword from "./pages/ChangePassword/ChangePassword";
 import PrivacyPolicy from "./pages/PrivacyPolicy/PrivacyPolicy";
@@ -55,7 +54,6 @@ const App = () => (
         <Route path="/shots-frequency" element={<ShotsFrequencyScreen />} />
         <Route path="/last-reminder" element={<LastReminderScreen />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
-        <Route path="/summary" element={<Summary />} />
         <Route path="/management" element={<Management />} />
         <Route path="/home" element={<Home />} />
         <Route path="/signup" element={<SignUp />} />

@@ -80,7 +80,10 @@ const CurrentWeight = ({
         <WeightChart dates={chartData.dates} weights={chartData.weights} />
       </div>
 
-      <h2 className="text-xl font-bold mb-4">Weight Entry Log</h2>
+      <div className="flex justify-between items-center mb-4 mt-4">
+        <h2 className="text-xl font-bold">Weight Entry Log</h2>
+        <div className="text-[#50B498] text-sm">July'24</div>
+      </div>
       <Table columns={columns} data={weightData} />
     </>
   );

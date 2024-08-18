@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import AddMedicineModal from "../../component/AddMedicineModal/AddMedicineModal";
 import MoreTabContent from "../../component/MoreTabContent/MoreTabContent";
+import Summary from "../../component/Summary/Summary";
 
 const Management = () => {
   const navigate = useNavigate();
@@ -91,9 +92,15 @@ const Management = () => {
   }, []);
 
   return (
-    <div className="bg-gray-100 min-h-screen">
+    <div
+      className={
+        activeTab === "summary"
+          ? "bg-gradient-to-b from-[#FEC180] via-[#F5F0F0] to-[#F5F0F0] min-h-screen"
+          : "bg-gray-100 min-h-screen"
+      }
+    >
       <div className="flex flex-col items-start max-w-md mx-auto mb-2">
-        {activeTab !== "more" && (
+        {activeTab !== "more" && activeTab !== "summary" && (
           <div className="flex justify-around mb-4 mt-4 rounded-lg bg-white mx-auto w-full">
             <button
               className={`w-1/3 py-2 mt-2 mb-2 ml-2 ${
@@ -120,7 +127,12 @@ const Management = () => {
         {activeTab === "weight" && (
           <h2 className="text-xl font-bold mb-4 ml-4">Weight Management</h2>
         )}
-        <div className="bg-white rounded-lg shadow-md p-4 w-full">
+        <div
+          className={`${
+            activeTab === "summary" ? "" : "bg-white"
+          } rounded-lg p-4 w-full`}
+        >
+          {activeTab === "summary" && <Summary />}
           {activeTab === "weight" && (
             <CurrentWeight
               currentWeight={currentWeight}
@@ -149,17 +161,28 @@ const Management = () => {
       <div className="bg-white shadow-md rounded-lg">
         <div className="flex justify-around py-2">
           <button
-            className="text-black font-bold "
-            onClick={() => navigate("/summary")}
+            className="text-gray-500"
+            onClick={() => setActiveTab("summary")}
           >
-            <div className="flex flex-col items-center">
-              <img
-                className="w-7 h-7"
-                alt="Heart icon"
-                src="static/img/heart-unactive.svg"
-              />
-              <span className="text-xs">Summary</span>
-            </div>
+            {activeTab === "summary" ? (
+              <div className="flex flex-col items-center">
+                <img
+                  className="w-7 h-7"
+                  alt="Heart icon"
+                  src="static/img/heart-svgrepo-com.svg"
+                />
+                <span className="text-xs text-black font-bold">Summary</span>
+              </div>
+            ) : (
+              <div className="flex flex-col items-center">
+                <img
+                  className="w-7 h-7"
+                  alt="Heart icon"
+                  src="static/img/heart-unactive.svg"
+                />
+                <span className="text-xs">Summary</span>
+              </div>
+            )}
           </button>
           <button
             className="text-gray-500"
@@ -172,7 +195,7 @@ const Management = () => {
                   alt="Weight svgrepo com"
                   src="static/img/weight-active.svg"
                 />
-                <span className="text-xs">Weight</span>
+                <span className="text-xs text-black font-bold">Weight</span>
               </div>
             ) : (
               <div className="flex flex-col items-center">
@@ -196,7 +219,7 @@ const Management = () => {
                   alt="Medicine svgrepo"
                   src="static/img/medicine-active.svg"
                 />
-                <span className="text-xs">Shots</span>
+                <span className="text-xs text-black font-bold">Shots</span>
               </div>
             ) : (
               <div className="flex flex-col items-center">
@@ -210,14 +233,36 @@ const Management = () => {
             )}
           </button>
           <button className="text-gray-500">
-            <div className="flex flex-col items-center">
-              <img
-                className="relative w-7 h-7"
-                alt="More svgrepo com"
-                src="static/img/more-svgrepo-com.svg"
-                onClick={() => setActiveTab("more")}
-              />
-              <span className="text-xs">More</span>
+            <div
+              className="flex flex-col items-center"
+              onClick={() => setActiveTab("more")}
+            >
+              {activeTab === "more" ? (
+                <div
+                  className="flex flex-col items-center"
+                  onClick={() => setActiveTab("more")}
+                >
+                  <img
+                    className="relative w-7 h-7"
+                    alt="More svgrepo com"
+                    src={
+                      activeTab === "more"
+                        ? "static/img/more-svgrepo-com-active.svg"
+                        : "static/img/more-svgrepo-com.svg"
+                    }
+                  />
+                  <span className="text-xs text-black font-bold">More</span>
+                </div>
+              ) : (
+                <div className="flex flex-col items-center">
+                  <img
+                    className="relative w-7 h-7"
+                    alt="More svgrepo com"
+                    src="static/img/more-svgrepo-com.svg"
+                  />
+                  <span className="text-xs">More</span>
+                </div>
+              )}
             </div>
           </button>
         </div>
