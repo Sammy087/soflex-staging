@@ -7,6 +7,7 @@ const ShotsManagement = ({
   medLog,
   shotscolumns,
   openMedicineModal,
+  openShotModal,
 }) => {
   return (
     <div>
@@ -38,7 +39,10 @@ const ShotsManagement = ({
         <button className="w-full bg-[#50B498] text-white py-2 rounded-lg mb-2 mt-2">
           Mark as Taken
         </button>
-        <button className="w-full border border-[#50B498] text-[#50B498] py-2 rounded-lg">
+        <button
+          className="w-full border border-[#50B498] text-[#50B498] py-2 rounded-lg"
+          onClick={openShotModal}
+        >
           Add new shot
         </button>
       </div>

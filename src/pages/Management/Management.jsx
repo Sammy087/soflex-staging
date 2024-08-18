@@ -5,6 +5,7 @@ import ShotsManagement from "../../component/ShotsManagement/ShotsManagement";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import AddMedicineModal from "../../component/AddMedicineModal/AddMedicineModal";
+import MoreTabContent from "../../component/MoreTabContent/MoreTabContent";
 
 const Management = () => {
   const navigate = useNavigate();
@@ -92,28 +93,30 @@ const Management = () => {
   return (
     <div className="bg-gray-100 min-h-screen">
       <div className="flex flex-col items-start max-w-md mx-auto mb-2">
-        <div className="flex justify-around mb-4 mt-4 rounded-lg bg-white mx-auto w-full">
-          <button
-            className={`w-1/2 py-2 mt-2 mb-2 ml-2 ${
-              activeTab === "weight"
-                ? "bg-[#50B498] text-white rounded-lg"
-                : "text-gray-700"
-            }`}
-            onClick={() => setActiveTab("weight")}
-          >
-            Weight
-          </button>
-          <button
-            className={`w-1/2 py-2 mt-2 mb-2 mr-2 ${
-              activeTab === "shots"
-                ? "bg-[#50B498] text-white rounded-lg"
-                : "text-gray-700"
-            }`}
-            onClick={() => setActiveTab("shots")}
-          >
-            Shots
-          </button>
-        </div>
+        {activeTab !== "more" && (
+          <div className="flex justify-around mb-4 mt-4 rounded-lg bg-white mx-auto w-full">
+            <button
+              className={`w-1/3 py-2 mt-2 mb-2 ml-2 ${
+                activeTab === "weight"
+                  ? "bg-[#50B498] text-white rounded-lg"
+                  : "text-gray-700"
+              }`}
+              onClick={() => setActiveTab("weight")}
+            >
+              Weight
+            </button>
+            <button
+              className={`w-1/3 py-2 mt-2 mb-2 ${
+                activeTab === "shots"
+                  ? "bg-[#50B498] text-white rounded-lg"
+                  : "text-gray-700"
+              }`}
+              onClick={() => setActiveTab("shots")}
+            >
+              Shots
+            </button>
+          </div>
+        )}
         {activeTab === "weight" && (
           <h2 className="text-xl font-bold mb-4 ml-4">Weight Management</h2>
         )}
@@ -139,6 +142,7 @@ const Management = () => {
               openMedicineModal={openMedicineModal}
             />
           )}
+          {activeTab === "more" && <MoreTabContent />}
         </div>
       </div>
 
@@ -211,6 +215,7 @@ const Management = () => {
                 className="relative w-7 h-7"
                 alt="More svgrepo com"
                 src="static/img/more-svgrepo-com.svg"
+                onClick={() => setActiveTab("more")}
               />
               <span className="text-xs">More</span>
             </div>
@@ -223,6 +228,7 @@ const Management = () => {
         startWeight={startWeight}
         setStartWeight={setStartWeight}
         onConfirm={handleConfirm}
+        title={"Update today Weight"}
       />
       <AddMedicineModal
         isOpen={isAddMedicineModalOpen}

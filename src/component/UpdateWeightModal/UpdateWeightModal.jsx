@@ -7,6 +7,7 @@ const UpdateWeightModal = ({
   startWeight,
   setStartWeight,
   onConfirm,
+  title,
 }) => {
   return (
     <Modal
@@ -19,7 +20,7 @@ const UpdateWeightModal = ({
         <button onClick={onRequestClose} className="text-gray-500">
           Cancel
         </button>
-        <h2 className="text-lg font-semibold">Update today Weight</h2>
+        <h2 className="text-lg font-semibold">{title}</h2>
         <span></span>
       </div>
       <div className="text-center text-sm text-gray-500 mb-4">

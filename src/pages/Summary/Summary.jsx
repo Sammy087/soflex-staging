@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import UpdateWeightModal from "../../component/UpdateWeightModal/UpdateWeightModal";
+import AddMedicineModal from "../../component/AddMedicineModal/AddMedicineModal";
 import { useNavigate } from "react-router-dom";
 
 const Summary = () => {
   const navigate = useNavigate();
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [isAddMedicineModalOpen, setIsAddMedicineModalOpen] = useState(false);
   const [startWeight, setStartWeight] = useState(102);
   const [dreamWeight, setDreamWeight] = useState(62);
   const [lastRead, setLastRead] = useState(76);
@@ -22,6 +24,14 @@ const Summary = () => {
 
   const closeModal = () => {
     setModalIsOpen(false);
+  };
+
+  const openAddMedicineModal = () => {
+    setIsAddMedicineModalOpen(true);
+  };
+
+  const closeAddMedicineModal = () => {
+    setIsAddMedicineModalOpen(false);
   };
 
   return (
@@ -106,7 +116,12 @@ const Summary = () => {
           <div className="bg-gray-100 p-4 rounded-lg">
             <div className="flex justify-between items-center mb-2">
               <h3 className="text-lg font-semibold">Shots Management</h3>
-              <button className="text-sm text-[#50B498]">Edit schedule</button>
+              <button
+                className="text-sm text-[#50B498]"
+                onClick={openAddMedicineModal}
+              >
+                Edit schedule
+              </button>
             </div>
             <div className="flex justify-center items-center">
               <div className="text-center text-2xl text-[#50B498] font-bold mb-2 px-1">
@@ -176,6 +191,11 @@ const Summary = () => {
         startWeight={startWeight}
         setStartWeight={setStartWeight}
         onConfirm={handleConfirm}
+      />
+      <AddMedicineModal
+        isOpen={isAddMedicineModalOpen}
+        onRequestClose={closeAddMedicineModal}
+        onConfirm={closeAddMedicineModal}
       />
     </div>
   );

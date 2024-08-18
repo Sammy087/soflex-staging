@@ -23,8 +23,10 @@ import LastReminderScreen from "./pages/LastReminderScreen/LastReminderScreen";
 import ForgotPassword from "./pages/ForgotPassword/ForgotPassword";
 import Summary from "./pages/Summary/Summary";
 import Management from "./pages/Management/Management";
-
+import ChangePassword from "./pages/ChangePassword/ChangePassword";
+import PrivacyPolicy from "./pages/PrivacyPolicy/PrivacyPolicy";
 import { UserProvider } from "./contexts/UserContext";
+import TermsOfUse from "./pages/TermsOfUse/TermsOfUse";
 
 const App = () => (
   <UserProvider>
@@ -58,6 +60,9 @@ const App = () => (
         <Route path="/home" element={<Home />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/signin" element={<SignIn />} />
+        <Route path="/change-password" element={<ChangePassword />} />
+        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+        <Route path="/terms-of-use" element={<TermsOfUse />} />
       </Routes>
     </Router>
   </UserProvider>
