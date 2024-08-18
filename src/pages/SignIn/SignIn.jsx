@@ -83,7 +83,7 @@ const SignIn = () => {
         await updateDoc(userProfile, {
           last_login_at: serverTimestamp(),
         });
-        navigate("/summary");
+        navigate("/management");
       } catch (error) {
         setAlertMessage(error.message);
         setShowAlert(true);
