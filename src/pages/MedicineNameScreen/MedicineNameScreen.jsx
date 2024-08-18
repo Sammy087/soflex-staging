@@ -36,7 +36,7 @@ export function MedicineNameScreen() {
           medicine name
         </label>
         <select
-          className="w-full p-2 mb-3 border border-gray-300 rounded"
+          className="w-full p-2 mb-3 h-12 border border-gray-300 rounded"
           value={medicine}
           onChange={(e) => setMedicine(e.target.value)}
         >
@@ -46,15 +46,15 @@ export function MedicineNameScreen() {
           <option value="medicine3">Medicine 3</option>
         </select>
       </div>
-      <div className="flex justify-between w-full max-w-xs mb-5">
+      <div className="flex justify-between w-full max-w-xs mt-9">
         <button onClick={handleSkip} className="text-gray-500">
           Skip
         </button>
         <button
           onClick={handleNext}
-          className="px-6 py-3 text-lg font-semibold text-white bg-black rounded-full"
+          className="px-6 py-3 text-lg text-white bg-[#50B498] rounded-full"
         >
-          Next
+          Next →
         </button>
       </div>
     </div>

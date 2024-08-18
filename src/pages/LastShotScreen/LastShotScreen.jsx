@@ -172,15 +172,15 @@ function LastShotScreen() {
         <div className="flex justify-between w-full">
           <button
             onClick={handleSkip}
-            className="px-6 py-3 text-gray-700 bg-gray-200 rounded-full hover:bg-gray-300"
+            className="px-6 py-3 text-gray-700 rounded-full hover:bg-gray-300"
           >
             Skip
           </button>
           <button
             onClick={handleNext}
-            className="px-6 py-3 text-white bg-black rounded-full hover:bg-gray-800"
+            className="px-6 py-3 text-white bg-[#50B498] rounded-full hover:bg-gray-800"
           >
-            Next
+            Next →
           </button>
         </div>
       </div>

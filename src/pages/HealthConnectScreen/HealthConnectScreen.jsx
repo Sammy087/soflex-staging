@@ -24,17 +24,18 @@ function HealthConnectScreen() {
         Fill in, {username}! Connect your health, so I could synchronize your
         health data and show you all these useful charts and logs
       </p>
-      <img src="static/img/middle.svg" className="w-1/2" alt="middle"></img>
-      <div className="flex gap-3">
-        <button
-          onClick={handleSkip}
-          className="px-6 py-3 text-lg font-semibold text-black bg-gray-300 rounded-full"
-        >
+      <img
+        src="static/img/middle.svg"
+        className="w-1/2 mb-10"
+        alt="middle"
+      ></img>
+      <div className="flex justify-between w-full max-w-xs mt-5">
+        <button onClick={handleSkip} className="text-gray-500">
           Skip
         </button>
         <button
           onClick={handleConnect}
-          className="px-6 py-3 text-lg font-semibold text-white bg-black rounded-full"
+          className="px-6 py-3 text-lg text-white bg-[#50B498] rounded-full"
         >
           Connect to Health
         </button>

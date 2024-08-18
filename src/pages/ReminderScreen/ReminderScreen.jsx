@@ -18,10 +18,10 @@ function ReminderScreen() {
         Share with me your injection schedule, and I'll remind you about an
         upcoming shot
       </p>
-      <img src="static/img/middle.svg" alt="middle"></img>
+      <img src="static/img/middle.svg" alt="middle" className="mb-10"></img>
       <button
         onClick={handleNext}
-        className="px-6 py-3 text-lg font-semibold text-white bg-black rounded-full"
+        className="px-6 py-3 text-lg text-white bg-[#50B498] rounded-full"
       >
         Next →
       </button>

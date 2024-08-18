@@ -52,9 +52,9 @@ function LastReminderScreen() {
         </button>
         <button
           onClick={handleNext}
-          className="px-6 py-3 text-lg font-semibold text-white bg-black rounded-full"
+          className="px-6 py-3 text-lg text-white bg-[#50B498] rounded-full"
         >
-          Next
+          Next →
         </button>
       </div>
     </div>

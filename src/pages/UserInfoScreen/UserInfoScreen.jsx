@@ -35,7 +35,7 @@ function UserInfoScreen() {
       <p className="text-base mb-5 max-w-xs">
         Enter the name you would like to go by
       </p>
-      <div className="relative w-full max-w-xs mb-5">
+      <div className="relative w-full max-w-xs mb-9 mt-2">
         <input
           type="text"
           placeholder="Name"
@@ -50,7 +50,7 @@ function UserInfoScreen() {
       {errors.name && <div className="text-red-500 mb-5">{errors.name}</div>}
       <button
         onClick={handleNext}
-        className="px-6 py-3 text-lg font-semibold text-white bg-black rounded-full"
+        className="px-6 py-3 text-lg text-white bg-[#50B498] rounded-full"
       >
         Next →
       </button>

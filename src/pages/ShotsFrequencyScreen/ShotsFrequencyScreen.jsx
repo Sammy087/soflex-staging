@@ -39,7 +39,7 @@ function ShotsFrequencyScreen() {
           medicine name
         </label>
         <select
-          className="w-full p-2 mb-3 border border-gray-300 rounded"
+          className="w-full p-2 h-12 mb-3 border border-gray-300 rounded-lg"
           value={frequency}
           onChange={(e) => setFrequency(e.target.value)}
         >
@@ -54,9 +54,9 @@ function ShotsFrequencyScreen() {
         </button>
         <button
           onClick={handleNext}
-          className="px-6 py-3 text-lg font-semibold text-white bg-black rounded-full"
+          className="px-6 py-3 text-lg text-white bg-[#50B498] rounded-full"
         >
-          Next
+          Next →
         </button>
       </div>
     </div>

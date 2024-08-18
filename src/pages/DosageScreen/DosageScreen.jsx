@@ -27,19 +27,19 @@ export function DosageScreen() {
       <p className="text-base mb-5 max-w-xs">
         Second, choose your medicine dosage
       </p>
-      <div>
+      <div className="w-full">
         <label
-          htmlFor="price"
+          htmlFor="dosage"
           className="block text-left text-sm font-medium text-gray-700 mb-1"
         >
           Dosage
         </label>
-        <div className="relative mt-2 rounded-md shadow-sm">
+        <div className="relative mt-2 rounded-md shadow-sm w-80">
           <input
             type="text"
-            name="amount"
-            id="price"
-            className="w-full p-3 text-base border border-gray-300 rounded-lg block py-1.5 pl-3 pr-20 mb-6 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+            name="dosage"
+            id="dosage"
+            className="w-full h-12 p-3 text-base border border-gray-300 rounded-lg block py-1.5 pl-3 pr-20 mb-6 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
             placeholder="50"
             onChange={(e) => setDosage(e.target.value)}
           />
@@ -63,9 +63,9 @@ export function DosageScreen() {
         </button>
         <button
           onClick={handleNext}
-          className="px-6 py-3 text-lg font-semibold text-white bg-black rounded-full"
+          className="px-6 py-3 text-lg text-white bg-[#50B498] rounded-full"
         >
-          Next
+          Next →
         </button>
       </div>
     </div>

@@ -16,10 +16,10 @@ function WelcomeScreen() {
         the best app for tracking shots and weight loss! More than 10,000 people
         choose me to be their guide in GLP-using journey!
       </p>
-      <img src="static/img/middle.svg" alt="middle"></img>
+      <img src="static/img/middle.svg" alt="middle" className="mb-10"></img>
       <button
         onClick={handleNext}
-        className="px-6 py-3 text-lg font-semibold text-white bg-black rounded-full"
+        className="px-6 py-3 text-lg text-white bg-[#50B498] rounded-full"
       >
         Hi, NAME 👋
       </button>
