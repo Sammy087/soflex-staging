@@ -14,7 +14,7 @@ import StartWeightScreen from "./pages/StartWeightScreen/StartWeightScreen";
 import CurrentWeightScreen from "./pages/CurrentWeightScreen/CurrentWeightScreen";
 import DreamWeightScreen from "./pages/DreamWeightScreen/DreamWeightScreen";
 import CheckCurrentWeightScreen from "./pages/CheckCurrentWeightScreen/CheckCurrentWeightScreen";
-import StartTodayWeightScreen from "./pages/StartTodayWeightScreen/StartTodayWeightScreen";
+import TodayWeightScreen from "./pages/TodayWeightScreen/TodayWeightScreen";
 import MedicineNameScreen from "./pages/MedicineNameScreen/MedicineNameScreen";
 import DosageScreen from "./pages/DosageScreen/DosageScreen";
 import LastShotScreen from "./pages/LastShotScreen/LastShotScreen";
@@ -47,10 +47,7 @@ const App = () => {
           path={Paths.CHECK_CURRENT_WEIGHT}
           element={<CheckCurrentWeightScreen />}
         />
-        <Route
-          path={Paths.START_TODAY_WEIGHT}
-          element={<StartTodayWeightScreen />}
-        />
+        <Route path={Paths.TODAY_WEIGHT} element={<TodayWeightScreen />} />
         <Route path={Paths.MEDICINE_NAME} element={<MedicineNameScreen />} />
         <Route path={Paths.MEDICINE_DOSAGE} element={<DosageScreen />} />
         <Route path={Paths.LAST_SHOT} element={<LastShotScreen />} />
