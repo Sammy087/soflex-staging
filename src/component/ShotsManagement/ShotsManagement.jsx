@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import Table from "../Table/Table";
+import FilterModal from "../FilterModal/FilterModal";
 
 const ShotsManagement = ({
   schedule,
@@ -9,8 +10,30 @@ const ShotsManagement = ({
   openMedicineModal,
   openShotModal,
 }) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedMonth, setSelectedMonth] = useState("");
+  const [filteredData, setFilteredData] = useState("");
+
+  const handleOpenModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleConfirm = () => {
+    const filtered = medLog.filter((row) => {
+      const date = new Date(row.date); // Assuming 'date' is the accessor for the date column
+      return (
+        date.toLocaleString("default", { month: "long" }) === selectedMonth
+      );
+    });
+    setFilteredData(filtered);
+    handleCloseModal();
+  };
   return (
-    <div>
+    <>
       <h2 className="text-xl font-bold mb-4">Shots Management</h2>
       <div className="flex justify-between items-center mb-4">
         <h3 className="text-lg font-semibold">Edit schedule</h3>
@@ -46,17 +69,50 @@ const ShotsManagement = ({
           Add new shot
         </button>
       </div>
-      <h2 className="text-xl font-bold mb-4">Med Entry Log</h2>
-      <div className="flex justify-between items-center mb-2">
-        <span className="text-sm text-gray-500">
+      <div className="flex justify-between items-center mb-4 mt-4">
+        <h2 className="text-xl font-bold">Med Entry Log</h2>
+        <div className="text-[#50B498] text-sm" onClick={handleOpenModal}>
           {new Date().toLocaleDateString("en-US", {
             month: "long",
             day: "numeric",
           })}
-        </span>
+        </div>
       </div>
-      <Table columns={shotscolumns} data={medLog} />
-    </div>
+      <Table
+        columns={shotscolumns}
+        data={filteredData ? filteredData : medLog}
+      />
+      <FilterModal
+        isOpen={isModalOpen}
+        onClose={handleCloseModal}
+        onConfirm={handleConfirm}
+      >
+        <div>
+          <label className="block text-sm font-medium text-gray-700">
+            Month
+          </label>
+          <select
+            className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
+            value={selectedMonth}
+            onChange={(e) => setSelectedMonth(e.target.value)}
+          >
+            <option value="">Select a month</option>
+            <option>January</option>
+            <option>February</option>
+            <option>March</option>
+            <option>April</option>
+            <option>May</option>
+            <option>June</option>
+            <option>July</option>
+            <option>August</option>
+            <option>September</option>
+            <option>October</option>
+            <option>November</option>
+            <option>December</option>
+          </select>
+        </div>
+      </FilterModal>
+    </>
   );
 };
 
