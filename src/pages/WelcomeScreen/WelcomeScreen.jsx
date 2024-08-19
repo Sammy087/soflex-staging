@@ -12,7 +12,7 @@ function WelcomeScreen() {
 
   return (
     <div className="flex flex-col items-center justify-center h-screen p-5 text-center bg-white">
-      <h1 className="text-2xl font-bold mb-2">Hey, I'm NAME</h1>
+      <h1 className="text-2xl font-bold mb-2">Hey, I'm Soflex</h1>
       <p className="text-base mb-5 max-w-xs">
         the best app for tracking shots and weight loss! More than 10,000 people
         choose me to be their guide in GLP-using journey!
