@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
+import axios from "axios";
 import CurrentWeight from "../../component/CurrentWeight/CurrentWeight";
 import UpdateWeightModal from "../../component/UpdateWeightModal/UpdateWeightModal";
 import ShotsManagement from "../../component/ShotsManagement/ShotsManagement";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import AddMedicineModal from "../../component/AddMedicineModal/AddMedicineModal";
 import MoreTabContent from "../../component/MoreTabContent/MoreTabContent";
 import Summary from "../../component/Summary/Summary";
+import AddShotModal from "../../component/AddShotModal/AddShotModal";
 
 const Management = () => {
   const navigate = useNavigate();
@@ -17,6 +18,7 @@ const Management = () => {
   const [lastRead, setLastRead] = useState("76");
   const [sinceStart, setSinceStart] = useState("29");
   const [isAddMedicineModalOpen, setIsAddMedicineModalOpen] = useState(false);
+  const [isAddShotModalOpen, setIsAddShotModalOpen] = useState(false);
 
   const closeMedicineModal = () => {
     setIsAddMedicineModalOpen(false);
@@ -41,6 +43,21 @@ const Management = () => {
   const handleConfirm = () => {
     // Handle the confirm action (e.g., send the updated weight to the backend)
     closeModal();
+  };
+
+  const handleShotConfirm = () => {
+    setIsAddShotModalOpen(false);
+  };
+
+  const openShotModal = () => {
+    setIsAddShotModalOpen(true);
+  };
+
+  const closeShotModal = () => {
+    setIsAddShotModalOpen(false);
+  };
+  const seeMore = () => {
+    setActiveTab("weight");
   };
 
   const [activeTab, setActiveTab] = useState("summary");
@@ -143,6 +160,7 @@ const Management = () => {
               sinceStart={sinceStart}
               openMedicineModal={openMedicineModal}
               openModal={openModal}
+              seeMore={seeMore}
             />
           )}
           {activeTab === "weight" && (
@@ -164,6 +182,10 @@ const Management = () => {
               medLog={medLog}
               shotscolumns={shotsColumns}
               openMedicineModal={openMedicineModal}
+              currentWeight={currentWeight}
+              startWeight={startWeight}
+              dreamWeight={dreamWeight}
+              openShotModal={openShotModal}
             />
           )}
           {activeTab === "more" && <MoreTabContent />}
@@ -291,6 +313,11 @@ const Management = () => {
         isOpen={isAddMedicineModalOpen}
         onRequestClose={closeMedicineModal}
         onConfirm={handleMedicineConfirm}
+      />
+      <AddShotModal
+        isOpen={isAddShotModalOpen}
+        onRequestClose={closeShotModal}
+        onConfirm={handleShotConfirm}
       />
     </div>
   );

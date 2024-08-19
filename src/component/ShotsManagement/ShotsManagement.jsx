@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import Table from "../Table/Table";
 import FilterModal from "../FilterModal/FilterModal";
+import WeekCalendar from "../WeekCalendar/WeekCalendar";
+import WeightModal from "../WeightModal/WeightModal";
 
 const ShotsManagement = ({
   schedule,
@@ -9,10 +11,22 @@ const ShotsManagement = ({
   shotscolumns,
   openMedicineModal,
   openShotModal,
+  currentWeight,
+  startWeight,
+  dreamWeight,
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isWeightModalOpen, setIsWeightModalOpen] = useState(false);
   const [selectedMonth, setSelectedMonth] = useState("");
   const [filteredData, setFilteredData] = useState("");
+  const currentDate = new Date();
+  const [formData, setFormData] = useState({
+    WedWeight: currentWeight,
+    StartWeight: startWeight,
+    LastRead: currentWeight,
+    DreamWeight: dreamWeight,
+    KGsinceStart: startWeight - currentWeight,
+  });
 
   const handleOpenModal = () => {
     setIsModalOpen(true);
@@ -32,15 +46,31 @@ const ShotsManagement = ({
     setFilteredData(filtered);
     handleCloseModal();
   };
+  const handleOpenWeightModal = () => {
+    setIsWeightModalOpen(true);
+  };
+
+  const handleCloseWeightModal = () => {
+    setIsWeightModalOpen(false);
+  };
+
+  const handleWeightConfirm = (data) => {
+    setFormData(data);
+    // You can also update the state or perform other actions here
+  };
+
   return (
     <>
-      <h2 className="text-xl font-bold mb-4">Shots Management</h2>
       <div className="flex justify-between items-center mb-4">
-        <h3 className="text-lg font-semibold">Edit schedule</h3>
+        <h3 className="text-lg font-semibold">Shots Management</h3>
         <button className="text-sm text-[#50B498]" onClick={openMedicineModal}>
           Edit schedule
         </button>
       </div>
+      <WeekCalendar
+        currentDate={currentDate}
+        handleOpenWeightModal={handleOpenWeightModal}
+      />
       <div className="text-center text-sm text-gray-500 mb-4">
         Days Left for next Shot
       </div>
@@ -112,6 +142,12 @@ const ShotsManagement = ({
           </select>
         </div>
       </FilterModal>
+      <WeightModal
+        isOpen={isWeightModalOpen}
+        onClose={handleCloseWeightModal}
+        onConfirm={handleWeightConfirm}
+        initialData={formData}
+      />
     </>
   );
 };

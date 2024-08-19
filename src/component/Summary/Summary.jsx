@@ -8,6 +8,7 @@ const Summary = ({
   sinceStart,
   openMedicineModal,
   openModal,
+  seeMore,
 }) => {
   return (
     <div>
@@ -84,7 +85,10 @@ const Summary = ({
                 </div>
               </div>
             </div>
-            <button className="mt-4 w-full bg-[#50B498] text-white py-2 rounded-lg">
+            <button
+              className="mt-4 w-full bg-[#50B498] text-white py-2 rounded-lg"
+              onClick={seeMore}
+            >
               See More
             </button>
           </div>

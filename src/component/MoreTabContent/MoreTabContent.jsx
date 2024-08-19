@@ -47,6 +47,10 @@ const MoreTabContent = () => {
     navigate(Paths.TERMS_OF_USE);
   };
 
+  const handleSignOut = () => {
+    navigate(Paths.LOGIN);
+  };
+
   return (
     <div className="bg-white p-4 w-full">
       <div className="flex flex-col items-center">
@@ -60,66 +64,83 @@ const MoreTabContent = () => {
       <div className="mt-4">
         <div className="bg-gray-100 p-4 rounded-lg">
           <button
-            className="w-full text-left py-2 border-b"
+            className="w-full text-left py-2 border-b flex justify-between items-center"
             onClick={() => navigate(Paths.CHANGE_PASSWORD)}
           >
-            Change Password
+            <span>Change Password</span>
+            <img src="static/img/right-arrow-green.svg" className="w-6 h-6" />
           </button>
           <button
-            className="w-full text-left py-2 border-b"
+            className="w-full text-left py-2 border-b flex justify-between items-center"
             onClick={openMeasurementModal}
           >
-            Measurement system
+            <span>Measurement system</span>
+            <img src="static/img/right-arrow-green.svg" className="w-6 h-6" />
           </button>
           <button
-            className="w-full text-left py-2 border-b"
+            className="w-full text-left py-2 border-b flex justify-between items-center"
             onClick={openAddMedicineModal}
           >
-            Edit shot schedule
+            <span>Edit shot schedule</span>
+            <img src="static/img/right-arrow-green.svg" className="w-6 h-6" />
           </button>
           <button
-            className="w-full text-left py-2 border-b"
+            className="w-full text-left py-2 border-b flex justify-between items-center"
             onClick={openUpdateWeightModal}
           >
-            Change weight goals
+            <span>Change weight goals</span>
+            <img src="static/img/right-arrow-green.svg" className="w-6 h-6" />
           </button>
-          <button className="w-full text-left py-2 border-b">
-            Health Connect
+          <button className="w-full text-left py-2 border-b flex justify-between items-center">
+            <span>Health Connect</span>
+            <img src="static/img/right-arrow-green.svg" className="w-6 h-6" />
           </button>
-          <div className="flex justify-between py-2 border-b">
+          <div className="flex justify-between items-center py-2 border-b">
             <span>Notifications</span>
-            <input type="checkbox" className="toggle-checkbox" />
+            <label className="relative inline-flex items-center cursor-pointer">
+              <input type="checkbox" className="sr-only peer" />
+              <div className="w-11 h-6 bg-gray-200 rounded-full peer peer-checked:bg-[#50B498] peer-focus:ring-4 peer-focus:ring-[#50B498]"></div>
+              <div className="absolute left-1 top-1 bg-white w-4 h-4 rounded-full transition-transform peer-checked:translate-x-full"></div>
+            </label>
           </div>
         </div>
       </div>
       <div className="mt-4">
         <div className="bg-gray-100 p-4 rounded-lg">
           <button
-            className="w-full text-left py-2 border-b"
+            className="w-full text-left py-2 border-b flex justify-between items-center"
             onClick={openContactUsModal}
           >
-            Contact us
+            <span>Contact us</span>
+            <img src="static/img/right-arrow-green.svg" className="w-6 h-6" />
           </button>
           <button
-            className="w-full text-left py-2 border-b"
+            className="w-full text-left py-2 border-b flex justify-between items-center"
             onClick={openRateUsModal}
           >
-            Rate Us
+            <span>Rate Us</span>
+            <img src="static/img/right-arrow-green.svg" className="w-6 h-6" />
           </button>
           <button
-            className="w-full text-left py-2 border-b"
+            className="w-full text-left py-2 border-b flex justify-between items-center"
             onClick={handlePrivacyPolicyClick}
           >
-            Privacy policy
+            <span>Privacy policy</span>
+            <img src="static/img/right-arrow-green.svg" className="w-6 h-6" />
           </button>
           <button
-            className="w-full text-left py-2 border-b"
+            className="w-full text-left py-2 border-b flex justify-between items-center"
             onClick={handleTermsOfUseClick}
           >
-            Terms of use
+            <span>Terms of use</span>
+            <img src="static/img/right-arrow-green.svg" className="w-6 h-6" />
           </button>
-          <button className="w-full text-left py-2 text-red-500">
-            Sign out
+          <button
+            className="w-full text-left py-2 text-red-500 flex justify-between items-center"
+            onClick={handleSignOut}
+          >
+            <span>Sign out</span>
+            <img src="static/img/right-arrow-green.svg" className="w-6 h-6" />
           </button>
         </div>
       </div>
