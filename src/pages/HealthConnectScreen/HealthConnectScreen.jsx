@@ -2,17 +2,18 @@
 import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../../contexts/UserContext";
+import { Paths } from "../../AppConstants";
 
 function HealthConnectScreen() {
   const navigate = useNavigate();
   const { username } = useContext(UserContext);
 
   const handleSkip = () => {
-    navigate("/check-current-weight");
+    navigate(Paths.CHECK_CURRENT_WEIGHT);
   };
 
   const handleConnect = () => {
-    navigate("/start-weight");
+    navigate(Paths.START_WEIGHT);
   };
 
   return (

@@ -1,12 +1,13 @@
 // src/components/ReminderScreen.js
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { Paths } from "../../AppConstants";
 
 function ReminderScreen() {
   const navigate = useNavigate();
 
   const handleNext = () => {
-    navigate("/weight-loss");
+    navigate(Paths.WEIGHT_LOSS);
   };
 
   return (

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getAuth, sendPasswordResetEmail } from "firebase/auth";
 import { ArrowUp } from "../../component/Icons/ArrowUp";
+import { Paths } from "../../AppConstants";
 
 const ChangePassword = () => {
   const [email, setEmail] = useState("");
@@ -11,7 +12,7 @@ const ChangePassword = () => {
   const auth = getAuth();
 
   const handleBackClick = () => {
-    navigate("/management");
+    navigate(Paths.MANAGEMENT);
   };
 
   const handlePasswordReset = async () => {

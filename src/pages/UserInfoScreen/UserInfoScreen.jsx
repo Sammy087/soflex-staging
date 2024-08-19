@@ -1,6 +1,7 @@
 import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../../contexts/UserContext";
+import { Paths } from "../../AppConstants";
 
 function UserInfoScreen() {
   const [name, setName] = useState("");
@@ -24,7 +25,7 @@ function UserInfoScreen() {
       setErrors(validationErrors);
     } else {
       setUsername(name);
-      navigate("/reminder");
+      navigate(Paths.REMINDER);
     }
   };
 

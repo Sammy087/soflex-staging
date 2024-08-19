@@ -9,6 +9,7 @@ import {
   updateDoc,
 } from "firebase/firestore";
 import { firestore } from "../../firebase";
+import { Paths } from "../../AppConstants";
 
 const InputField = ({
   label,
@@ -54,7 +55,7 @@ const SignIn = () => {
   const auth = getAuth();
 
   const handleBackClick = () => {
-    navigate("/home");
+    navigate(Paths.HOME);
   };
 
   const validate = () => {
@@ -83,7 +84,7 @@ const SignIn = () => {
         await updateDoc(userProfile, {
           last_login_at: serverTimestamp(),
         });
-        navigate("/management");
+        navigate(Paths.MANAGEMENT);
       } catch (error) {
         setAlertMessage(error.message);
         setShowAlert(true);
@@ -92,7 +93,7 @@ const SignIn = () => {
   };
 
   const handleSignUp = () => {
-    navigate("/signup");
+    navigate(Paths.SIGN_UP);
   };
 
   return (
@@ -140,7 +141,7 @@ const SignIn = () => {
           <div className="text-right">
             <a
               className="text-balck hover:text-blue-700 cursor-pointer"
-              onClick={() => navigate("/forgot-password")}
+              onClick={() => navigate(Paths.FORGOT_PASSWORD)}
             >
               Forgot Password?
             </a>

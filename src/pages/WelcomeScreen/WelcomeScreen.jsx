@@ -1,12 +1,13 @@
 // src/components/WelcomeScreen.js
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { Paths } from "../../AppConstants";
 
 function WelcomeScreen() {
   const navigate = useNavigate();
 
   const handleNext = () => {
-    navigate("/user-info");
+    navigate(Paths.USER_INFO);
   };
 
   return (

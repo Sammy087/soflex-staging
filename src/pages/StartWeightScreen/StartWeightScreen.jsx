@@ -9,13 +9,14 @@ import {
 import { GlobalContext } from "../../contexts/GlobalContext";
 import { UserContext } from "../../contexts/UserContext";
 import Loading from "../Loading/Loading";
+import { Paths } from "../../AppConstants";
 
 function StartWeightScreen() {
   const navigate = useNavigate();
+  const { uid } = useContext(UserContext);
   const { userWeights, setUserWeights } = useContext(GlobalContext);
   const [weight, setWeight] = useState(102);
   const [loading, setLoading] = useState(true);
-  const { uid } = useContext(UserContext);
 
   useEffect(() => {
     checkHealthConnection({ uid })
@@ -40,13 +41,11 @@ function StartWeightScreen() {
       });
   }, []);
 
-  const currentWeightPath = "/current-weight";
-
   const handleNextAndSkip = async () => {
     setLoading(true);
     await mutationUserWeights({ uid, key: "start_weight", value: weight })
       .then((res) => {
-        if (res.data.result) navigate(currentWeightPath);
+        if (res.data.result) navigate(Paths.CURRENT_WEIGHT);
       })
       .catch((err) => console.error(err));
     setLoading(false);

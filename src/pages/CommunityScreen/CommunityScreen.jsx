@@ -1,12 +1,13 @@
 // src/components/CommunityScreen.js
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { Paths } from "../../AppConstants";
 
 function CommunityScreen() {
   const navigate = useNavigate();
 
   const handleNext = () => {
-    navigate("/health-connect");
+    navigate(Paths.HEALTH_CONNECT);
   };
 
   return (

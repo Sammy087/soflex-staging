@@ -1,15 +1,16 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Paths } from "../../AppConstants";
 
 export function DosageScreen() {
   const navigate = useNavigate();
   const [dosage, setDosage] = useState("");
   const [unit, setUnit] = useState("");
   const handleNext = () => {
-    navigate("/last-Shot");
+    navigate(Paths.LAST_SHOT);
   };
   const handleSkip = () => {
-    navigate("/last-shot");
+    navigate(Paths.LAST_SHOT);
   };
   const handleBack = () => {
     navigate(-1);

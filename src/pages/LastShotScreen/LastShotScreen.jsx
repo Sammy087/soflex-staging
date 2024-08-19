@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import DateSelectionModal from "../../component/DateSelectionModal/DateSelectionModal";
+import { Paths } from "../../AppConstants";
 
 function LastShotScreen() {
   const navigate = useNavigate();
@@ -19,11 +20,11 @@ function LastShotScreen() {
   }, [formattedToday]);
 
   const handleNext = () => {
-    navigate("/shots-frequency");
+    navigate(Paths.SHOTS_FREQUENCY);
   };
 
   const handleSkip = () => {
-    navigate("/shots-frequency");
+    navigate(Paths.SHOTS_FREQUENCY);
   };
 
   const handleDateConfirm = (date) => {

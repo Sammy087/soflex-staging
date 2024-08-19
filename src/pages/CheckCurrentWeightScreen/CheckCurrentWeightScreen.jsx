@@ -1,14 +1,15 @@
 import React from "react";
 import WeightInputScreen from "../../component/WeightInputScreen/WeightInputScreen";
 import { useNavigate } from "react-router-dom";
+import { Paths } from "../../AppConstants";
 
 function CheckCurrentWeightScreen() {
   const navigate = useNavigate();
   const handleNext = () => {
-    navigate("/start-today-weight");
+    navigate(Paths.START_TODAY_WEIGHT);
   };
   const handleSkip = () => {
-    navigate("/start-today-weight");
+    navigate(Paths.START_TODAY_WEIGHT);
   };
   const handleBack = () => {
     navigate(-1);

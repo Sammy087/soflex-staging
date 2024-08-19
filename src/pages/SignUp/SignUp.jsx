@@ -7,6 +7,7 @@ import {
   sendEmailVerification,
 } from "firebase/auth";
 import { setDoc, doc, collection } from "firebase/firestore";
+import { Paths } from "../../AppConstants";
 
 const InputField = ({
   label,
@@ -57,7 +58,7 @@ const SignUp = () => {
   });
 
   const handleBackClick = () => {
-    navigate("/home");
+    navigate(Paths.HOME);
   };
 
   const validate = () => {
@@ -121,7 +122,7 @@ const SignUp = () => {
   };
 
   const handleSignIn = () => {
-    navigate("/signin");
+    navigate(Paths.SIGNIN);
   };
 
   return (
@@ -219,7 +220,7 @@ const SignUp = () => {
               className="bg-[#50B498] hover:bg-[#50B498] text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline"
               onClick={() => {
                 setShowModal(false);
-                navigate("/signin");
+                navigate(Paths.SIGNIN);
               }}
             >
               Close

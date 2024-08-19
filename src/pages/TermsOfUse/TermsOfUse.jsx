@@ -1,12 +1,13 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { ArrowUp } from "../../component/Icons/ArrowUp"; // Adjust the import path as necessary
+import { Paths } from "../../AppConstants";
 
 const TermsOfUse = () => {
   const navigate = useNavigate();
 
   const handleBackClick = () => {
-    navigate("/management"); // Adjust the path as necessary
+    navigate(Paths.MANAGEMENT); // Adjust the path as necessary
   };
 
   return (

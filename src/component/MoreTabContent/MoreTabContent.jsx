@@ -5,6 +5,7 @@ import UpdateWeightModal from "../UpdateWeightModal/UpdateWeightModal";
 import { useNavigate } from "react-router-dom";
 import ContactUsModal from "../ContactUsModal/ContactUsModal";
 import RateUsModal from "../RateUsModal/RateUsModal";
+import { Paths } from "../../AppConstants";
 
 const MoreTabContent = () => {
   const [isMeasurementModalOpen, setIsMeasurementModalOpen] = useState(false);
@@ -39,11 +40,11 @@ const MoreTabContent = () => {
   };
 
   const handlePrivacyPolicyClick = () => {
-    navigate("/privacy-policy");
+    navigate(Paths.PRIVACY_POLICY);
   };
 
   const handleTermsOfUseClick = () => {
-    navigate("/terms-of-use");
+    navigate(Paths.TERMS_OF_USE);
   };
 
   return (
@@ -60,7 +61,7 @@ const MoreTabContent = () => {
         <div className="bg-gray-100 p-4 rounded-lg">
           <button
             className="w-full text-left py-2 border-b"
-            onClick={() => navigate("/change-password")}
+            onClick={() => navigate(Paths.CHANGE_PASSWORD)}
           >
             Change Password
           </button>

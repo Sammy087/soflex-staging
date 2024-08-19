@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { Paths } from "../../AppConstants";
 
 function LastReminderScreen() {
   const navigate = useNavigate();
@@ -21,11 +22,11 @@ function LastReminderScreen() {
   }, []);
 
   const handleNext = () => {
-    navigate("/home");
+    navigate();
   };
 
   const handleSkip = () => {
-    navigate("/home");
+    navigate();
   };
   const handleBack = () => {
     navigate(-1);

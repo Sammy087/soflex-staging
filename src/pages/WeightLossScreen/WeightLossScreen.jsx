@@ -1,12 +1,13 @@
 // src/components/WeightLossScreen.js
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { Paths } from "../../AppConstants";
 
 function WeightLossScreen() {
   const navigate = useNavigate();
 
   const handleNext = () => {
-    navigate("/community");
+    navigate(Paths.COMMUNITY);
   };
 
   return (

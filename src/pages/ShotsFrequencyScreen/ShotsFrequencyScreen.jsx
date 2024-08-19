@@ -1,16 +1,17 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Paths } from "../../AppConstants";
 
 function ShotsFrequencyScreen() {
   const navigate = useNavigate();
   const [frequency, setFrequency] = useState("monthly");
 
   const handleNext = () => {
-    navigate("/last-reminder");
+    navigate(Paths.LAST_REMINDER);
   };
 
   const handleSkip = () => {
-    navigate("/last-reminder");
+    navigate(Paths.LAST_REMINDER);
   };
   const handleBack = () => {
     navigate(-1);

@@ -1,14 +1,15 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Paths } from "../../AppConstants";
 
 export function MedicineNameScreen() {
   const navigate = useNavigate();
   const [medicine, setMedicine] = useState("");
   const handleNext = () => {
-    navigate("/medicine-dosage");
+    navigate(Paths.MEDICINE_DOSAGE);
   };
   const handleSkip = () => {
-    navigate("/medicine-dosage");
+    navigate(Paths.MEDICINE_DOSAGE);
   };
   const handleBack = () => {
     navigate(-1);

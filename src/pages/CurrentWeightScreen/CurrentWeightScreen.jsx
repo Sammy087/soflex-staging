@@ -9,6 +9,7 @@ import {
 } from "../../firebaseApis/healthApis";
 import { GlobalContext } from "../../contexts/GlobalContext";
 import Loading from "../Loading/Loading";
+import { Paths } from "../../AppConstants";
 
 function CurrentWeightScreen() {
   const navigate = useNavigate();
@@ -16,8 +17,6 @@ function CurrentWeightScreen() {
   const { userWeights, setUserWeights } = useContext(GlobalContext);
   const { uid } = useContext(UserContext);
   const [weight, setWeight] = useState(80);
-
-  const dreamWeightPath = "/dream-weight";
 
   useEffect(() => {
     checkHealthConnection({ uid })
@@ -46,7 +45,7 @@ function CurrentWeightScreen() {
     setLoading(true);
     await mutationUserWeights({ uid, key: "current_weight", value: weight })
       .then((res) => {
-        if (res.data.result) navigate(dreamWeightPath);
+        if (res.data.result) navigate(Paths.DREAM_WEIGHT);
       })
       .catch((err) => console.error(err));
     setLoading(false);

@@ -3,16 +3,17 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { auth, firestore } from "../../firebase";
 import { collection, doc, serverTimestamp, setDoc } from "firebase/firestore";
+import { Paths } from "../../AppConstants";
 
 const Home = () => {
   const navigate = useNavigate();
 
   const handleSignUp = () => {
-    navigate("/signup");
+    navigate(Paths.SIGNUP);
   };
 
   const handleSignIn = () => {
-    navigate("/signin");
+    navigate(Paths.SIGNIN);
   };
 
   const handleGoogleSignUp = async () => {
