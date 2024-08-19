@@ -1,5 +1,5 @@
 import "./index.css";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Home from "./pages/Home/Home";
 import SignUp from "./pages/SignUp/SignUp";
@@ -26,7 +26,6 @@ import ChangePassword from "./pages/ChangePassword/ChangePassword";
 import PrivacyPolicy from "./pages/PrivacyPolicy/PrivacyPolicy";
 import TermsOfUse from "./pages/TermsOfUse/TermsOfUse";
 import { Paths } from "./AppConstants";
-import { UserContext } from "./contexts/UserContext";
 import { GlobalContext } from "./contexts/GlobalContext";
 
 const App = () => {

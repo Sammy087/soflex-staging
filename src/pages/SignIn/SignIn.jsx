@@ -93,7 +93,7 @@ const SignIn = () => {
         setUid(user?.uid);
         sessionStorage.setItem("uid", user?.uid);
         setLoading(false);
-        // navigate(Paths.MANAGEMENT);
+        navigate(Paths.MANAGEMENT);
       } catch (error) {
         setAlertMessage(error.message);
         setShowAlert(true);

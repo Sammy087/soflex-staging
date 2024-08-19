@@ -12,7 +12,7 @@ export const UserContext = createContext();
 export const UserProvider = ({ children }) => {
   const { setAllowed } = useContext(GlobalContext);
   const [username, setUsername] = useState("");
-  const [uid, setUid] = useState("");
+  const [uid, setUid] = useState("8Qw8d1u3HNgz6yXXTw694FD8Vc62");
 
   useEffect(() => {
     const sessionUid = sessionStorage.getItem("uid");
