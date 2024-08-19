@@ -9,8 +9,13 @@ export function WeightInputScreen({
   onNext,
   onSkip,
   onBack,
+  onChange,
 }) {
   const [weight, setWeight] = useState(initialValue || "");
+  const handleChange = (e) => {
+    setWeight(e.target.value);
+    onChange(e.target.value);
+  };
   return (
     <div className="flex flex-col items-center justify-center h-screen p-5 text-center bg-white">
       <div
@@ -34,7 +39,7 @@ export function WeightInputScreen({
           type="text"
           placeholder={placeholder}
           value={weight}
-          onChange={(e) => setWeight(e.target.value)}
+          onChange={handleChange}
           className="w-full p-3 text-base border border-gray-300 rounded-lg"
         />
         <span className="absolute right-3 bottom-3 text-lg text-gray-400">
