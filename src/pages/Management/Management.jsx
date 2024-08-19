@@ -14,6 +14,8 @@ const Management = () => {
   const [startWeight, setStartWeight] = useState("102");
   const [dreamWeight, setDreamWeight] = useState("62");
   const [currentWeight, setCurrentWeight] = useState("70");
+  const [lastRead, setLastRead] = useState("76");
+  const [sinceStart, setSinceStart] = useState("29");
   const [isAddMedicineModalOpen, setIsAddMedicineModalOpen] = useState(false);
 
   const closeMedicineModal = () => {
@@ -41,7 +43,7 @@ const Management = () => {
     closeModal();
   };
 
-  const [activeTab, setActiveTab] = useState("weight");
+  const [activeTab, setActiveTab] = useState("summary");
   const [weightData, setWeightData] = useState([
     { date: "2023-01-01", weight: 70 },
     { date: "2023-02-01", weight: 71 },
@@ -132,7 +134,17 @@ const Management = () => {
             activeTab === "summary" ? "" : "bg-white"
           } rounded-lg p-4 w-full`}
         >
-          {activeTab === "summary" && <Summary />}
+          {activeTab === "summary" && (
+            <Summary
+              currentWeight={currentWeight}
+              startWeight={startWeight}
+              dreamWeight={dreamWeight}
+              lastRead={lastRead}
+              sinceStart={sinceStart}
+              openMedicineModal={openMedicineModal}
+              openModal={openModal}
+            />
+          )}
           {activeTab === "weight" && (
             <CurrentWeight
               currentWeight={currentWeight}

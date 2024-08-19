@@ -1,39 +1,14 @@
 import React, { useState } from "react";
-import UpdateWeightModal from "../UpdateWeightModal/UpdateWeightModal";
-import AddMedicineModal from "../AddMedicineModal/AddMedicineModal";
-import { useNavigate } from "react-router-dom";
 
-const Summary = () => {
-  const navigate = useNavigate();
-  const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [isAddMedicineModalOpen, setIsAddMedicineModalOpen] = useState(false);
-  const [startWeight, setStartWeight] = useState(102);
-  const [dreamWeight, setDreamWeight] = useState(62);
-  const [lastRead, setLastRead] = useState(76);
-  const [sinceStart, setSinceStart] = useState(29);
-  const [currentWeight, setCurrentWeight] = useState(73);
-
-  const handleConfirm = () => {
-    // Handle the confirm action (e.g., send the updated weight to the backend)
-    closeModal();
-  };
-
-  const openModal = () => {
-    setModalIsOpen(true);
-  };
-
-  const closeModal = () => {
-    setModalIsOpen(false);
-  };
-
-  const openAddMedicineModal = () => {
-    setIsAddMedicineModalOpen(true);
-  };
-
-  const closeAddMedicineModal = () => {
-    setIsAddMedicineModalOpen(false);
-  };
-
+const Summary = ({
+  currentWeight,
+  startWeight,
+  dreamWeight,
+  lastRead,
+  sinceStart,
+  openMedicineModal,
+  openModal,
+}) => {
   return (
     <div>
       <div className="flex flex-col items-start max-w-md mx-auto">
@@ -118,7 +93,7 @@ const Summary = () => {
               <h3 className="text-lg font-semibold">Shots Management</h3>
               <button
                 className="text-sm text-[#50B498]"
-                onClick={openAddMedicineModal}
+                onClick={openMedicineModal}
               >
                 Edit schedule
               </button>
@@ -138,18 +113,6 @@ const Summary = () => {
           </div>
         </div>
       </div>
-      <UpdateWeightModal
-        isOpen={modalIsOpen}
-        onRequestClose={closeModal}
-        startWeight={startWeight}
-        setStartWeight={setStartWeight}
-        onConfirm={handleConfirm}
-      />
-      <AddMedicineModal
-        isOpen={isAddMedicineModalOpen}
-        onRequestClose={closeAddMedicineModal}
-        onConfirm={closeAddMedicineModal}
-      />
     </div>
   );
 };
