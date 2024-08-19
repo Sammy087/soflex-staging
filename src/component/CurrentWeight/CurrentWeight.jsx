@@ -13,6 +13,8 @@ const CurrentWeight = ({
   openModal,
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedMonth, setSelectedMonth] = useState("");
+  const [filteredData, setFilteredData] = useState("");
 
   const handleOpenModal = () => {
     setIsModalOpen(true);
@@ -22,13 +24,24 @@ const CurrentWeight = ({
     setIsModalOpen(false);
   };
 
+  const handleConfirm = () => {
+    const filtered = weightData.filter((row) => {
+      const date = new Date(row.date); // Assuming 'date' is the accessor for the date column
+      return (
+        date.toLocaleString("default", { month: "long" }) === selectedMonth
+      );
+    });
+    setFilteredData(filtered);
+    handleCloseModal();
+  };
+
   return (
     <>
       <div className="flex justify-between items-center mb-2">
         <h3 className="text-lg font-semibold">Current Weight</h3>
         <button
           className="flex items-center text-sm text-[#50B498]"
-          onClick={handleOpenModal}
+          onClick={openModal}
         >
           <img
             className="w-4 h-4 mr-1"
@@ -40,7 +53,7 @@ const CurrentWeight = ({
       </div>
       <div
         className="flex justify-between items-center bg-gray-200 rounded-lg"
-        onClick={handleOpenModal}
+        onClick={openModal}
       >
         <div className="text-2xm font-bold ml-4 mt-2 mb-2">
           {currentWeight} KG
@@ -97,14 +110,26 @@ const CurrentWeight = ({
           })}
         </div>
       </div>
-      <Table columns={columns} data={weightData} />
+      <Table
+        columns={columns}
+        data={filteredData ? filteredData : weightData}
+      />
 
-      <FilterModal isOpen={isModalOpen} onClose={handleCloseModal}>
+      <FilterModal
+        isOpen={isModalOpen}
+        onClose={handleCloseModal}
+        onConfirm={handleConfirm}
+      >
         <div>
           <label className="block text-sm font-medium text-gray-700">
             Month
           </label>
-          <select className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+          <select
+            className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
+            value={selectedMonth}
+            onChange={(e) => setSelectedMonth(e.target.value)}
+          >
+            <option value="">Select a month</option>
             <option>January</option>
             <option>February</option>
             <option>March</option>
