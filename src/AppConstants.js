@@ -23,7 +23,7 @@ export const Paths = {
   CURRENT_WEIGHT: "/current-weight",
   DREAM_WEIGHT: "/dream-weight",
   CHECK_CURRENT_WEIGHT: "/check-current-weight",
-  START_TODAY_WEIGHT: "/start-today-weight",
+  TODAY_WEIGHT: "/today-weight",
   MEDICINE_NAME: "/medicine-name",
   MEDICINE_DOSAGE: "/medicine-dosage",
   LAST_SHOT: "/last-shot",

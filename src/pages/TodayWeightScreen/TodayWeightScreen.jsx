@@ -1,6 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
 import WeightInputScreen from "../../component/WeightInputScreen/WeightInputScreen";
 import { useNavigate } from "react-router-dom";
+import { Paths } from "../../AppConstants";
+import Loading from "../Loading/Loading";
 import {
   checkHealthConnection,
   getUserWeights,
@@ -8,17 +10,16 @@ import {
 } from "../../firebaseApis/healthApis";
 import { UserContext } from "../../contexts/UserContext";
 import { GlobalContext } from "../../contexts/GlobalContext";
-import Loading from "../Loading/Loading";
-import { Paths } from "../../AppConstants";
 
-function DreamWeightScreen() {
-  const { uid } = useContext(UserContext);
-  const { userWeights, setUserWeights } = useContext(GlobalContext);
-  const [loading, setLoading] = useState(true);
-  const [weight, setWeight] = useState(80);
+function TodayWeightScreen() {
   const navigate = useNavigate();
+  const { uid } = useContext(UserContext);
+  const { userWeights, setUserWeights, loading, setLoading } =
+    useContext(GlobalContext);
+  const [weight, setWeight] = useState(80);
 
   useEffect(() => {
+    setLoading(true);
     checkHealthConnection({ uid })
       .then((res) => {
         if (res.data.result) {
@@ -41,26 +42,35 @@ function DreamWeightScreen() {
       });
   }, []);
 
+  useEffect(() => {
+    if (userWeights) {
+      setWeight(userWeights.today_weight);
+    }
+  }, [userWeights]);
+
   const handleNextOrSkip = async () => {
     setLoading(true);
-    await mutationUserWeights({ uid, key: "dream_weight", value: weight })
+    await mutationUserWeights({ uid, key: "today_weight", value: weight })
       .then((res) => {
-        if (res.data.result) navigate(Paths.MEDICINE_NAME);
+        if (res.data.result) navigate(Paths.DREAM_WEIGHT);
       })
       .catch((err) => console.error(err));
     setLoading(false);
   };
-  const handleBack = () => navigate(-1);
+
+  const handleBack = () => {
+    navigate(-1);
+  };
 
   if (loading) return <Loading />;
 
   return (
     <WeightInputScreen
-      title="And what weight you'd like to achieve?"
-      subtitle="Please tell me what is your dream weight"
-      placeholder="Dream Weight"
+      title="I need to know your weight to help you track the progress!"
+      subtitle="Please enter your start weight"
+      placeholder="Today Weight"
       buttonText="Done!"
-      initialValue={!userWeights ? weight : userWeights.dream_weight}
+      initialValue={!userWeights ? weight : userWeights.current_weight}
       onChange={(e) => setWeight(e)}
       onNext={handleNextOrSkip}
       onSkip={handleNextOrSkip}
@@ -69,4 +79,4 @@ function DreamWeightScreen() {
   );
 }
 
-export default DreamWeightScreen;
+export default TodayWeightScreen;
