@@ -17,6 +17,11 @@ export const mutationUserWeights = httpsCallable(
 
 export const getUserShots = httpsCallable(functions, "getUserShots");
 
+export const getOptionalShotInfo = httpsCallable(
+  functions,
+  "getOptionalShotInfo"
+);
+
 export const createOrUpdateShotsInfo = httpsCallable(
   functions,
   "createOrUpdateShotsInfo"
