@@ -46,14 +46,14 @@ const ShotsManagement = ({
           Add new shot
         </button>
       </div>
-      <h2 className="text-xl font-bold mb-4">Med Entry Log</h2>
-      <div className="flex justify-between items-center mb-2">
-        <span className="text-sm text-gray-500">
+      <div className="flex justify-between items-center mb-4 mt-4">
+        <h2 className="text-xl font-bold">Med Entry Log</h2>
+        <div className="text-[#50B498] text-sm">
           {new Date().toLocaleDateString("en-US", {
             month: "long",
             day: "numeric",
           })}
-        </span>
+        </div>
       </div>
       <Table columns={shotscolumns} data={medLog} />
     </div>

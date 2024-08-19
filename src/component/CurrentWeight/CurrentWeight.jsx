@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import WeightChart from "../WeightChart/WeightChart";
 import Table from "../Table/Table";
+import FilterModal from "../FilterModal/FilterModal";
 
 const CurrentWeight = ({
   currentWeight,
@@ -11,16 +12,23 @@ const CurrentWeight = ({
   columns,
   openModal,
 }) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleOpenModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
+
   return (
     <>
-      <div
-        className="flex justify-between items-center mb-2"
-        onClick={openModal}
-      >
+      <div className="flex justify-between items-center mb-2">
         <h3 className="text-lg font-semibold">Current Weight</h3>
         <button
           className="flex items-center text-sm text-[#50B498]"
-          onClick={openModal}
+          onClick={handleOpenModal}
         >
           <img
             className="w-4 h-4 mr-1"
@@ -32,7 +40,7 @@ const CurrentWeight = ({
       </div>
       <div
         className="flex justify-between items-center bg-gray-200 rounded-lg"
-        onClick={openModal}
+        onClick={handleOpenModal}
       >
         <div className="text-2xm font-bold ml-4 mt-2 mb-2">
           {currentWeight} KG
@@ -82,9 +90,36 @@ const CurrentWeight = ({
 
       <div className="flex justify-between items-center mb-4 mt-4">
         <h2 className="text-xl font-bold">Weight Entry Log</h2>
-        <div className="text-[#50B498] text-sm">July'24</div>
+        <div className="text-[#50B498] text-sm" onClick={handleOpenModal}>
+          {new Date().toLocaleDateString("en-US", {
+            month: "long",
+            day: "numeric",
+          })}
+        </div>
       </div>
       <Table columns={columns} data={weightData} />
+
+      <FilterModal isOpen={isModalOpen} onClose={handleCloseModal}>
+        <div>
+          <label className="block text-sm font-medium text-gray-700">
+            Month
+          </label>
+          <select className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+            <option>January</option>
+            <option>February</option>
+            <option>March</option>
+            <option>April</option>
+            <option>May</option>
+            <option>June</option>
+            <option>July</option>
+            <option>August</option>
+            <option>September</option>
+            <option>October</option>
+            <option>November</option>
+            <option>December</option>
+          </select>
+        </div>
+      </FilterModal>
     </>
   );
 };
