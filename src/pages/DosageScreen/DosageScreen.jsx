@@ -1,20 +1,39 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Paths } from "../../AppConstants";
+import { GlobalContext } from "../../contexts/GlobalContext";
+import { createOrUpdateShotsInfo } from "../../firebaseApis/healthApis";
+import { UserContext } from "../../contexts/UserContext";
+import Loading from "../Loading/Loading";
 
 export function DosageScreen() {
+  const unitOptions = ["mg", "ml", "gr"];
+
   const navigate = useNavigate();
-  const [dosage, setDosage] = useState("");
-  const [unit, setUnit] = useState("");
-  const handleNext = () => {
-    navigate(Paths.LAST_SHOT);
+  const [dosage, setDosage] = useState(50);
+  const [unit, setUnit] = useState(unitOptions[0]);
+  const { uid } = useContext(UserContext);
+  const { shots, setShots, loading, setLoading } = useContext(GlobalContext);
+
+  useEffect(() => {
+    setShots({ ...shots, dosage, dosage_unit: unit });
+  }, [dosage, unit]);
+
+  const handleNextOrSkip = async () => {
+    setLoading(true);
+    if (shots.dosage && shots.dosage_unit) {
+      await createOrUpdateShotsInfo({ uid, newShot: shots });
+      navigate(Paths.LAST_SHOT);
+    }
+    setLoading(false);
   };
-  const handleSkip = () => {
-    navigate(Paths.LAST_SHOT);
-  };
+
   const handleBack = () => {
     navigate(-1);
   };
+
+  if (loading) return <Loading />;
+
   return (
     <div className="flex flex-col items-center justify-center h-screen p-5 text-center bg-white">
       <div
@@ -40,6 +59,7 @@ export function DosageScreen() {
             type="text"
             name="dosage"
             id="dosage"
+            value={dosage}
             className="w-full h-12 p-3 text-base border border-gray-300 rounded-lg block py-1.5 pl-3 pr-20 mb-6 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
             placeholder="50"
             onChange={(e) => setDosage(e.target.value)}
@@ -48,22 +68,25 @@ export function DosageScreen() {
             <select
               id="unit"
               name="unit"
-              className="h-full rounded-md border-0 bg-transparent py-0 pl-2 pr-7 text-gray-500 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm"
+              value={unit}
+              className="h-full rounded-md border-0 bg-transparent py-0 pl-2 pr-7 text-gray-500 focus:ring-2 focus:ring-inset focus:ring-indigo-6000 sm:text-sm"
               onChange={(e) => setUnit(e.target.value)}
             >
-              <option>mg</option>
-              <option>ml</option>
-              <option>gr</option>
+              {unitOptions.map((option) => (
+                <option key={option} value={option}>
+                  {option}
+                </option>
+              ))}
             </select>
           </div>
         </div>
       </div>
       <div className="flex justify-between w-full max-w-xs mb-5">
-        <button onClick={handleSkip} className="text-gray-500">
+        <button onClick={handleNextOrSkip} className="text-gray-500">
           Skip
         </button>
         <button
-          onClick={handleNext}
+          onClick={handleNextOrSkip}
           className="px-6 py-3 text-lg text-white bg-[#50B498] rounded-full"
         >
           Next →

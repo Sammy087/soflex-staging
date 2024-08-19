@@ -12,12 +12,12 @@ import { UserContext } from "../../contexts/UserContext";
 export function MedicineNameScreen() {
   const navigate = useNavigate();
   const [medicine, setMedicine] = useState("");
-  const [loading, setLoading] = useState(true);
   const [medicineList, setMedicineList] = useState([]);
   const { uid } = useContext(UserContext);
-  const { shots, setShots } = useContext(GlobalContext);
+  const { shots, setShots, loading, setLoading } = useContext(GlobalContext);
 
   useEffect(() => {
+    setLoading(true);
     getAllMedicines()
       .then(({ data }) => {
         if (data.data) setMedicineList(data.data);
