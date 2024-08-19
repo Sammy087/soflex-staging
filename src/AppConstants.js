@@ -39,5 +39,6 @@ export const Paths = {
   TERMS_OF_USE: "/terms-of-use",
 };
 
-
 export const ShotUnits = ["mg", "ml", "gr"];
+
+export const Frequency = ["Daily", "Weekly", "Monthly", "Yearly"];

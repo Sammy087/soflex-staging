@@ -21,13 +21,10 @@ function LastReminderScreen() {
     return () => clearTimeout(timer);
   }, []);
 
-  const handleNext = () => {
-    navigate();
+  const handleNextOrSkip = () => {
+    navigate(Paths.HOME);
   };
 
-  const handleSkip = () => {
-    navigate();
-  };
   const handleBack = () => {
     navigate(-1);
   };
@@ -48,11 +45,11 @@ function LastReminderScreen() {
         Connect notifications and never forget when your next shot is
       </p>
       <div className="flex justify-between w-full max-w-xs mb-5">
-        <button onClick={handleSkip} className="text-gray-500">
+        <button onClick={handleNextOrSkip} className="text-gray-500">
           Skip
         </button>
         <button
-          onClick={handleNext}
+          onClick={handleNextOrSkip}
           className="px-6 py-3 text-lg text-white bg-[#50B498] rounded-full"
         >
           Next →

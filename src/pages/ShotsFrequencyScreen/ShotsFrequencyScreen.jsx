@@ -1,21 +1,33 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Paths } from "../../AppConstants";
+import { Frequency, Paths } from "../../AppConstants";
+import { UserContext } from "../../contexts/UserContext";
+import { GlobalContext } from "../../contexts/GlobalContext";
+import Loading from "../Loading/Loading";
+import { createOrUpdateShotsInfo } from "../../firebaseApis/healthApis";
 
 function ShotsFrequencyScreen() {
   const navigate = useNavigate();
-  const [frequency, setFrequency] = useState("monthly");
+  const [frequency, setFrequency] = useState(Frequency[0]);
+  const { uid } = useContext(UserContext);
+  const { shots, setShots, loading, setLoading } = useContext(GlobalContext);
 
-  const handleNext = () => {
+  useEffect(() => {
+    setShots({ ...shots, frequency });
+  }, [frequency]);
+
+  const handleNextOrSkip = async () => {
+    setLoading(true);
+    await createOrUpdateShotsInfo({ uid, newShot: shots });
+    setLoading(false);
     navigate(Paths.LAST_REMINDER);
   };
 
-  const handleSkip = () => {
-    navigate(Paths.LAST_REMINDER);
-  };
   const handleBack = () => {
     navigate(-1);
   };
+
+  if (loading) return <Loading />;
 
   return (
     <div className="flex flex-col items-center justify-center h-screen p-5 text-center bg-white">
@@ -37,24 +49,26 @@ function ShotsFrequencyScreen() {
           htmlFor="weight-input"
           className="block text-left text-sm font-medium text-gray-700 mb-1"
         >
-          medicine name
+          Frequency
         </label>
         <select
           className="w-full p-2 h-12 mb-3 border border-gray-300 rounded-lg"
           value={frequency}
           onChange={(e) => setFrequency(e.target.value)}
         >
-          <option value="weekly">Weekly</option>
-          <option value="monthly">Monthly</option>
-          <option value="yearly">Yearly</option>
+          {Frequency.map((freq) => (
+            <option key={freq} value={freq}>
+              {freq}
+            </option>
+          ))}
         </select>
       </div>
       <div className="flex justify-between w-full max-w-xs mb-5">
-        <button onClick={handleSkip} className="text-gray-500">
+        <button onClick={handleNextOrSkip} className="text-gray-500">
           Skip
         </button>
         <button
-          onClick={handleNext}
+          onClick={handleNextOrSkip}
           className="px-6 py-3 text-lg text-white bg-[#50B498] rounded-full"
         >
           Next →

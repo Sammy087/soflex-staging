@@ -4,7 +4,6 @@ import DateSelectionModal from "../../component/DateSelectionModal/DateSelection
 import { Paths } from "../../AppConstants";
 import { GlobalContext } from "../../contexts/GlobalContext";
 import {
-  createOrUpdateShotsInfo,
   getOptionalShotInfo,
   getUserWeights,
   mutationShotsInfoTimes,
@@ -53,14 +52,9 @@ function LastShotScreen() {
   }, [formattedToday]);
 
   useEffect(() => {
-    const now = new Date();
-    const hours = now.getHours().toString().padStart(2, "0");
-    const minutes = now.getMinutes().toString().padStart(2, "0");
-    const currentTime = `${hours}:${minutes}`;
     setShots({
       ...shots,
       last_shot_date: clickedDate,
-      default_time: currentTime,
     });
   }, [clickedDate]);
 
@@ -69,12 +63,16 @@ function LastShotScreen() {
   };
 
   const handleDateConfirm = async () => {
+    const now = new Date();
+    const hours = now.getHours().toString().padStart(2, "0");
+    const minutes = now.getMinutes().toString().padStart(2, "0");
+    const currentTime = `${hours}:${minutes}`;
     setLoading(true);
     await mutationShotsInfoTimes({
       uid,
       shot_name: shots.shot_name,
       last_shot_date: clickedDate,
-      time: shots.default_time,
+      time: currentTime,
     });
     setLoading(false);
     // setSelectedDate(date);
