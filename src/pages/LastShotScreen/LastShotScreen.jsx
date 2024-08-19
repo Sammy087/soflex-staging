@@ -1,7 +1,16 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import DateSelectionModal from "../../component/DateSelectionModal/DateSelectionModal";
 import { Paths } from "../../AppConstants";
+import { GlobalContext } from "../../contexts/GlobalContext";
+import {
+  createOrUpdateShotsInfo,
+  getOptionalShotInfo,
+  getUserWeights,
+  mutationShotsInfoTimes,
+} from "../../firebaseApis/healthApis";
+import { UserContext } from "../../contexts/UserContext";
+import Loading from "../Loading/Loading";
 
 function LastShotScreen() {
   const navigate = useNavigate();
@@ -14,22 +23,63 @@ function LastShotScreen() {
   const [currentMonth, setCurrentMonth] = useState(today.getMonth());
   const [currentYear, setCurrentYear] = useState(today.getFullYear());
   const [clickedDate, setClickedDate] = useState(null);
+  const [currentWeight, setCurrentWeight] = useState(80);
+  const { shots, setShots, loading, setLoading } = useContext(GlobalContext);
+  const [fetchedShot, setFetchedShot] = useState(null);
+  const { uid } = useContext(UserContext);
+
+  useEffect(() => {
+    setLoading(true);
+    getUserWeights({ uid })
+      .then((res) => {
+        setCurrentWeight(res.data.data.current_weight);
+      })
+      .catch((err) => {
+        console.error(err);
+        setLoading(false);
+      });
+    getOptionalShotInfo({ uid, shot_name: shots.shot_name })
+      .then(({ data }) => {
+        if (data) setFetchedShot(data.shot);
+      })
+      .catch((err) => {
+        throw new Error(err);
+      });
+    setLoading(false);
+  }, []);
 
   useEffect(() => {
     setSelectedDate(formattedToday);
   }, [formattedToday]);
 
-  const handleNext = () => {
+  useEffect(() => {
+    const now = new Date();
+    const hours = now.getHours().toString().padStart(2, "0");
+    const minutes = now.getMinutes().toString().padStart(2, "0");
+    const currentTime = `${hours}:${minutes}`;
+    setShots({
+      ...shots,
+      last_shot_date: clickedDate,
+      default_time: currentTime,
+    });
+  }, [clickedDate]);
+
+  const handleNextOrSkip = () => {
     navigate(Paths.SHOTS_FREQUENCY);
   };
 
-  const handleSkip = () => {
-    navigate(Paths.SHOTS_FREQUENCY);
-  };
-
-  const handleDateConfirm = (date) => {
-    setSelectedDate(date);
+  const handleDateConfirm = async () => {
+    setLoading(true);
+    await mutationShotsInfoTimes({
+      uid,
+      shot_name: shots.shot_name,
+      last_shot_date: clickedDate,
+      time: shots.default_time,
+    });
+    setLoading(false);
+    // setSelectedDate(date);
     setIsModalOpen(false);
+    navigate(Paths.SHOTS_FREQUENCY);
   };
 
   const handlePreviousMonth = () => {
@@ -50,19 +100,34 @@ function LastShotScreen() {
     }
   };
 
+  // const monthNames = [
+  //   "January",
+  //   "February",
+  //   "March",
+  //   "April",
+  //   "May",
+  //   "June",
+  //   "July",
+  //   "August",
+  //   "September",
+  //   "October",
+  //   "November",
+  //   "December",
+  // ];
+
   const monthNames = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
+    "01",
+    "02",
+    "03",
+    "04",
+    "05",
+    "06",
+    "07",
+    "08",
+    "09",
+    "10",
+    "11",
+    "12",
   ];
 
   const daysInMonth = (month, year) => {
@@ -73,6 +138,8 @@ function LastShotScreen() {
     setClickedDate(date);
     setIsModalOpen(true);
   };
+
+  if (loading) return <Loading />;
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-white p-4">
@@ -113,8 +180,8 @@ function LastShotScreen() {
                     />
                   </svg>
                 </button>
-                <span className="text-lg font-semibold">
-                  {monthNames[currentMonth]} {currentYear}
+                <span className="text-lg font-semibold text-aling-center">
+                  {currentYear}-{monthNames[currentMonth]}
                 </span>
                 <button className="p-2" onClick={handleNextMonth}>
                   <svg
@@ -155,10 +222,15 @@ function LastShotScreen() {
                           : "bg-gray-200"
                       }`}
                       onClick={() =>
+                        // handleDateClick(
+                        //   `${monthNames[currentMonth]} ${
+                        //     index + 1
+                        //   }, ${currentYear}`
+                        // )
                         handleDateClick(
-                          `${monthNames[currentMonth]} ${
+                          `${currentYear}-${monthNames[currentMonth]}-${
                             index + 1
-                          }, ${currentYear}`
+                          }`
                         )
                       }
                     >
@@ -172,13 +244,13 @@ function LastShotScreen() {
         </div>
         <div className="flex justify-between w-full">
           <button
-            onClick={handleSkip}
+            onClick={handleNextOrSkip}
             className="px-6 py-3 text-gray-700 rounded-full hover:bg-gray-300"
           >
             Skip
           </button>
           <button
-            onClick={handleNext}
+            onClick={handleNextOrSkip}
             className="px-6 py-3 text-white bg-[#50B498] rounded-full hover:bg-gray-800"
           >
             Next →
@@ -190,6 +262,8 @@ function LastShotScreen() {
           onClose={() => setIsModalOpen(false)}
           onConfirm={handleDateConfirm}
           date={clickedDate}
+          data={fetchedShot}
+          weight={currentWeight}
         />
       )}
     </div>

@@ -1,17 +1,15 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Paths } from "../../AppConstants";
+import { Paths, ShotUnits } from "../../AppConstants";
 import { GlobalContext } from "../../contexts/GlobalContext";
 import { createOrUpdateShotsInfo } from "../../firebaseApis/healthApis";
 import { UserContext } from "../../contexts/UserContext";
 import Loading from "../Loading/Loading";
 
 export function DosageScreen() {
-  const unitOptions = ["mg", "ml", "gr"];
-
   const navigate = useNavigate();
   const [dosage, setDosage] = useState(50);
-  const [unit, setUnit] = useState(unitOptions[0]);
+  const [unit, setUnit] = useState(ShotUnits[0]);
   const { uid } = useContext(UserContext);
   const { shots, setShots, loading, setLoading } = useContext(GlobalContext);
 
@@ -72,7 +70,7 @@ export function DosageScreen() {
               className="h-full rounded-md border-0 bg-transparent py-0 pl-2 pr-7 text-gray-500 focus:ring-2 focus:ring-inset focus:ring-indigo-6000 sm:text-sm"
               onChange={(e) => setUnit(e.target.value)}
             >
-              {unitOptions.map((option) => (
+              {ShotUnits.map((option) => (
                 <option key={option} value={option}>
                   {option}
                 </option>
