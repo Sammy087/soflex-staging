@@ -41,7 +41,7 @@ function StartWeightScreen() {
       });
   }, []);
 
-  const handleNextAndSkip = async () => {
+  const handleNextOrSkip = async () => {
     setLoading(true);
     await mutationUserWeights({ uid, key: "start_weight", value: weight })
       .then((res) => {
@@ -64,8 +64,8 @@ function StartWeightScreen() {
       buttonText="Done!"
       initialValue={!userWeights ? weight : userWeights.start_weight}
       onChange={(e) => setWeight(e)}
-      onNext={handleNextAndSkip}
-      onSkip={handleNextAndSkip}
+      onNext={handleNextOrSkip}
+      onSkip={handleNextOrSkip}
       onBack={handleBack}
     />
   );

@@ -6,6 +6,7 @@ export const GlobalContext = createContext();
 export const GlobalProvider = ({ children }) => {
   const [userWeights, setUserWeights] = useState(null);
   const [userShotsInfo, setUserShotsInfo] = useState(null);
+  const [shots, setShots] = useState({});
   const memorizeValues = useMemo(() => {
     return {
       userWeights,
@@ -13,12 +14,16 @@ export const GlobalProvider = ({ children }) => {
       userShotsInfo,
       setUserShotsInfo,
       mutationUserWeights,
+      shots,
+      setShots,
     };
   }, [
     userWeights,
     setUserWeights,
     userShotsInfo,
     setUserShotsInfo,
+    shots,
+    setShots,
   ]);
   return (
     <GlobalContext.Provider value={memorizeValues}>

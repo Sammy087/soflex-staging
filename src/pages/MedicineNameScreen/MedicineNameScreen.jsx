@@ -1,19 +1,55 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Paths } from "../../AppConstants";
+import {
+  createShotsInfo,
+  getAllMedicines,
+} from "../../firebaseApis/healthApis";
+import Loading from "../Loading/Loading";
+import { GlobalContext } from "../../contexts/GlobalContext";
+import { UserContext } from "../../contexts/UserContext";
 
 export function MedicineNameScreen() {
   const navigate = useNavigate();
   const [medicine, setMedicine] = useState("");
-  const handleNext = () => {
-    navigate(Paths.MEDICINE_DOSAGE);
+  const [loading, setLoading] = useState(true);
+  const [medicineList, setMedicineList] = useState([]);
+  const { uid } = useContext(UserContext);
+  const { shots, setShots } = useContext(GlobalContext);
+
+  useEffect(() => {
+    getAllMedicines()
+      .then(({ data }) => {
+        if (data.data) setMedicineList(data.data);
+        setLoading(false);
+        if (data.data.length) {
+          setMedicine(data.data[0].name);
+        }
+      })
+      .catch((err) => {
+        throw new Error(err);
+      });
+  }, []);
+
+  useEffect(() => {
+    setShots({ ...shots, shot_name: medicine });
+  }, [medicine]);
+
+  const handleNextOrSkip = async () => {
+    if (medicine) {
+      setLoading(true);
+      await createShotsInfo({ uid, shots });
+      setLoading(false);
+      navigate(Paths.MEDICINE_DOSAGE);
+    }
   };
-  const handleSkip = () => {
-    navigate(Paths.MEDICINE_DOSAGE);
-  };
+
   const handleBack = () => {
     navigate(-1);
   };
+
+  if (loading) return <Loading />;
+
   return (
     <div className="flex flex-col items-center justify-center h-screen p-5 text-center bg-white">
       <div
@@ -41,18 +77,19 @@ export function MedicineNameScreen() {
           value={medicine}
           onChange={(e) => setMedicine(e.target.value)}
         >
-          <option value="custom">custom</option>
-          <option value="medicine1">Medicine 1</option>
-          <option value="medicine2">Medicine 2</option>
-          <option value="medicine3">Medicine 3</option>
+          {(medicineList || []).map((medicine) => (
+            <option key={medicine.name} value={medicine.name}>
+              {medicine.name}
+            </option>
+          ))}
         </select>
       </div>
       <div className="flex justify-between w-full max-w-xs mt-9">
-        <button onClick={handleSkip} className="text-gray-500">
+        <button onClick={handleNextOrSkip} className="text-gray-500">
           Skip
         </button>
         <button
-          onClick={handleNext}
+          onClick={handleNextOrSkip}
           className="px-6 py-3 text-lg text-white bg-[#50B498] rounded-full"
         >
           Next →

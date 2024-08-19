@@ -28,7 +28,7 @@ export function DosageScreen() {
       <p className="text-base mb-5 max-w-xs">
         Second, choose your medicine dosage
       </p>
-      <div className="w-full">
+      <div className="w-full max-w-xs">
         <label
           htmlFor="dosage"
           className="block text-left text-sm font-medium text-gray-700 mb-1"

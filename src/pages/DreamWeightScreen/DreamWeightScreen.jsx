@@ -41,7 +41,7 @@ function DreamWeightScreen() {
       });
   }, []);
 
-  const handleNextAndSkip = async () => {
+  const handleNextOrSkip = async () => {
     setLoading(true);
     await mutationUserWeights({ uid, key: "dream_weight", value: weight })
       .then((res) => {
@@ -62,8 +62,8 @@ function DreamWeightScreen() {
       buttonText="Done!"
       initialValue={weight}
       onChange={(e) => setWeight(e)}
-      onNext={handleNextAndSkip}
-      onSkip={handleNextAndSkip}
+      onNext={handleNextOrSkip}
+      onSkip={handleNextOrSkip}
       onBack={handleBack}
     />
   );
