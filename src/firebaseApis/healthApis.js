@@ -27,4 +27,7 @@ export const createOrUpdateShotsInfo = httpsCallable(
   "createOrUpdateShotsInfo"
 );
 
-export const mutationShotsInfo = httpsCallable(functions, "mutationShotsInfo");
+export const mutationShotsInfoTimes = httpsCallable(
+  functions,
+  "mutationShotsInfoTimes"
+);
