@@ -42,12 +42,14 @@ function StartWeightScreen() {
 
   const currentWeightPath = "/current-weight";
 
-  const handleNextAndSkip = () => {
-    mutationUserWeights({ uid, key: "start_weight", value: weight })
+  const handleNextAndSkip = async () => {
+    setLoading(true);
+    await mutationUserWeights({ uid, key: "start_weight", value: weight })
       .then((res) => {
         if (res.data.result) navigate(currentWeightPath);
       })
       .catch((err) => console.error(err));
+    setLoading(false);
   };
   const handleBack = () => navigate(-1);
 

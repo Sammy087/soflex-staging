@@ -1,27 +1,71 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import WeightInputScreen from "../../component/WeightInputScreen/WeightInputScreen";
 import { useNavigate } from "react-router-dom";
+import { UserContext } from "../../contexts/UserContext";
+import {
+  checkHealthConnection,
+  getUserWeights,
+  mutationUserWeights,
+} from "../../firebaseApis/healthApis";
+import { GlobalContext } from "../../contexts/GlobalContext";
+import Loading from "../Loading/Loading";
 
 function CurrentWeightScreen() {
   const navigate = useNavigate();
-  const handleNext = () => {
-    navigate("/dream-weight");
+  const [loading, setLoading] = useState(true);
+  const { userWeights, setUserWeights } = useContext(GlobalContext);
+  const { uid } = useContext(UserContext);
+  const [weight, setWeight] = useState(80);
+
+  const dreamWeightPath = "/dream-weight";
+
+  useEffect(() => {
+    checkHealthConnection({ uid })
+      .then((res) => {
+        if (res.data.result) {
+          getUserWeights({ uid })
+            .then((res) => {
+              setUserWeights(res.data.data);
+              setLoading(false);
+            })
+            .catch((err) => {
+              console.error(err);
+              setLoading(false);
+            });
+        } else {
+          setLoading(false);
+        }
+      })
+      .catch((err) => {
+        console.error(err);
+        setLoading(false);
+      });
+  }, []);
+
+  const handleNextAndSkip = async () => {
+    setLoading(true);
+    await mutationUserWeights({ uid, key: "current_weight", value: weight })
+      .then((res) => {
+        if (res.data.result) navigate(dreamWeightPath);
+      })
+      .catch((err) => console.error(err));
+    setLoading(false);
   };
-  const handleSkip = () => {
-    navigate("/dream-weight");
-  };
-  const handleBack = () => {
-    navigate(-1);
-  };
+
+  const handleBack = () => navigate(-1);
+
+  if (loading) return <Loading />;
+
   return (
     <WeightInputScreen
       title="What's your current progress?"
       subtitle="Please tell me what is your weight for today"
       placeholder="Current Weight"
       buttonText="Done!"
-      initialValue="80"
-      onNext={handleNext}
-      onSkip={handleSkip}
+      initialValue={!userWeights ? weight : userWeights.current_weight}
+      onChange={(e) => setWeight(e)}
+      onNext={handleNextAndSkip}
+      onSkip={handleNextAndSkip}
       onBack={handleBack}
     />
   );
