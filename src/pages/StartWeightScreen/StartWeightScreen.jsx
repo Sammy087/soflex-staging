@@ -41,6 +41,12 @@ function StartWeightScreen() {
       });
   }, []);
 
+  useEffect(() => {
+    if (userWeights) {
+      setWeight(userWeights.start_weight);
+    }
+  }, [userWeights]);
+
   const handleNextOrSkip = async () => {
     setLoading(true);
     await mutationUserWeights({ uid, key: "start_weight", value: weight })
