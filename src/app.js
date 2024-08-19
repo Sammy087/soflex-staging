@@ -26,44 +26,47 @@ import ChangePassword from "./pages/ChangePassword/ChangePassword";
 import PrivacyPolicy from "./pages/PrivacyPolicy/PrivacyPolicy";
 import { UserProvider } from "./contexts/UserContext";
 import TermsOfUse from "./pages/TermsOfUse/TermsOfUse";
+import { GlobalProvider } from "./contexts/GlobalContext";
 
 const App = () => (
-  <UserProvider>
-    <Router>
-      <Routes>
-        <Route path="/" exact element={<WelcomeScreen />} />
-        <Route path="/user-info" element={<UserInfoScreen />} />
-        <Route path="/reminder" element={<ReminderScreen />} />
-        <Route path="/weight-loss" element={<WeightLossScreen />} />
-        <Route path="/community" element={<CommunityScreen />} />
-        <Route path="/health-connect" element={<HealthConnectScreen />} />
-        <Route path="/start-weight" element={<StartWeightScreen />} />
-        <Route path="/current-weight" element={<CurrentWeightScreen />} />
-        <Route path="/dream-weight" element={<DreamWeightScreen />} />
-        <Route
-          path="/check-current-weight"
-          element={<CheckCurrentWeightScreen />}
-        />
-        <Route
-          path="/start-today-weight"
-          element={<StartTodayWeightScreen />}
-        />
-        <Route path="/medicine-name" element={<MedicineNameScreen />} />
-        <Route path="/medicine-dosage" element={<DosageScreen />} />
-        <Route path="/last-shot" element={<LastShotScreen />} />
-        <Route path="/shots-frequency" element={<ShotsFrequencyScreen />} />
-        <Route path="/last-reminder" element={<LastReminderScreen />} />
-        <Route path="/forgot-password" element={<ForgotPassword />} />
-        <Route path="/management" element={<Management />} />
-        <Route path="/home" element={<Home />} />
-        <Route path="/signup" element={<SignUp />} />
-        <Route path="/signin" element={<SignIn />} />
-        <Route path="/change-password" element={<ChangePassword />} />
-        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-        <Route path="/terms-of-use" element={<TermsOfUse />} />
-      </Routes>
-    </Router>
-  </UserProvider>
+  <GlobalProvider>
+    <UserProvider>
+      <Router>
+        <Routes>
+          <Route path="/" exact element={<WelcomeScreen />} />
+          <Route path="/user-info" element={<UserInfoScreen />} />
+          <Route path="/reminder" element={<ReminderScreen />} />
+          <Route path="/weight-loss" element={<WeightLossScreen />} />
+          <Route path="/community" element={<CommunityScreen />} />
+          <Route path="/health-connect" element={<HealthConnectScreen />} />
+          <Route path="/start-weight" element={<StartWeightScreen />} />
+          <Route path="/current-weight" element={<CurrentWeightScreen />} />
+          <Route path="/dream-weight" element={<DreamWeightScreen />} />
+          <Route
+            path="/check-current-weight"
+            element={<CheckCurrentWeightScreen />}
+          />
+          <Route
+            path="/start-today-weight"
+            element={<StartTodayWeightScreen />}
+          />
+          <Route path="/medicine-name" element={<MedicineNameScreen />} />
+          <Route path="/medicine-dosage" element={<DosageScreen />} />
+          <Route path="/last-shot" element={<LastShotScreen />} />
+          <Route path="/shots-frequency" element={<ShotsFrequencyScreen />} />
+          <Route path="/last-reminder" element={<LastReminderScreen />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/management" element={<Management />} />
+          <Route path="/home" element={<Home />} />
+          <Route path="/signup" element={<SignUp />} />
+          <Route path="/signin" element={<SignIn />} />
+          <Route path="/change-password" element={<ChangePassword />} />
+          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+          <Route path="/terms-of-use" element={<TermsOfUse />} />
+        </Routes>
+      </Router>
+    </UserProvider>
+  </GlobalProvider>
 );
 
 export default App;
