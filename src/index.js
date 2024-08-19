@@ -4,12 +4,15 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { GlobalProvider } from "./contexts/GlobalContext";
+import { UserProvider } from "./contexts/UserContext";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <GlobalProvider>
-      <App />
+      <UserProvider>
+        <App />
+      </UserProvider>
     </GlobalProvider>
   </React.StrictMode>
 );

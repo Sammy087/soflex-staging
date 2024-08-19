@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { ArrowUp } from "../../component/Icons/ArrowUp";
@@ -10,6 +10,9 @@ import {
 } from "firebase/firestore";
 import { firestore } from "../../firebase";
 import { Paths } from "../../AppConstants";
+import { GlobalContext } from "../../contexts/GlobalContext";
+import Loading from "../Loading/Loading";
+import { UserContext } from "../../contexts/UserContext";
 
 const InputField = ({
   label,
@@ -53,6 +56,8 @@ const SignIn = () => {
   const [alertMessage, setAlertMessage] = useState("");
   const navigate = useNavigate();
   const auth = getAuth();
+  const { loading, setLoading } = useContext(GlobalContext);
+  const { setUid } = useContext(UserContext);
 
   const handleBackClick = () => {
     navigate(Paths.HOME);
@@ -75,6 +80,7 @@ const SignIn = () => {
       setErrors(validationErrors);
     } else {
       try {
+        setLoading(true);
         const { user } = await signInWithEmailAndPassword(
           auth,
           email,
@@ -84,7 +90,10 @@ const SignIn = () => {
         await updateDoc(userProfile, {
           last_login_at: serverTimestamp(),
         });
-        navigate(Paths.MANAGEMENT);
+        setUid(user?.uid);
+        sessionStorage.setItem("uid", user?.uid);
+        setLoading(false);
+        // navigate(Paths.MANAGEMENT);
       } catch (error) {
         setAlertMessage(error.message);
         setShowAlert(true);
@@ -95,6 +104,8 @@ const SignIn = () => {
   const handleSignUp = () => {
     navigate(Paths.SIGN_UP);
   };
+
+  if (loading) return <Loading />;
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">

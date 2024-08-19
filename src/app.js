@@ -1,5 +1,5 @@
 import "./index.css";
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Home from "./pages/Home/Home";
 import SignUp from "./pages/SignUp/SignUp";
@@ -24,59 +24,52 @@ import ForgotPassword from "./pages/ForgotPassword/ForgotPassword";
 import Management from "./pages/Management/Management";
 import ChangePassword from "./pages/ChangePassword/ChangePassword";
 import PrivacyPolicy from "./pages/PrivacyPolicy/PrivacyPolicy";
-import { UserProvider } from "./contexts/UserContext";
 import TermsOfUse from "./pages/TermsOfUse/TermsOfUse";
-import { GlobalProvider } from "./contexts/GlobalContext";
 import { Paths } from "./AppConstants";
+import { GlobalContext } from "./contexts/GlobalContext";
 
-const App = () => (
-  <GlobalProvider>
-    <UserProvider>
-      <Router>
-        <Routes>
-          <Route path={Paths.WELCOME} exact element={<WelcomeScreen />} />
-          <Route path={Paths.USER_INFO} element={<UserInfoScreen />} />
-          <Route path={Paths.REMINDER} element={<ReminderScreen />} />
-          <Route path={Paths.WEIGHT_LOSS} element={<WeightLossScreen />} />
-          <Route path={Paths.COMMUNITY} element={<CommunityScreen />} />
-          <Route
-            path={Paths.HEALTH_CONNECT}
-            element={<HealthConnectScreen />}
-          />
-          <Route path={Paths.START_WEIGHT} element={<StartWeightScreen />} />
-          <Route
-            path={Paths.CURRENT_WEIGHT}
-            element={<CurrentWeightScreen />}
-          />
-          <Route path={Paths.DREAM_WEIGHT} element={<DreamWeightScreen />} />
-          <Route
-            path={Paths.CHECK_CURRENT_WEIGHT}
-            element={<CheckCurrentWeightScreen />}
-          />
-          <Route
-            path={Paths.START_TODAY_WEIGHT}
-            element={<StartTodayWeightScreen />}
-          />
-          <Route path={Paths.MEDICINE_NAME} element={<MedicineNameScreen />} />
-          <Route path={Paths.MEDICINE_DOSAGE} element={<DosageScreen />} />
-          <Route path={Paths.LAST_SHOT} element={<LastShotScreen />} />
-          <Route
-            path={Paths.SHOTS_FREQUENCY}
-            element={<ShotsFrequencyScreen />}
-          />
-          <Route path={Paths.LAST_REMINDER} element={<LastReminderScreen />} />
-          <Route path={Paths.FORGOT_PASSWORD} element={<ForgotPassword />} />
-          <Route path={Paths.MANAGEMENT} element={<Management />} />
-          <Route path={Paths.HOME} element={<Home />} />
-          <Route path={Paths.SIGNUP} element={<SignUp />} />
-          <Route path={Paths.SIGNIN} element={<SignIn />} />
-          <Route path={Paths.CHANGE_PASSWORD} element={<ChangePassword />} />
-          <Route path={Paths.PRIVACY_POLICY} element={<PrivacyPolicy />} />
-          <Route path={Paths.TERMS_OF_USE} element={<TermsOfUse />} />
-        </Routes>
-      </Router>
-    </UserProvider>
-  </GlobalProvider>
-);
+const App = () => {
+  const { allowed } = useContext(GlobalContext);
+
+  return (
+    <Router>
+      <Routes>
+        <Route path={Paths.WELCOME} exact element={<WelcomeScreen />} />
+        <Route path={Paths.USER_INFO} element={<UserInfoScreen />} />
+        <Route path={Paths.REMINDER} element={<ReminderScreen />} />
+        <Route path={Paths.WEIGHT_LOSS} element={<WeightLossScreen />} />
+        <Route path={Paths.COMMUNITY} element={<CommunityScreen />} />
+        <Route path={Paths.HEALTH_CONNECT} element={<HealthConnectScreen />} />
+        <Route path={Paths.START_WEIGHT} element={<StartWeightScreen />} />
+        <Route path={Paths.CURRENT_WEIGHT} element={<CurrentWeightScreen />} />
+        <Route path={Paths.DREAM_WEIGHT} element={<DreamWeightScreen />} />
+        <Route
+          path={Paths.CHECK_CURRENT_WEIGHT}
+          element={<CheckCurrentWeightScreen />}
+        />
+        <Route
+          path={Paths.START_TODAY_WEIGHT}
+          element={<StartTodayWeightScreen />}
+        />
+        <Route path={Paths.MEDICINE_NAME} element={<MedicineNameScreen />} />
+        <Route path={Paths.MEDICINE_DOSAGE} element={<DosageScreen />} />
+        <Route path={Paths.LAST_SHOT} element={<LastShotScreen />} />
+        <Route
+          path={Paths.SHOTS_FREQUENCY}
+          element={<ShotsFrequencyScreen />}
+        />
+        <Route path={Paths.LAST_REMINDER} element={<LastReminderScreen />} />
+        <Route path={Paths.FORGOT_PASSWORD} element={<ForgotPassword />} />
+        <Route path={Paths.MANAGEMENT} element={<Management />} />
+        <Route path={Paths.HOME} element={<Home />} />
+        <Route path={Paths.SIGNUP} element={<SignUp />} />
+        <Route path={Paths.SIGNIN} element={<SignIn />} />
+        <Route path={Paths.CHANGE_PASSWORD} element={<ChangePassword />} />
+        <Route path={Paths.PRIVACY_POLICY} element={<PrivacyPolicy />} />
+        <Route path={Paths.TERMS_OF_USE} element={<TermsOfUse />} />
+      </Routes>
+    </Router>
+  );
+};
 
 export default App;
