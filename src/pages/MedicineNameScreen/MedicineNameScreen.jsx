@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Paths } from "../../AppConstants";
 import {
-  createShotsInfo,
+  createOrUpdateShotsInfo,
   getAllMedicines,
 } from "../../firebaseApis/healthApis";
 import Loading from "../Loading/Loading";
@@ -38,7 +38,7 @@ export function MedicineNameScreen() {
   const handleNextOrSkip = async () => {
     if (medicine) {
       setLoading(true);
-      await createShotsInfo({ uid, shots });
+      await createOrUpdateShotsInfo({ uid, newShot: shots });
       setLoading(false);
       navigate(Paths.MEDICINE_DOSAGE);
     }
