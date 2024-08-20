@@ -8,7 +8,11 @@ import Summary from "../../component/Summary/Summary";
 import AddShotModal from "../../component/AddShotModal/AddShotModal";
 import { UserContext } from "../../contexts/UserContext";
 import { GlobalContext } from "../../contexts/GlobalContext";
-import { getUserShots, getUserWeights } from "../../firebaseApis/healthApis";
+import {
+  getAllMedicines,
+  getUserShots,
+  getUserWeights,
+} from "../../firebaseApis/healthApis";
 import Loading from "../Loading/Loading";
 import { timestampToDate } from "../../component/dateConverter";
 import ManagementLayout from "./ManagementLayout";
@@ -20,6 +24,7 @@ const Management = () => {
   const [currentWeight, setCurrentWeight] = useState("70");
   const [lastRead, setLastRead] = useState("76");
   const [sinceStart, setSinceStart] = useState("29");
+  const [medicinesList, setMedicinesList] = useState([]);
   const [isAddMedicineModalOpen, setIsAddMedicineModalOpen] = useState(false);
   const [isAddShotModalOpen, setIsAddShotModalOpen] = useState(false);
   const { uid } = useContext(UserContext);
@@ -105,11 +110,13 @@ const Management = () => {
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
+      const f_medinices_list = await getAllMedicines({ uid });
       const f_user_shots = await getUserShots({ uid });
       const f_user_weights = await getUserWeights({ uid });
 
       const userWeightData = f_user_weights.data.data.today_weight;
       const userShotsData = f_user_shots.data.data.shots;
+      setMedicinesList(f_medinices_list.data.data);
 
       const convertedUserWeightData = userWeightData.map((wData, _index) => ({
         date: timestampToDate(wData.timestamp),
@@ -256,6 +263,7 @@ const Management = () => {
           onConfirm={handleMedicineConfirm}
         />
         <AddShotModal
+          medicinesList={medicinesList}
           isOpen={isAddShotModalOpen}
           onRequestClose={closeShotModal}
           onConfirm={handleShotConfirm}

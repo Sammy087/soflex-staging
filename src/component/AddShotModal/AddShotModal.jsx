@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Modal from "react-modal";
 import AddMedicineModal from "../AddMedicineModal/AddMedicineModal";
 
-const AddShotModal = ({ isOpen, onRequestClose, onConfirm }) => {
+const AddShotModal = ({ isOpen, onRequestClose, onConfirm, medicinesList }) => {
   const [medicineName, setMedicineName] = useState("");
   const [date, setDate] = useState("");
   const [dosage, setDosage] = useState("");
@@ -42,9 +42,11 @@ const AddShotModal = ({ isOpen, onRequestClose, onConfirm }) => {
             value={medicineName}
             onChange={(e) => setMedicineName(e.target.value)}
           >
-            <option value="">Choose Medicine</option>
-            <option value="Medicine 1">Medicine 1</option>
-            <option value="Medicine 2">Medicine 2</option>
+            {medicinesList.map((medicine) => (
+              <option key={medicine.name} value={medicine.name}>
+                {medicine.name}
+              </option>
+            ))}
           </select>
         </div>
         <div className="mb-4">
