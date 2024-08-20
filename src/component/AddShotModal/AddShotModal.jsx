@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import Modal from "react-modal";
 import AddNewMedicineModal from "../AddMedicineModal/AddNewMedicineModal";
-import { Frequency } from "../../AppConstants";
+import { Frequency, Paths } from "../../AppConstants";
 import { UserContext } from "../../contexts/UserContext";
 import { GlobalContext } from "../../contexts/GlobalContext";
 import Loading from "../../pages/Loading/Loading";
@@ -9,6 +9,7 @@ import {
   createOrUpdateShotsInfo,
   mutationShotsInfoTimes,
 } from "../../firebaseApis/healthApis";
+import { useNavigate } from "react-router-dom";
 
 const AddShotModal = ({ isOpen, onRequestClose, onConfirm, medicinesList }) => {
   const [medicineName, setMedicineName] = useState(medicinesList[0].name);
@@ -22,6 +23,7 @@ const AddShotModal = ({ isOpen, onRequestClose, onConfirm, medicinesList }) => {
   const [isAddMedicineModalOpen, setIsAddMedicineModalOpen] = useState(false);
   const { uid } = useContext(UserContext);
   const { loading, setLoading } = useContext(GlobalContext);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const date = new Date();
@@ -68,6 +70,7 @@ const AddShotModal = ({ isOpen, onRequestClose, onConfirm, medicinesList }) => {
     });
     setIsAddMedicineModalOpen(false);
     onConfirm();
+    navigate(Paths.PRIVACY_POLICY);
     setLoading(false);
   };
 

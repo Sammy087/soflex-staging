@@ -7,7 +7,7 @@ import ContactUsModal from "../ContactUsModal/ContactUsModal";
 import RateUsModal from "../RateUsModal/RateUsModal";
 import { Paths } from "../../AppConstants";
 
-const MoreTabContent = () => {
+const MoreTabContent = ({ medicinesList }) => {
   const [isMeasurementModalOpen, setIsMeasurementModalOpen] = useState(false);
   const [isAddMedicineModalOpen, setIsAddMedicineModalOpen] = useState(false);
   const [isUpdateWeightModalOpen, setIsUpdateWeightModalOpen] = useState(false);
@@ -148,10 +148,13 @@ const MoreTabContent = () => {
         isOpen={isMeasurementModalOpen}
         onClose={closeMeasurementModal}
       />
-      <AddMedicineModal
-        isOpen={isAddMedicineModalOpen}
-        onClose={closeAddMedicineModal}
-      />
+      {medicinesList.length > 0 && (
+        <AddMedicineModal
+          medicinesList={medicinesList}
+          isOpen={isAddMedicineModalOpen}
+          onClose={closeAddMedicineModal}
+        />
+      )}
       <UpdateWeightModal
         isOpen={isUpdateWeightModalOpen}
         onRequestClose={closeUpdateWeightModal}

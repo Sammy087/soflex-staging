@@ -260,7 +260,9 @@ const Management = () => {
                 openShotModal={openShotModal}
               />
             )}
-            {activeTab === "more" && <MoreTabContent />}
+            {activeTab === "more" && (
+              <MoreTabContent medicinesList={medicinesList} />
+            )}
           </div>
         </div>
 

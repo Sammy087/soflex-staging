@@ -1,16 +1,50 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Modal from "react-modal";
+import { Frequency } from "../../AppConstants";
+import { GlobalContext } from "../../contexts/GlobalContext";
+import {
+  createOrUpdateShotsInfo,
+  mutationShotsInfoTimes,
+} from "../../firebaseApis/healthApis";
+import { UserContext } from "../../contexts/UserContext";
+import Loading from "../../pages/Loading/Loading";
 
-const AddMedicineModal = ({ isOpen, onRequestClose, onConfirm }) => {
-  const [medicineName, setMedicineName] = useState("");
-  const [dosage, setDosage] = useState("");
-  const [frequency, setFrequency] = useState("Everyday");
-  const [times, setTimes] = useState([
-    { time: "1:35 PM", dosage: "1 Capsule" },
-  ]);
+const AddMedicineModal = ({
+  isOpen,
+  onRequestClose,
+  onConfirm,
+  medicinesList,
+}) => {
+  const [medicineName, setMedicineName] = useState(medicinesList[0].name);
+  const [date, setDate] = useState("");
+  const [dosage, setDosage] = useState("50");
+  const [times, setTimes] = useState([{ time: "1:35 PM", dosage: "50" }]);
+  const [frequency, setFrequency] = useState(Frequency[0]);
+  const { uid } = useContext(UserContext);
+  const { loading, setLoading } = useContext(GlobalContext);
+
+  useEffect(() => {
+    const date = new Date();
+    const year = date.getFullYear();
+    const month = ("0" + (date.getMonth() + 1)).slice(-2);
+    const day = ("0" + date.getDate()).slice(-2);
+    const hours = ("0" + date.getHours()).slice(-2);
+    const minutes = ("0" + date.getMinutes()).slice(-2);
+    const time = `${hours}:${minutes}`;
+    setTimes([{ time, dosage }]);
+    setDate(`${year}-${month}-${day}`);
+  }, [dosage]);
 
   const addTime = () => {
-    setTimes([...times, { time: "", dosage: "1 Capsule" }]);
+    setTimes([
+      ...times,
+      {
+        time: `${("0" + new Date().getHours()).slice(-2)}:${(
+          "0" + new Date().getMinutes()
+        ).slice(-2)}`,
+        dosage,
+      },
+    ]);
   };
 
   const handleTimeChange = (index, value) => {
@@ -23,6 +57,36 @@ const AddMedicineModal = ({ isOpen, onRequestClose, onConfirm }) => {
     const newTimes = times.filter((_, i) => i !== index);
     setTimes(newTimes);
   };
+
+  const handleConfirm = async () => {
+    setLoading(true);
+
+    const newShot = {
+      shot_name: medicineName,
+      dosage,
+      dosage_unit: "mg",
+      frequency,
+    };
+
+    const newTimes = times.map((time) => time.time);
+
+    await createOrUpdateShotsInfo({
+      uid,
+      newShot,
+    });
+
+    await mutationShotsInfoTimes({
+      uid,
+      shot_name: medicineName,
+      last_shot_date: date,
+      time: newTimes,
+    });
+    onRequestClose();
+    onConfirm();
+    setLoading(false);
+  };
+
+  if (loading) return <Loading />;
 
   return (
     <Modal
@@ -55,9 +119,11 @@ const AddMedicineModal = ({ isOpen, onRequestClose, onConfirm }) => {
           value={medicineName}
           onChange={(e) => setMedicineName(e.target.value)}
         >
-          <option value="">Choose Medicine</option>
-          <option value="Medicine 1">Medicine 1</option>
-          <option value="Medicine 2">Medicine 2</option>
+          {medicinesList.map((medicine) => (
+            <option key={medicine.name} value={medicine.name}>
+              {medicine.name}
+            </option>
+          ))}
         </select>
       </div>
       <div className="mb-4">
@@ -107,7 +173,7 @@ const AddMedicineModal = ({ isOpen, onRequestClose, onConfirm }) => {
                 onChange={(e) => handleTimeChange(index, e.target.value)}
               />
             </div>
-            <span className="text-sm text-[#50B498]">{time.dosage}</span>
+            <span className="text-sm text-[#50B498]">{time.dosage} mg</span>
           </div>
         ))}
         <div
@@ -125,7 +191,7 @@ const AddMedicineModal = ({ isOpen, onRequestClose, onConfirm }) => {
       </div>
       <button
         className="w-full bg-[#50B498] text-white py-2 rounded-lg"
-        onClick={onConfirm}
+        onClick={handleConfirm}
       >
         Confirm
       </button>
