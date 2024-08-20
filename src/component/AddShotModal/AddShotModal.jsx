@@ -1,6 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Modal from "react-modal";
 import AddNewMedicineModal from "../AddMedicineModal/AddNewMedicineModal";
+import { Frequency } from "../../AppConstants";
+import { UserContext } from "../../contexts/UserContext";
+import { GlobalContext } from "../../contexts/GlobalContext";
+import Loading from "../../pages/Loading/Loading";
+import {
+  createOrUpdateShotsInfo,
+  mutationShotsInfoTimes,
+} from "../../firebaseApis/healthApis";
 
 const AddShotModal = ({ isOpen, onRequestClose, onConfirm, medicinesList }) => {
   const [medicineName, setMedicineName] = useState(medicinesList[0].name);
@@ -9,8 +17,11 @@ const AddShotModal = ({ isOpen, onRequestClose, onConfirm, medicinesList }) => {
   const [timeTaken, setTimeTaken] = useState([
     { time: "1:35 PM", dosage: "50" },
   ]);
+  const [frequency, setFrequency] = useState(Frequency[0]);
   const [injectionSite, setInjectionSite] = useState("Stomach - Upper Left");
   const [isAddMedicineModalOpen, setIsAddMedicineModalOpen] = useState(false);
+  const { uid } = useContext(UserContext);
+  const { loading, setLoading } = useContext(GlobalContext);
 
   useEffect(() => {
     const date = new Date();
@@ -31,6 +42,36 @@ const AddShotModal = ({ isOpen, onRequestClose, onConfirm, medicinesList }) => {
   const closeAddMedicineModal = () => {
     setIsAddMedicineModalOpen(false);
   };
+
+  const handleConfirm = async () => {
+    setLoading(true);
+
+    const newShot = {
+      shot_name: medicineName,
+      dosage,
+      dosage_unit: "mg",
+      frequency,
+    };
+
+    const times = timeTaken.map((time) => time.time);
+
+    await createOrUpdateShotsInfo({
+      uid,
+      newShot,
+    });
+
+    await mutationShotsInfoTimes({
+      uid,
+      shot_name: medicineName,
+      last_shot_date: date,
+      time: times,
+    });
+    setIsAddMedicineModalOpen(false);
+    onConfirm();
+    setLoading(false);
+  };
+
+  if (loading) return <Loading />;
 
   return (
     <>
@@ -138,13 +179,14 @@ const AddShotModal = ({ isOpen, onRequestClose, onConfirm, medicinesList }) => {
           </button>
           <button
             className="bg-[#50B498] text-white py-2 px-4 rounded-lg ml-2"
-            onClick={onConfirm}
+            onClick={handleConfirm}
           >
             Confirm
           </button>
         </div>
       </Modal>
       <AddNewMedicineModal
+        frequency={frequency}
         medicineName={medicineName}
         setMedicineName={setMedicineName}
         dosage={dosage}
@@ -154,7 +196,7 @@ const AddShotModal = ({ isOpen, onRequestClose, onConfirm, medicinesList }) => {
         medicinesList={medicinesList}
         isOpen={isAddMedicineModalOpen}
         onRequestClose={closeAddMedicineModal}
-        onConfirm={closeAddMedicineModal}
+        onConfirm={handleConfirm}
       />
     </>
   );

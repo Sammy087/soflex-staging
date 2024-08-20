@@ -12,8 +12,8 @@ const AddNewMedicineModal = ({
   times,
   setTimes,
   medicinesList,
+  frequency
 }) => {
-  const [frequency, setFrequency] = useState("Everyday");
   const [confirm, setConfirm] = useState(false);
 
   const addTime = () => {

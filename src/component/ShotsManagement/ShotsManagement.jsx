@@ -25,7 +25,7 @@ const ShotsManagement = ({
     StartWeight: startWeight,
     LastRead: currentWeight,
     DreamWeight: dreamWeight,
-    KGsinceStart: startWeight - currentWeight,
+    SinceStart: startWeight - currentWeight,
   });
 
   const handleOpenModal = () => {

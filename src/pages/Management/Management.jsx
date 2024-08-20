@@ -12,10 +12,13 @@ import {
   getAllMedicines,
   getUserShots,
   getUserWeights,
+  mutationUserWeights,
 } from "../../firebaseApis/healthApis";
 import Loading from "../Loading/Loading";
 import { timestampToDate } from "../../component/dateConverter";
 import ManagementLayout from "./ManagementLayout";
+import { useNavigate } from "react-router-dom";
+import { Paths } from "../../AppConstants";
 
 const Management = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -31,6 +34,7 @@ const Management = () => {
   const { loading, setLoading, activeTab, setActiveTab } =
     useContext(GlobalContext);
   const [medLog, setMedLog] = useState([]);
+  const navigate = useNavigate();
 
   const closeMedicineModal = () => {
     setIsAddMedicineModalOpen(false);
@@ -52,12 +56,23 @@ const Management = () => {
     setIsAddMedicineModalOpen(false);
   };
 
-  const handleConfirm = () => {
-    // Handle the confirm action (e.g., send the updated weight to the backend)
+  const handleConfirm = async () => {
+    setLoading(true);
+    await mutationUserWeights({
+      uid,
+      key: "current_weight",
+      value: currentWeight,
+    })
+      .then((res) => {
+        if (res.data.result) console.log(res.data.result);
+      })
+      .catch((err) => console.error(err));
+    setLoading(false);
     closeModal();
   };
 
   const handleShotConfirm = () => {
+    window.location.href = Paths.MANAGEMENT;
     setIsAddShotModalOpen(false);
   };
 
@@ -252,8 +267,8 @@ const Management = () => {
         <UpdateWeightModal
           isOpen={modalIsOpen}
           onRequestClose={closeModal}
-          startWeight={startWeight}
-          setStartWeight={setStartWeight}
+          startWeight={currentWeight}
+          setStartWeight={setCurrentWeight}
           onConfirm={handleConfirm}
           title={"Update today Weight"}
         />
