@@ -1,14 +1,28 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Modal from "react-modal";
-import AddMedicineModal from "../AddMedicineModal/AddMedicineModal";
+import AddNewMedicineModal from "../AddMedicineModal/AddNewMedicineModal";
 
 const AddShotModal = ({ isOpen, onRequestClose, onConfirm, medicinesList }) => {
-  const [medicineName, setMedicineName] = useState("");
+  const [medicineName, setMedicineName] = useState(medicinesList[0].name);
   const [date, setDate] = useState("");
-  const [dosage, setDosage] = useState("");
-  const [timeTaken, setTimeTaken] = useState("1:26 PM");
+  const [dosage, setDosage] = useState("50");
+  const [timeTaken, setTimeTaken] = useState([
+    { time: "1:35 PM", dosage: "50" },
+  ]);
   const [injectionSite, setInjectionSite] = useState("Stomach - Upper Left");
   const [isAddMedicineModalOpen, setIsAddMedicineModalOpen] = useState(false);
+
+  useEffect(() => {
+    const date = new Date();
+    const year = date.getFullYear();
+    const month = ("0" + (date.getMonth() + 1)).slice(-2);
+    const day = ("0" + date.getDate()).slice(-2);
+    const hours = ("0" + date.getHours()).slice(-2);
+    const minutes = ("0" + date.getMinutes()).slice(-2);
+    const time = `${hours}:${minutes}`;
+    setTimeTaken([{ time, dosage }]);
+    setDate(`${year}-${month}-${day}`);
+  }, [dosage]);
 
   const openAddMedicineModal = () => {
     setIsAddMedicineModalOpen(true);
@@ -79,9 +93,14 @@ const AddShotModal = ({ isOpen, onRequestClose, onConfirm, medicinesList }) => {
             <label className="block text-sm font-medium text-gray-700 mb-1">
               Time Taken
             </label>
-            <div className="bg-[#50B498] text-white text-sm p-2 rounded-lg">
-              {timeTaken}
-            </div>
+            {timeTaken.map((time) => (
+              <div
+                key={time.time}
+                className="bg-[#50B498] text-white text-sm p-2 rounded-lg"
+              >
+                {time.time}
+              </div>
+            ))}
           </div>
           <div className="flex justify-between items-center">
             <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -125,7 +144,14 @@ const AddShotModal = ({ isOpen, onRequestClose, onConfirm, medicinesList }) => {
           </button>
         </div>
       </Modal>
-      <AddMedicineModal
+      <AddNewMedicineModal
+        medicineName={medicineName}
+        setMedicineName={setMedicineName}
+        dosage={dosage}
+        setDosage={setDosage}
+        times={timeTaken}
+        setTimes={setTimeTaken}
+        medicinesList={medicinesList}
         isOpen={isAddMedicineModalOpen}
         onRequestClose={closeAddMedicineModal}
         onConfirm={closeAddMedicineModal}

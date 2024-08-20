@@ -257,17 +257,22 @@ const Management = () => {
           onConfirm={handleConfirm}
           title={"Update today Weight"}
         />
-        <AddMedicineModal
-          isOpen={isAddMedicineModalOpen}
-          onRequestClose={closeMedicineModal}
-          onConfirm={handleMedicineConfirm}
-        />
-        <AddShotModal
-          medicinesList={medicinesList}
-          isOpen={isAddShotModalOpen}
-          onRequestClose={closeShotModal}
-          onConfirm={handleShotConfirm}
-        />
+        {medicinesList.length > 0 && (
+          <>
+            <AddMedicineModal
+              medicinesList={medicinesList}
+              isOpen={isAddMedicineModalOpen}
+              onRequestClose={closeMedicineModal}
+              onConfirm={handleMedicineConfirm}
+            />
+            <AddShotModal
+              medicinesList={medicinesList}
+              isOpen={isAddShotModalOpen}
+              onRequestClose={closeShotModal}
+              onConfirm={handleShotConfirm}
+            />
+          </>
+        )}
       </div>
     </ManagementLayout>
   );
