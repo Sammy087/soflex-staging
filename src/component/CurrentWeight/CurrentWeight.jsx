@@ -7,6 +7,7 @@ const CurrentWeight = ({
   currentWeight,
   startWeight,
   dreamWeight,
+  lastRead,
   chartData,
   weightData,
   columns,
@@ -62,14 +63,14 @@ const CurrentWeight = ({
       </div>
       <div className="flex justify-between items-center mt-2 bg-gray-100 p-4 rounded-lg">
         <div className="text-center">
-          <div className="text-[#50B498] font-bold">-3 KG</div>
+          <div className="text-[#50B498] font-bold">{currentWeight - lastRead} KG</div>
           <div className="text-xs text-gray-500">
             Progress than your last read
           </div>
         </div>
         <div className="border-l-2 border-gray-400 h-full mx-4"></div>
         <div className="text-center">
-          <div className="text-[#50B498] font-bold">12 KG</div>
+          <div className="text-[#50B498] font-bold">{currentWeight - dreamWeight} KG</div>
           <div className="text-xs text-gray-500">
             Between you and your dream weight
           </div>
@@ -90,11 +91,15 @@ const CurrentWeight = ({
         </div>
         <div className="text-center">
           <div className="text-xs text-gray-500">Last Read</div>
-          <div className="font-bold bg-gray-100 p-2 rounded-lg">76 KG</div>
+          <div className="font-bold bg-gray-100 p-2 rounded-lg">
+            {lastRead} KG
+          </div>
         </div>
         <div className="text-center">
           <div className="text-xs text-gray-500">Since Start</div>
-          <div className="font-bold bg-gray-100 p-2 rounded-lg">29 KG</div>
+          <div className="font-bold bg-gray-100 p-2 rounded-lg">
+            {startWeight - lastRead} KG
+          </div>
         </div>
       </div>
       <div className="mt-4">

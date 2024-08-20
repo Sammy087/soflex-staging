@@ -9,6 +9,7 @@ export const GlobalProvider = ({ children }) => {
   const [shots, setShots] = useState({});
   const [loading, setLoading] = useState(false);
   const [allowed, setAllowed] = useState(false);
+  const [activeTab, setActiveTab] = useState("summary");
   const memorizeValues = useMemo(() => {
     return {
       userWeights,
@@ -22,6 +23,8 @@ export const GlobalProvider = ({ children }) => {
       setLoading,
       allowed,
       setAllowed,
+      activeTab,
+      setActiveTab,
     };
   }, [
     userWeights,
@@ -34,6 +37,8 @@ export const GlobalProvider = ({ children }) => {
     setLoading,
     allowed,
     setAllowed,
+    activeTab,
+    setActiveTab,
   ]);
   return (
     <GlobalContext.Provider value={memorizeValues}>
