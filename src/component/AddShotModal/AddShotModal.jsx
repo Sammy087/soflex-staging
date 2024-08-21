@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import Modal from "react-modal";
 import AddNewMedicineModal from "../AddMedicineModal/AddNewMedicineModal";
-import { Frequency, Paths } from "../../AppConstants";
+import { FrequencyCheckForm, Paths } from "../../AppConstants";
 import { UserContext } from "../../contexts/UserContext";
 import { GlobalContext } from "../../contexts/GlobalContext";
 import Loading from "../../pages/Loading/Loading";
@@ -19,8 +19,7 @@ const AddShotModal = ({ isOpen, onRequestClose, onConfirm, medicinesList }) => {
   const [timeTaken, setTimeTaken] = useState([
     { time: "1:35 PM", dosage: "50" },
   ]);
-  const [frequency, setFrequency] = useState(Frequency[0]);
-  const [formData, setFormData] = useState({ dosage, frequency });
+  const [frequency, setFrequency] = useState(FrequencyCheckForm[0].value);
   const [injectionSite, setInjectionSite] = useState("Stomach - Upper Left");
   const [isAddMedicineModalOpen, setIsAddMedicineModalOpen] = useState(false);
   const [isFrequencyModalOpen, setIsFrequencyModalOpen] = useState(false);
@@ -214,7 +213,9 @@ const AddShotModal = ({ isOpen, onRequestClose, onConfirm, medicinesList }) => {
         isOpen={isFrequencyModalOpen}
         onClose={() => setIsFrequencyModalOpen(false)}
         onConfirm={() => setIsFrequencyModalOpen(false)}
-        initialData={formData}
+        date={date}
+        frequency={frequency}
+        setFrequency={setFrequency}
       />
     </>
   );

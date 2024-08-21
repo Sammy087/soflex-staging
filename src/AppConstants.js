@@ -42,3 +42,9 @@ export const Paths = {
 export const ShotUnits = ["mg", "ml", "gr"];
 
 export const Frequency = ["Daily", "Weekly", "Monthly", "Yearly"];
+
+export const FrequencyCheckForm = [
+  { title: "At Regular Intervals", value: "Daily" },
+  { title: "On Specific Days of the Week", value: "Weekly" },
+  { title: "As Needed", value: "Monthly" },
+];

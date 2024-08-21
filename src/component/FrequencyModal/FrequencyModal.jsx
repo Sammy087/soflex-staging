@@ -1,9 +1,16 @@
 import React, { useState } from "react";
 import Modal from "react-modal";
+import { FrequencyCheckForm } from "../../AppConstants";
 
-const FrequencyModal = ({ isOpen, onClose, onConfirm, initialData }) => {
-  const [formData, setFormData] = useState(initialData);
-
+const FrequencyModal = ({
+  isOpen,
+  onClose,
+  onConfirm,
+  date,
+  frequency,
+  setFrequency,
+}) => {
+  const [formData, setFormData] = useState(null);
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
@@ -33,45 +40,24 @@ const FrequencyModal = ({ isOpen, onClose, onConfirm, initialData }) => {
         <h2 className="text-lg font-bold">Frequency</h2>
       </div>
       <div className="space-y-4">
-        <div className="flex justify-between items-center">
-          <label className="block text-sm font-medium text-gray-700">
-            At Regular Intervals
-          </label>
-          <input
-            type="checkbox"
-            name="frequency"
-            value="regular"
-            checked={formData.frequency === "regular"}
-            onChange={handleChange}
-            className="form-checkbox tick"
-          />
-        </div>
-        <div className="flex justify-between items-center">
-          <label className="block text-sm font-medium text-gray-700">
-            On Specific Days of the Week
-          </label>
-          <input
-            type="checkbox"
-            name="frequency"
-            value="specificDays"
-            checked={formData.frequency === "specificDays"}
-            onChange={handleChange}
-            className="form-checkbox tick"
-          />
-        </div>
-        <div className="flex justify-between items-center">
-          <label className="block text-sm font-medium text-gray-700">
-            As Needed
-          </label>
-          <input
-            type="checkbox"
-            name="frequency"
-            value="asNeeded"
-            checked={formData.frequency === "asNeeded"}
-            onChange={handleChange}
-            className="form-checkbox tick"
-          />
-        </div>
+        {FrequencyCheckForm.map((item) => (
+          <div key={item.value} className="flex justify-between items-center">
+            <label
+              className="block text-sm font-medium text-gray-700"
+              htmlFor={item.value}
+            >
+              {item.title}
+            </label>
+            <input
+              type="checkbox"
+              name={item.value}
+              value={item.value}
+              checked={frequency === item.value}
+              onChange={(e) => setFrequency(e.target.value)}
+              className="form-checkbox tick"
+            />
+          </div>
+        ))}
         <div className="flex flex-col items-center bg-gray-100 p-2 rounded-lg">
           <div className="flex justify-between w-full">
             <label className="block text-sm font-medium text-gray-700">
@@ -97,7 +83,7 @@ const FrequencyModal = ({ isOpen, onClose, onConfirm, initialData }) => {
                 const selectedIndex = Math.min(
                   Math.round(scrollTop / itemHeight),
                   3
-                ); // Allow selecting the last item
+                );
                 const options = ["1", "2", "3", "4"];
                 handleChange({
                   target: {
@@ -131,9 +117,9 @@ const FrequencyModal = ({ isOpen, onClose, onConfirm, initialData }) => {
           <input
             type="date"
             name="startDate"
-            value={formData.startDate}
-            onChange={handleChange}
-            className="ml-2 bg-white border-none text-sm"
+            value={date}
+            className="ml-2 bg-white border-none text-sm text-end"
+            disabled
           />
         </div>
       </div>
