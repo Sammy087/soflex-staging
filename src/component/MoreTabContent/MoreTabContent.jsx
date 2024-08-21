@@ -12,58 +12,77 @@ import { UserContext } from "../../contexts/UserContext";
 import Loading from "../../pages/Loading/Loading";
 
 const MoreTabContent = ({ medicinesList, handleMedicineConfirm }) => {
-  const [isMeasurementModalOpen, setIsMeasurementModalOpen] = useState(false);
-  const [isAddMedicineModalOpen, setIsAddMedicineModalOpen] = useState(false);
-  const [isUpdateWeightModalOpen, setIsUpdateWeightModalOpen] = useState(false);
-  const [isContactUsModalOpen, setIsContactUsModalOpen] = useState(false);
-  const [isRateUsModalOpen, setIsRateUsModalOpen] = useState(false);
+  const PrimaryButtons = [
+    {
+      label: "Change Password",
+      onClick: () => handleNavigation(Paths.CHANGE_PASSWORD),
+    },
+    {
+      label: "Measurement system",
+      onClick: () => toggleModal("measurement", true),
+    },
+    {
+      label: "Edit shot schedule",
+      onClick: () => toggleModal("addMedicine", true),
+    },
+    {
+      label: "Change weight goals",
+      onClick: () => toggleModal("updateWeight", true),
+    },
+    { label: "Health Connect", onClick: () => {} },
+  ];
+  const SecondaryButtons = [
+    { label: "Contact us", onClick: () => toggleModal("contactUs", true) },
+    { label: "Rate Us", onClick: () => toggleModal("rateUs", true) },
+    {
+      label: "Privacy policy",
+      onClick: () => handleNavigation(Paths.PRIVACY_POLICY),
+    },
+    {
+      label: "Terms of use",
+      onClick: () => handleNavigation(Paths.TERMS_OF_USE),
+    },
+    {
+      label: "Sign out",
+      onClick: () => handleNavigation(Paths.LOGIN),
+      className: "text-red-500",
+    },
+  ];
+
+  const [modals, setModals] = useState({
+    measurement: false,
+    addMedicine: false,
+    updateWeight: false,
+    contactUs: false,
+    rateUs: false,
+  });
   const [dreamWeight, setDreamWeight] = useState("70");
   const { uid } = useContext(UserContext);
   const { loading, setLoading } = useContext(GlobalContext);
   const navigate = useNavigate();
 
-  const openRateUsModal = () => setIsRateUsModalOpen(true);
-  const closeRateUsModal = () => setIsRateUsModalOpen(false);
-
-  const openContactUsModal = () => setIsContactUsModalOpen(true);
-  const closeContactUsModal = () => setIsContactUsModalOpen(false);
-
-  const openMeasurementModal = () => setIsMeasurementModalOpen(true);
-  const closeMeasurementModal = () => setIsMeasurementModalOpen(false);
-
-  const openAddMedicineModal = () => setIsAddMedicineModalOpen(true);
-  const closeAddMedicineModal = () => setIsAddMedicineModalOpen(false);
-
-  const openUpdateWeightModal = () => {
-    setIsUpdateWeightModalOpen(true);
+  const toggleModal = (modalName, state) => {
+    setModals((prev) => ({ ...prev, [modalName]: state }));
   };
-  const closeUpdateWeightModal = () => setIsUpdateWeightModalOpen(false);
 
   const handleConfirm = async () => {
     setLoading(true);
-    await mutationUserWeights({
-      uid,
-      key: "dream_weight",
-      value: dreamWeight,
-    })
-      .then((res) => {
-        if (res.data.result) console.log(res.data.result);
-      })
-      .catch((err) => console.error(err));
+    try {
+      const res = await mutationUserWeights({
+        uid,
+        key: "dream_weight",
+        value: dreamWeight,
+      });
+      if (res.data.result) console.log(res.data.result);
+    } catch (err) {
+      console.error(err);
+    }
     setLoading(false);
-    closeUpdateWeightModal();
+    toggleModal("updateWeight", false);
   };
 
-  const handlePrivacyPolicyClick = () => {
-    navigate(Paths.PRIVACY_POLICY);
-  };
-
-  const handleTermsOfUseClick = () => {
-    navigate(Paths.TERMS_OF_USE);
-  };
-
-  const handleSignOut = () => {
-    navigate(Paths.LOGIN);
+  const handleNavigation = (path) => {
+    navigate(path);
   };
 
   if (loading) return <Loading />;
@@ -80,38 +99,16 @@ const MoreTabContent = ({ medicinesList, handleMedicineConfirm }) => {
       </div>
       <div className="mt-4">
         <div className="bg-gray-100 p-4 rounded-lg">
-          <button
-            className="w-full text-left py-2 border-b flex justify-between items-center"
-            onClick={() => navigate(Paths.CHANGE_PASSWORD)}
-          >
-            <span>Change Password</span>
-            <img src="static/img/right-arrow-green.svg" className="w-6 h-6" />
-          </button>
-          <button
-            className="w-full text-left py-2 border-b flex justify-between items-center"
-            onClick={openMeasurementModal}
-          >
-            <span>Measurement system</span>
-            <img src="static/img/right-arrow-green.svg" className="w-6 h-6" />
-          </button>
-          <button
-            className="w-full text-left py-2 border-b flex justify-between items-center"
-            onClick={openAddMedicineModal}
-          >
-            <span>Edit shot schedule</span>
-            <img src="static/img/right-arrow-green.svg" className="w-6 h-6" />
-          </button>
-          <button
-            className="w-full text-left py-2 border-b flex justify-between items-center"
-            onClick={openUpdateWeightModal}
-          >
-            <span>Change weight goals</span>
-            <img src="static/img/right-arrow-green.svg" className="w-6 h-6" />
-          </button>
-          <button className="w-full text-left py-2 border-b flex justify-between items-center">
-            <span>Health Connect</span>
-            <img src="static/img/right-arrow-green.svg" className="w-6 h-6" />
-          </button>
+          {PrimaryButtons.map((item, index) => (
+            <button
+              key={index}
+              className="w-full text-left py-2 border-b flex justify-between items-center"
+              onClick={item.onClick}
+            >
+              <span>{item.label}</span>
+              <img alt="green" src="static/img/right-arrow-green.svg" className="w-6 h-6" />
+            </button>
+          ))}
           <div className="flex justify-between items-center py-2 border-b">
             <span>Notifications</span>
             <label className="relative inline-flex items-center cursor-pointer">
@@ -124,68 +121,52 @@ const MoreTabContent = ({ medicinesList, handleMedicineConfirm }) => {
       </div>
       <div className="mt-4">
         <div className="bg-gray-100 p-4 rounded-lg">
-          <button
-            className="w-full text-left py-2 border-b flex justify-between items-center"
-            onClick={openContactUsModal}
-          >
-            <span>Contact us</span>
-            <img src="static/img/right-arrow-green.svg" className="w-6 h-6" />
-          </button>
-          <button
-            className="w-full text-left py-2 border-b flex justify-between items-center"
-            onClick={openRateUsModal}
-          >
-            <span>Rate Us</span>
-            <img src="static/img/right-arrow-green.svg" className="w-6 h-6" />
-          </button>
-          <button
-            className="w-full text-left py-2 border-b flex justify-between items-center"
-            onClick={handlePrivacyPolicyClick}
-          >
-            <span>Privacy policy</span>
-            <img src="static/img/right-arrow-green.svg" className="w-6 h-6" />
-          </button>
-          <button
-            className="w-full text-left py-2 border-b flex justify-between items-center"
-            onClick={handleTermsOfUseClick}
-          >
-            <span>Terms of use</span>
-            <img src="static/img/right-arrow-green.svg" className="w-6 h-6" />
-          </button>
-          <button
-            className="w-full text-left py-2 text-red-500 flex justify-between items-center"
-            onClick={handleSignOut}
-          >
-            <span>Sign out</span>
-            <img src="static/img/right-arrow-green.svg" className="w-6 h-6" />
-          </button>
+          {SecondaryButtons.map((item, index) => (
+            <button
+              key={index}
+              className={`w-full text-left py-2 border-b flex justify-between items-center ${
+                item.className || ""
+              }`}
+              onClick={item.onClick}
+            >
+              <span>{item.label}</span>
+              <img
+                alt="arrow"
+                src="static/img/right-arrow-green.svg"
+                className="w-6 h-6"
+              />
+            </button>
+          ))}
         </div>
       </div>
       <MeasurementSystemModal
-        isOpen={isMeasurementModalOpen}
-        onClose={closeMeasurementModal}
+        isOpen={modals.measurement}
+        onClose={() => toggleModal("measurement", false)}
       />
       {medicinesList.length > 0 && (
         <AddMedicineModal
           medicinesList={medicinesList}
-          isOpen={isAddMedicineModalOpen}
-          onRequestClose={closeAddMedicineModal}
+          isOpen={modals.addMedicine}
+          onRequestClose={() => toggleModal("addMedicine", false)}
           onConfirm={handleMedicineConfirm}
         />
       )}
       <UpdateWeightModal
-        isOpen={isUpdateWeightModalOpen}
-        onRequestClose={closeUpdateWeightModal}
+        isOpen={modals.updateWeight}
+        onRequestClose={() => toggleModal("updateWeight", false)}
         weight={dreamWeight}
         setWeight={setDreamWeight}
         onConfirm={handleConfirm}
         title={"Change Weight Goals"}
       />
       <ContactUsModal
-        isOpen={isContactUsModalOpen}
-        onClose={closeContactUsModal}
+        isOpen={modals.contactUs}
+        onClose={() => toggleModal("contactUs", false)}
       />
-      <RateUsModal isOpen={isRateUsModalOpen} onClose={closeRateUsModal} />
+      <RateUsModal
+        isOpen={modals.rateUs}
+        onClose={() => toggleModal("rateUs", false)}
+      />
     </div>
   );
 };
