@@ -10,14 +10,9 @@ import {
   mutationShotsInfoTimes,
 } from "../../firebaseApis/healthApis";
 import { useNavigate } from "react-router-dom";
+import FrequencyModal from "../FrequencyModal/FrequencyModal";
 
-const AddShotModal = ({
-  isOpen,
-  onRequestClose,
-  onConfirm,
-  medicinesList,
-  isOpenFrequencyModal,
-}) => {
+const AddShotModal = ({ isOpen, onRequestClose, onConfirm, medicinesList }) => {
   const [medicineName, setMedicineName] = useState(medicinesList[0].name);
   const [date, setDate] = useState("");
   const [dosage, setDosage] = useState("50");
@@ -25,8 +20,10 @@ const AddShotModal = ({
     { time: "1:35 PM", dosage: "50" },
   ]);
   const [frequency, setFrequency] = useState(Frequency[0]);
+  const [formData, setFormData] = useState({ dosage, frequency });
   const [injectionSite, setInjectionSite] = useState("Stomach - Upper Left");
   const [isAddMedicineModalOpen, setIsAddMedicineModalOpen] = useState(false);
+  const [isFrequencyModalOpen, setIsFrequencyModalOpen] = useState(false);
   const { uid } = useContext(UserContext);
   const { loading, setLoading } = useContext(GlobalContext);
   const navigate = useNavigate();
@@ -141,8 +138,8 @@ const AddShotModal = ({
         <div
           className="mb-4 flex-row justify-between items-center bg-gray-100 p-4 rounded-lg"
           onClick={() => {
-            isOpenFrequencyModal();
-            onRequestClose();
+            setIsFrequencyModalOpen(true);
+            // onRequestClose();
           }}
         >
           <div className="flex justify-between items-center">
@@ -212,6 +209,12 @@ const AddShotModal = ({
         isOpen={isAddMedicineModalOpen}
         onRequestClose={closeAddMedicineModal}
         onConfirm={handleConfirm}
+      />
+      <FrequencyModal
+        isOpen={isFrequencyModalOpen}
+        onClose={() => setIsFrequencyModalOpen(false)}
+        onConfirm={() => setIsFrequencyModalOpen(false)}
+        initialData={formData}
       />
     </>
   );

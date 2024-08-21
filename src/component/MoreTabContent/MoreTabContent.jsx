@@ -7,15 +7,12 @@ import ContactUsModal from "../ContactUsModal/ContactUsModal";
 import RateUsModal from "../RateUsModal/RateUsModal";
 import { Paths } from "../../AppConstants";
 
-const MoreTabContent = ({ medicinesList }) => {
+const MoreTabContent = ({ medicinesList, handleMedicineConfirm }) => {
   const [isMeasurementModalOpen, setIsMeasurementModalOpen] = useState(false);
   const [isAddMedicineModalOpen, setIsAddMedicineModalOpen] = useState(false);
   const [isUpdateWeightModalOpen, setIsUpdateWeightModalOpen] = useState(false);
   const [isContactUsModalOpen, setIsContactUsModalOpen] = useState(false);
   const [isRateUsModalOpen, setIsRateUsModalOpen] = useState(false);
-  const [isPrivacyPolicyModalOpen, setIsPrivacyPolicyModalOpen] =
-    useState(false);
-  const [isTermsOfUseModalOpen, setIsTermsOfUseModalOpen] = useState(false);
   const [startWeight, setStartWeight] = useState("70");
   const navigate = useNavigate();
 
@@ -35,7 +32,6 @@ const MoreTabContent = ({ medicinesList }) => {
   const closeUpdateWeightModal = () => setIsUpdateWeightModalOpen(false);
 
   const handleConfirm = () => {
-    // Handle the confirm action (e.g., send the updated weight to the backend)
     closeUpdateWeightModal();
   };
 
@@ -152,7 +148,8 @@ const MoreTabContent = ({ medicinesList }) => {
         <AddMedicineModal
           medicinesList={medicinesList}
           isOpen={isAddMedicineModalOpen}
-          onClose={closeAddMedicineModal}
+          onRequestClose={closeAddMedicineModal}
+          onConfirm={handleMedicineConfirm}
         />
       )}
       <UpdateWeightModal
