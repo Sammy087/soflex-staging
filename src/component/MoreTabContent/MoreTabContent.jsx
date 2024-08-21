@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import MeasurementSystemModal from "../MeasurementSystemModal/MeasurementSystemModal";
 import AddMedicineModal from "../AddMedicineModal/AddMedicineModal";
 import UpdateWeightModal from "../UpdateWeightModal/UpdateWeightModal";
@@ -6,6 +6,10 @@ import { useNavigate } from "react-router-dom";
 import ContactUsModal from "../ContactUsModal/ContactUsModal";
 import RateUsModal from "../RateUsModal/RateUsModal";
 import { Paths } from "../../AppConstants";
+import { mutationUserWeights } from "../../firebaseApis/healthApis";
+import { GlobalContext } from "../../contexts/GlobalContext";
+import { UserContext } from "../../contexts/UserContext";
+import Loading from "../../pages/Loading/Loading";
 
 const MoreTabContent = ({ medicinesList, handleMedicineConfirm }) => {
   const [isMeasurementModalOpen, setIsMeasurementModalOpen] = useState(false);
@@ -13,7 +17,9 @@ const MoreTabContent = ({ medicinesList, handleMedicineConfirm }) => {
   const [isUpdateWeightModalOpen, setIsUpdateWeightModalOpen] = useState(false);
   const [isContactUsModalOpen, setIsContactUsModalOpen] = useState(false);
   const [isRateUsModalOpen, setIsRateUsModalOpen] = useState(false);
-  const [startWeight, setStartWeight] = useState("70");
+  const [dreamWeight, setDreamWeight] = useState("70");
+  const { uid } = useContext(UserContext);
+  const { loading, setLoading } = useContext(GlobalContext);
   const navigate = useNavigate();
 
   const openRateUsModal = () => setIsRateUsModalOpen(true);
@@ -28,10 +34,23 @@ const MoreTabContent = ({ medicinesList, handleMedicineConfirm }) => {
   const openAddMedicineModal = () => setIsAddMedicineModalOpen(true);
   const closeAddMedicineModal = () => setIsAddMedicineModalOpen(false);
 
-  const openUpdateWeightModal = () => setIsUpdateWeightModalOpen(true);
+  const openUpdateWeightModal = () => {
+    setIsUpdateWeightModalOpen(true);
+  };
   const closeUpdateWeightModal = () => setIsUpdateWeightModalOpen(false);
 
-  const handleConfirm = () => {
+  const handleConfirm = async () => {
+    setLoading(true);
+    await mutationUserWeights({
+      uid,
+      key: "dream_weight",
+      value: dreamWeight,
+    })
+      .then((res) => {
+        if (res.data.result) console.log(res.data.result);
+      })
+      .catch((err) => console.error(err));
+    setLoading(false);
     closeUpdateWeightModal();
   };
 
@@ -46,6 +65,8 @@ const MoreTabContent = ({ medicinesList, handleMedicineConfirm }) => {
   const handleSignOut = () => {
     navigate(Paths.LOGIN);
   };
+
+  if (loading) return <Loading />;
 
   return (
     <div className="bg-white p-4 w-full">
@@ -155,8 +176,8 @@ const MoreTabContent = ({ medicinesList, handleMedicineConfirm }) => {
       <UpdateWeightModal
         isOpen={isUpdateWeightModalOpen}
         onRequestClose={closeUpdateWeightModal}
-        startWeight={startWeight}
-        setStartWeight={setStartWeight}
+        weight={dreamWeight}
+        setWeight={setDreamWeight}
         onConfirm={handleConfirm}
         title={"Change Weight Goals"}
       />

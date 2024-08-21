@@ -71,7 +71,7 @@ const Management = () => {
   };
 
   const handleShotConfirm = () => {
-    window.location.href = Paths.MANAGEMENT;
+    navigate(Paths.TERMS_OF_USE);
     setIsAddShotModalOpen(false);
   };
 
