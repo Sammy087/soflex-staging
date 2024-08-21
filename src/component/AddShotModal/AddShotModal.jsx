@@ -11,7 +11,13 @@ import {
 } from "../../firebaseApis/healthApis";
 import { useNavigate } from "react-router-dom";
 
-const AddShotModal = ({ isOpen, onRequestClose, onConfirm, medicinesList }) => {
+const AddShotModal = ({
+  isOpen,
+  onRequestClose,
+  onConfirm,
+  medicinesList,
+  isOpenFrequencyModal,
+}) => {
   const [medicineName, setMedicineName] = useState(medicinesList[0].name);
   const [date, setDate] = useState("");
   const [dosage, setDosage] = useState("50");
@@ -132,7 +138,13 @@ const AddShotModal = ({ isOpen, onRequestClose, onConfirm, medicinesList }) => {
             <span className="text-[#50B498] ml-2">mg</span>
           </div>
         </div>
-        <div className="mb-4 flex-row justify-between items-center bg-gray-100 p-4 rounded-lg">
+        <div
+          className="mb-4 flex-row justify-between items-center bg-gray-100 p-4 rounded-lg"
+          onClick={() => {
+            isOpenFrequencyModal();
+            onRequestClose();
+          }}
+        >
           <div className="flex justify-between items-center">
             <label className="block text-sm font-medium text-gray-700 mb-1">
               Time Taken

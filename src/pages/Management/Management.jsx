@@ -19,6 +19,7 @@ import { timestampToDate } from "../../component/dateConverter";
 import ManagementLayout from "./ManagementLayout";
 import { useNavigate } from "react-router-dom";
 import { Paths } from "../../AppConstants";
+import FrequencyModal from "../../component/FrequencyModal/FrequencyModal";
 
 const Management = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -30,6 +31,8 @@ const Management = () => {
   const [medicinesList, setMedicinesList] = useState([]);
   const [isAddMedicineModalOpen, setIsAddMedicineModalOpen] = useState(false);
   const [isAddShotModalOpen, setIsAddShotModalOpen] = useState(false);
+  const [formData, setFormData] = useState({ dosage: "", frequency: "" });
+  const [isFrequencyModalOpen, setIsFrequencyModalOpen] = useState(false);
   const { uid } = useContext(UserContext);
   const { loading, setLoading, activeTab, setActiveTab } =
     useContext(GlobalContext);
@@ -178,6 +181,18 @@ const Management = () => {
     fetchData();
   }, []);
 
+  const handleOpenFrequencyModal = () => {
+    setIsFrequencyModalOpen(true);
+  };
+
+  const handleCloseFrequencyModal = () => {
+    setIsFrequencyModalOpen(false);
+  };
+
+  const handleFrequencyConfirm = () => {
+    setIsFrequencyModalOpen(false);
+  };
+
   if (loading) return <Loading />;
 
   return (
@@ -258,6 +273,7 @@ const Management = () => {
                 startWeight={startWeight}
                 dreamWeight={dreamWeight}
                 openShotModal={openShotModal}
+                handleOpenFrequencyModal={handleOpenFrequencyModal}
               />
             )}
             {activeTab === "more" && (
@@ -287,6 +303,13 @@ const Management = () => {
               isOpen={isAddShotModalOpen}
               onRequestClose={closeShotModal}
               onConfirm={handleShotConfirm}
+              isOpenFrequencyModal={handleOpenFrequencyModal}
+            />
+            <FrequencyModal
+              isOpen={isFrequencyModalOpen}
+              onClose={handleCloseFrequencyModal}
+              onConfirm={handleFrequencyConfirm}
+              initialData={formData}
             />
           </>
         )}
