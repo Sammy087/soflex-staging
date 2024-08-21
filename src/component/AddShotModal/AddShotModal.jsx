@@ -72,7 +72,7 @@ const AddShotModal = ({ isOpen, onRequestClose, onConfirm, medicinesList }) => {
     });
     setIsAddMedicineModalOpen(false);
     onConfirm();
-    navigate(Paths.PRIVACY_POLICY);
+    navigate(Paths.TERMS_OF_USE);
     setLoading(false);
   };
 

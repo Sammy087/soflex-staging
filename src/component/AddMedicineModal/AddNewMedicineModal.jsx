@@ -14,7 +14,6 @@ const AddNewMedicineModal = ({
   medicinesList,
   frequency
 }) => {
-  const [confirm, setConfirm] = useState(false);
 
   const addTime = () => {
     setTimes([
@@ -47,15 +46,7 @@ const AddNewMedicineModal = ({
     );
 
     setTimes(newTimes);
-    setConfirm(true);
   };
-
-  useEffect(() => {
-    if (confirm) {
-      onConfirm();
-      setConfirm(false);
-    }
-  }, [confirm]);
 
   return (
     <Modal

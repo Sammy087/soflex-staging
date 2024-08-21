@@ -52,7 +52,6 @@ const Management = () => {
     setModalIsOpen(false);
   };
   const handleMedicineConfirm = () => {
-    // handle the confirm action
     setIsAddMedicineModalOpen(false);
   };
 
@@ -102,13 +101,6 @@ const Management = () => {
     dosage: "50mg",
     frequency: "Everyday",
   };
-
-  // const medLog = [
-  //   { date: "7/16/2024", medicineName: "Medicine Name", dosage: "50 mg" },
-  //   { date: "7/16/2024", medicineName: "Medicine Name", dosage: "50 mg" },
-  //   { date: "7/16/2024", medicineName: "Medicine Name", dosage: "50 mg" },
-  //   { date: "7/16/2024", medicineName: "Medicine Name", dosage: "50 mg" },
-  // ];
 
   const columns = [
     { header: "Date", accessor: "date" },
