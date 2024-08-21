@@ -10,8 +10,24 @@ import { mutationUserWeights } from "../../firebaseApis/healthApis";
 import { GlobalContext } from "../../contexts/GlobalContext";
 import { UserContext } from "../../contexts/UserContext";
 import Loading from "../../pages/Loading/Loading";
+import { signOut } from "firebase/auth";
+import { auth } from "../../firebase";
 
 const MoreTabContent = ({ medicinesList, handleMedicineConfirm }) => {
+  const { setUid } = useContext(UserContext);
+
+  const handleSignOut = async () => {
+    try {
+      await signOut(auth);
+      // setUid(null);
+      setUid("8Qw8d1u3HNgz6yXXTw694FD8Vc62");
+      sessionStorage.removeItem("uid");
+      navigate(Paths.HOME);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   const PrimaryButtons = [
     {
       label: "Change Password",
@@ -31,6 +47,7 @@ const MoreTabContent = ({ medicinesList, handleMedicineConfirm }) => {
     },
     { label: "Health Connect", onClick: () => {} },
   ];
+
   const SecondaryButtons = [
     { label: "Contact us", onClick: () => toggleModal("contactUs", true) },
     { label: "Rate Us", onClick: () => toggleModal("rateUs", true) },
@@ -44,7 +61,7 @@ const MoreTabContent = ({ medicinesList, handleMedicineConfirm }) => {
     },
     {
       label: "Sign out",
-      onClick: () => handleNavigation(Paths.LOGIN),
+      onClick: handleSignOut,
       className: "text-red-500",
     },
   ];
@@ -56,6 +73,7 @@ const MoreTabContent = ({ medicinesList, handleMedicineConfirm }) => {
     contactUs: false,
     rateUs: false,
   });
+
   const [dreamWeight, setDreamWeight] = useState("70");
   const { uid } = useContext(UserContext);
   const { loading, setLoading } = useContext(GlobalContext);
@@ -106,7 +124,11 @@ const MoreTabContent = ({ medicinesList, handleMedicineConfirm }) => {
               onClick={item.onClick}
             >
               <span>{item.label}</span>
-              <img alt="green" src="static/img/right-arrow-green.svg" className="w-6 h-6" />
+              <img
+                alt="green"
+                src="static/img/right-arrow-green.svg"
+                className="w-6 h-6"
+              />
             </button>
           ))}
           <div className="flex justify-between items-center py-2 border-b">
