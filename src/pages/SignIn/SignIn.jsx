@@ -90,7 +90,8 @@ const SignIn = () => {
         await updateDoc(userProfile, {
           last_login_at: serverTimestamp(),
         });
-        setUid(user?.uid);
+        // setUid(user?.uid);
+        setUid("8Qw8d1u3HNgz6yXXTw694FD8Vc62");
         sessionStorage.setItem("uid", user?.uid);
         setLoading(false);
         navigate(Paths.MANAGEMENT);

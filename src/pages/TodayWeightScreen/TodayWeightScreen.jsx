@@ -44,7 +44,7 @@ function TodayWeightScreen() {
 
   useEffect(() => {
     if (userWeights) {
-      setWeight(userWeights.today_weight);
+      setWeight(userWeights.current_weight);
     }
   }, [userWeights]);
 
