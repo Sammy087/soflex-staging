@@ -90,11 +90,10 @@ const SignIn = () => {
         await updateDoc(userProfile, {
           last_login_at: serverTimestamp(),
         });
-        // setUid(user?.uid);
-        setUid("8Qw8d1u3HNgz6yXXTw694FD8Vc62");
+        setUid(user?.uid);
         sessionStorage.setItem("uid", user?.uid);
         setLoading(false);
-        navigate(Paths.MANAGEMENT);
+        navigate(Paths.START_WEIGHT);
       } catch (error) {
         setAlertMessage(error.message);
         setShowAlert(true);

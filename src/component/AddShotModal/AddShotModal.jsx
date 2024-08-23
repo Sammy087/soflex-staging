@@ -72,7 +72,6 @@ const AddShotModal = ({ isOpen, onRequestClose, onConfirm, medicinesList }) => {
     });
     setIsAddMedicineModalOpen(false);
     onConfirm();
-    navigate(Paths.TERMS_OF_USE);
     setLoading(false);
   };
 
@@ -134,14 +133,14 @@ const AddShotModal = ({ isOpen, onRequestClose, onConfirm, medicinesList }) => {
             <span className="text-[#50B498] ml-2">mg</span>
           </div>
         </div>
-        <div
-          className="mb-4 flex-row justify-between items-center bg-gray-100 p-4 rounded-lg"
-          onClick={() => {
-            setIsFrequencyModalOpen(true);
-            // onRequestClose();
-          }}
-        >
-          <div className="flex justify-between items-center">
+        <div className="mb-4 flex-row justify-between items-center bg-gray-100 p-4 rounded-lg">
+          <div
+            className="flex justify-between items-center"
+            onClick={() => {
+              setIsFrequencyModalOpen(true);
+              // onRequestClose();
+            }}
+          >
             <label className="block text-sm font-medium text-gray-700 mb-1">
               Time Taken
             </label>

@@ -88,7 +88,6 @@ const AddMedicineModal = ({
     onRequestClose();
     onConfirm();
     setLoading(false);
-    navigate(Paths.TERMS_OF_USE);
   };
 
   if (loading) return <Loading />;

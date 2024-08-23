@@ -22,7 +22,7 @@ function LastReminderScreen() {
   }, []);
 
   const handleNextOrSkip = () => {
-    navigate(Paths.HOME);
+    navigate(Paths.MANAGEMENT);
   };
 
   const handleBack = () => {

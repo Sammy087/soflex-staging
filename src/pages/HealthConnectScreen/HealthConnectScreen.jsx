@@ -9,7 +9,7 @@ function HealthConnectScreen() {
   const { username } = useContext(UserContext);
 
   const handleSkip = () => {
-    navigate(Paths.START_WEIGHT);
+    navigate(Paths.HOME);
   };
 
   const handleConnect = () => {

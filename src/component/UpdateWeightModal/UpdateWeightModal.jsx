@@ -4,8 +4,8 @@ import Modal from "react-modal";
 const UpdateWeightModal = ({
   isOpen,
   onRequestClose,
-  weight,
-  setWeight,
+  startWeight,
+  setStartWeight,
   onConfirm,
   title,
 }) => {
@@ -30,8 +30,8 @@ const UpdateWeightModal = ({
         <input
           type="text"
           className="border border-gray-300 rounded-lg p-2 w-full"
-          value={weight}
-          onChange={(e) => setWeight(e.target.value)}
+          value={startWeight}
+          onChange={(e) => setStartWeight(e.target.value)}
         />
         <span className="ml-2 text-lg">KG</span>
       </div>
@@ -46,20 +46,20 @@ const UpdateWeightModal = ({
           <button
             key={num}
             className="border border-gray-300 rounded-lg py-2"
-            onClick={() => setWeight(weight + num)}
+            onClick={() => setStartWeight(startWeight + num)}
           >
             {num}
           </button>
         ))}
         <button
           className="border border-gray-300 rounded-lg py-2"
-          onClick={() => setWeight(weight + ".")}
+          onClick={() => setStartWeight(startWeight + ".")}
         >
           .
         </button>
         <button
           className="border border-gray-300 rounded-lg py-2"
-          onClick={() => setWeight(weight.slice(0, -1))}
+          onClick={() => setStartWeight(startWeight.slice(0, -1))}
         >
           ⌫
         </button>

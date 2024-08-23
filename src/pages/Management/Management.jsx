@@ -71,7 +71,6 @@ const Management = () => {
   };
 
   const handleShotConfirm = () => {
-    navigate(Paths.TERMS_OF_USE);
     setIsAddShotModalOpen(false);
   };
 

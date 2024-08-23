@@ -19,8 +19,6 @@ const MoreTabContent = ({ medicinesList, handleMedicineConfirm }) => {
   const handleSignOut = async () => {
     try {
       await signOut(auth);
-      // setUid(null);
-      setUid("8Qw8d1u3HNgz6yXXTw694FD8Vc62");
       sessionStorage.removeItem("uid");
       navigate(Paths.HOME);
     } catch (error) {
@@ -176,8 +174,8 @@ const MoreTabContent = ({ medicinesList, handleMedicineConfirm }) => {
       <UpdateWeightModal
         isOpen={modals.updateWeight}
         onRequestClose={() => toggleModal("updateWeight", false)}
-        weight={dreamWeight}
-        setWeight={setDreamWeight}
+        startWeight={dreamWeight}
+        setStartWeight={setDreamWeight}
         onConfirm={handleConfirm}
         title={"Change Weight Goals"}
       />
