@@ -1,20 +1,41 @@
 // src/components/HealthConnectScreen.js
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../../contexts/UserContext";
 import { Paths } from "../../AppConstants";
+import { checkHealthConnection } from "../../firebaseApis/healthApis";
+import { GlobalContext } from "../../contexts/GlobalContext";
+import Loading from "../Loading/Loading";
 
 function HealthConnectScreen() {
   const navigate = useNavigate();
-  const { username } = useContext(UserContext);
+  const { username, uid } = useContext(UserContext);
+  const { loading, setLoading } = useContext(GlobalContext);
+  const [connected, setConnected] = useState(false);
+
+  useEffect(() => {
+    setLoading(true);
+    checkHealthConnection({ uid })
+      .then(({ data }) => {
+        setConnected(data.result);
+      })
+      .catch((err) => console.log("err", err));
+    setLoading(false);
+  }, []);
 
   const handleSkip = () => {
-    navigate(Paths.HOME);
+    navigate(Paths.START_WEIGHT);
   };
 
   const handleConnect = () => {
-    navigate(Paths.CHECK_CURRENT_WEIGHT);
+    if (connected) {
+      navigate(Paths.CHECK_CURRENT_WEIGHT);
+    } else {
+      navigate(Paths.START_WEIGHT);
+    }
   };
+
+  if (loading) return <Loading />;
 
   return (
     <div className="flex flex-col items-center justify-center h-screen p-5 text-center bg-white">

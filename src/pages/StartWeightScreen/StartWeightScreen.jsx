@@ -15,7 +15,7 @@ function StartWeightScreen() {
   const navigate = useNavigate();
   const { uid } = useContext(UserContext);
   const { userWeights, setUserWeights } = useContext(GlobalContext);
-  const [weight, setWeight] = useState();
+  const [weight, setWeight] = useState(102);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {

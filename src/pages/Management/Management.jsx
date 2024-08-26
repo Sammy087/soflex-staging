@@ -71,6 +71,7 @@ const Management = () => {
   };
 
   const handleShotConfirm = () => {
+    fetchData();
     setIsAddShotModalOpen(false);
   };
 
@@ -113,75 +114,73 @@ const Management = () => {
     { header: "Dosage", accessor: "dosage" },
   ];
 
-  useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true);
-      try {
-        const f_user_weights = await getUserWeights({ uid });
-        const f_user_shots = await getUserShots({ uid });
-        const f_medicines_list = await getAllMedicines({ uid });
+  const fetchData = async () => {
+    setLoading(true);
+    try {
+      const f_user_weights = await getUserWeights({ uid });
+      const f_user_shots = await getUserShots({ uid });
+      const f_medicines_list = await getAllMedicines({ uid });
 
-        if (f_user_weights.data && f_user_weights.data.data) {
-          const userWeightData = f_user_weights.data.data.today_weight;
-          const userShotsData = f_user_shots.data.data.shots;
-          setMedicinesList(f_medicines_list.data.data);
+      if (f_user_weights.data && f_user_weights.data.data) {
+        const userWeightData = f_user_weights.data.data.today_weight;
+        const userShotsData = f_user_shots.data.data.shots;
+        setMedicinesList(f_medicines_list.data.data);
 
-          const convertedUserWeightData = userWeightData.map(
-            (wData, _index) => ({
-              date: timestampToDate(wData.timestamp),
-              weight: wData.value,
-              change:
-                _index > 0
-                  ? userWeightData[_index].value -
-                    userWeightData[_index - 1].value
-                  : 0,
-              sinceStart:
-                f_user_weights.data.data.start_weight -
-                userWeightData[_index].value,
-            })
-          );
-
-          const convertedUserShotsData = userShotsData
-            .map((sData) => {
-              if (sData.shoted_dates) {
-                return sData.shoted_dates.map((sedData) => ({
-                  date: sedData.date,
-                  medicineName: sData.shot_name,
-                  dosage: sData.dosage,
-                }));
-              }
-            })
-            .flat()
-            .filter(Boolean);
-
-          setMedLog(convertedUserShotsData);
-          setWeightData(convertedUserWeightData);
-          setStartWeight(f_user_weights.data.data.start_weight);
-          setDreamWeight(f_user_weights.data.data.dream_weight);
-          setCurrentWeight(f_user_weights.data.data.current_weight);
-          setLastRead(userWeightData[userWeightData.length - 1].value);
-          setSinceStart(
+        const convertedUserWeightData = userWeightData.map((wData, _index) => ({
+          date: timestampToDate(wData.timestamp),
+          weight: wData.value,
+          change:
+            _index > 0
+              ? userWeightData[_index].value - userWeightData[_index - 1].value
+              : 0,
+          sinceStart:
             f_user_weights.data.data.start_weight -
-              f_user_weights.data.data.current_weight
-          );
-          const dates = userWeightData.map((entry) =>
-            timestampToDate(entry.timestamp)
-          );
-          const weights = userWeightData.map((entry) => entry.value);
-          setChartData({ dates, weights });
-        } else {
-          console.error(
-            "User weights data is not available",
-            f_user_weights.data
-          );
-        }
-      } catch (error) {
-        console.error("Error fetching data", error);
-      } finally {
-        setLoading(false);
-      }
-    };
+            userWeightData[_index].value,
+        }));
 
+        const convertedUserShotsData = userShotsData.flatMap((sData) => {
+          if (sData.shoted_dates) {
+            return sData.shoted_dates.flatMap((shotDate) => {
+              return shotDate.times.map((timeData) => ({
+                date: shotDate.date,
+                time: timeData.time,
+                medicineName: sData.shot_name,
+                dosage: `${sData.dosage} ${sData.dosage_unit}`,
+                frequency: sData.frequency,
+              }));
+            });
+          }
+          return [];
+        });
+
+        setMedLog(convertedUserShotsData);
+        setWeightData(convertedUserWeightData);
+        setStartWeight(f_user_weights.data.data.start_weight);
+        setDreamWeight(f_user_weights.data.data.dream_weight);
+        setCurrentWeight(f_user_weights.data.data.current_weight);
+        setLastRead(userWeightData[userWeightData.length - 1].value);
+        setSinceStart(
+          f_user_weights.data.data.start_weight -
+            f_user_weights.data.data.current_weight
+        );
+        const dates = userWeightData.map((entry) =>
+          timestampToDate(entry.timestamp)
+        );
+        const weights = userWeightData.map((entry) => entry.value);
+        setChartData({ dates, weights });
+      } else {
+        console.error(
+          "User weights data is not available",
+          f_user_weights.data
+        );
+      }
+    } catch (error) {
+      console.error("Error fetching data", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+  useEffect(() => {
     fetchData();
   }, []);
 

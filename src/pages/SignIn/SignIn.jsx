@@ -93,7 +93,7 @@ const SignIn = () => {
         setUid(user?.uid);
         sessionStorage.setItem("uid", user?.uid);
         setLoading(false);
-        navigate(Paths.START_WEIGHT);
+        navigate(Paths.WELCOME);
       } catch (error) {
         setAlertMessage(error.message);
         setShowAlert(true);
@@ -102,7 +102,7 @@ const SignIn = () => {
   };
 
   const handleSignUp = () => {
-    navigate(Paths.SIGN_UP);
+    navigate(Paths.SIGNUP);
   };
 
   if (loading) return <Loading />;

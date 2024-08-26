@@ -14,11 +14,12 @@ import { signOut } from "firebase/auth";
 import { auth } from "../../firebase";
 
 const MoreTabContent = ({ medicinesList, handleMedicineConfirm }) => {
-  const { setUid } = useContext(UserContext);
+  const { setUid, username } = useContext(UserContext);
 
   const handleSignOut = async () => {
     try {
       await signOut(auth);
+      setUid(null);
       sessionStorage.removeItem("uid");
       navigate(Paths.HOME);
     } catch (error) {
@@ -111,7 +112,7 @@ const MoreTabContent = ({ medicinesList, handleMedicineConfirm }) => {
           alt="Profile"
           src="static/img/avatar.svg"
         />
-        <h2 className="text-xl font-bold mt-4">Maria Adams</h2>
+        <h2 className="text-xl font-bold mt-4">{username}</h2>
       </div>
       <div className="mt-4">
         <div className="bg-gray-100 p-4 rounded-lg">

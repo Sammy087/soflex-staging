@@ -16,7 +16,7 @@ function CurrentWeightScreen() {
   const [loading, setLoading] = useState(true);
   const { userWeights, setUserWeights } = useContext(GlobalContext);
   const { uid } = useContext(UserContext);
-  const [weight, setWeight] = useState(80);
+  const [weight, setWeight] = useState(95);
 
   useEffect(() => {
     checkHealthConnection({ uid })
@@ -42,7 +42,7 @@ function CurrentWeightScreen() {
   }, []);
 
   useEffect(() => {
-    if (userWeights) {
+    if (userWeights?.current_weight) {
       setWeight(userWeights.current_weight);
     }
   }, [userWeights]);
@@ -67,7 +67,7 @@ function CurrentWeightScreen() {
       subtitle="Please tell me what is your weight for today"
       placeholder="Current Weight"
       buttonText="Done!"
-      initialValue={!userWeights ? weight : userWeights.current_weight}
+      initialValue={weight}
       onChange={(e) => setWeight(e)}
       onNext={handleNextOrSkip}
       onSkip={handleNextOrSkip}

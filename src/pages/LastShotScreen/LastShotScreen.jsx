@@ -44,8 +44,13 @@ function LastShotScreen() {
       .catch((err) => {
         throw new Error(err);
       });
-    setLoading(false);
   }, []);
+
+  useEffect(() => {
+    if (fetchedShot) {
+      setLoading(false);
+    }
+  }, [fetchedShot]);
 
   useEffect(() => {
     setSelectedDate(formattedToday);
@@ -97,7 +102,7 @@ function LastShotScreen() {
       setCurrentMonth(currentMonth + 1);
     }
   };
-  
+
   const monthNames = [
     "01",
     "02",
@@ -240,7 +245,7 @@ function LastShotScreen() {
           </button>
         </div>
       </div>
-      {isModalOpen && (
+      {isModalOpen && fetchedShot && (
         <DateSelectionModal
           onClose={() => setIsModalOpen(false)}
           onConfirm={handleDateConfirm}

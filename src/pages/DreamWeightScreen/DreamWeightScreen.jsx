@@ -41,6 +41,12 @@ function DreamWeightScreen() {
       });
   }, []);
 
+  useEffect(() => {
+    if (userWeights?.dream_weight) {
+      setWeight(userWeights.current_weight);
+    }
+  }, [userWeights]);
+
   const handleNextOrSkip = async () => {
     setLoading(true);
     await mutationUserWeights({ uid, key: "dream_weight", value: weight })
@@ -60,7 +66,7 @@ function DreamWeightScreen() {
       subtitle="Please tell me what is your dream weight"
       placeholder="Dream Weight"
       buttonText="Done!"
-      initialValue={!userWeights ? weight : userWeights.dream_weight}
+      initialValue={weight}
       onChange={(e) => setWeight(e)}
       onNext={handleNextOrSkip}
       onSkip={handleNextOrSkip}
