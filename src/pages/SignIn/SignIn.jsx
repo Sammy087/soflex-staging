@@ -13,6 +13,7 @@ import { Paths } from "../../AppConstants";
 import { GlobalContext } from "../../contexts/GlobalContext";
 import Loading from "../Loading/Loading";
 import { UserContext } from "../../contexts/UserContext";
+import { checkHealthConnection } from "../../firebaseApis/healthApis";
 
 const InputField = ({
   label,
@@ -90,10 +91,17 @@ const SignIn = () => {
         await updateDoc(userProfile, {
           last_login_at: serverTimestamp(),
         });
+        const { data } = await checkHealthConnection({
+          uid: user?.uid,
+        });
         setUid(user?.uid);
         sessionStorage.setItem("uid", user?.uid);
         setLoading(false);
-        navigate(Paths.WELCOME);
+        if (data.result) {
+          navigate(Paths.MANAGEMENT);
+        } else {
+          navigate(Paths.WELCOME);
+        }
       } catch (error) {
         setAlertMessage(error.message);
         setShowAlert(true);
