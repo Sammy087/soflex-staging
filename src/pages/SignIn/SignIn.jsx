@@ -9,7 +9,7 @@ import {
   updateDoc,
 } from "firebase/firestore";
 import { firestore } from "../../firebase";
-import { Paths } from "../../AppConstants";
+import { FirebaseErrorMessages, Paths } from "../../AppConstants";
 import { GlobalContext } from "../../contexts/GlobalContext";
 import Loading from "../Loading/Loading";
 import { UserContext } from "../../contexts/UserContext";
@@ -103,8 +103,10 @@ const SignIn = () => {
           navigate(Paths.WELCOME);
         }
       } catch (error) {
-        setAlertMessage(error.message);
+        const errorMessage = FirebaseErrorMessages[error.code];
+        setAlertMessage(errorMessage);
         setShowAlert(true);
+        setLoading(false);
       }
     }
   };

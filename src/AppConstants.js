@@ -48,3 +48,10 @@ export const FrequencyCheckForm = [
   { title: "On Specific Days of the Week", value: "Weekly" },
   { title: "As Needed", value: "Monthly" },
 ];
+
+export const FirebaseErrorMessages = {
+  "auth/invalid-credential": "The email address is not valid.",
+  "auth/user-disabled": "The user account has been disabled.",
+  "auth/user-not-found": "No user found with this email.",
+  "auth/wrong-password": "Incorrect password. Please try again.",
+};
