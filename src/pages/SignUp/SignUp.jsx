@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ArrowUp } from "../../component/Icons/ArrowUp";
 import { auth, firestore } from "../../firebase";
@@ -8,6 +8,8 @@ import {
 } from "firebase/auth";
 import { setDoc, doc, collection } from "firebase/firestore";
 import { Paths } from "../../AppConstants";
+import { GlobalContext } from "../../contexts/GlobalContext";
+import Loading from "../Loading/Loading";
 
 const InputField = ({
   label,
@@ -56,6 +58,7 @@ const SignUp = () => {
     message: "",
     type: "success",
   });
+  const { loading, setLoading } = useContext(GlobalContext);
 
   const handleBackClick = () => {
     navigate(Paths.HOME);
@@ -76,6 +79,7 @@ const SignUp = () => {
   };
 
   const handleSignUp = async () => {
+    setLoading(true);
     const validationErrors = validate();
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
@@ -112,11 +116,21 @@ const SignUp = () => {
           type: "success",
         });
         setShowModal(true);
+        setLoading(false);
       } catch (error) {
-        setAlert({
-          message: error.message,
-          type: "error",
-        });
+        if (error.code === "auth/email-already-in-use") {
+          setAlert({
+            message: "Email is already in use. Please sign in.",
+            type: "error",
+          });
+        } else {
+          setAlert({
+            message: error.message,
+            type: "error",
+          });
+        }
+        setShowModal(true);
+        setLoading(false);
       }
     }
   };
@@ -124,6 +138,8 @@ const SignUp = () => {
   const handleSignIn = () => {
     navigate(Paths.SIGNIN);
   };
+
+  if (loading) return <Loading />;
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
