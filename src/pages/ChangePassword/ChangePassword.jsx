@@ -28,7 +28,7 @@ const ChangePassword = () => {
 
   return (
     <div className="flex items-center justify-center h-screen bg-gray-100">
-      <div className="w-full h-full max-w-md bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+      <div className="w-full h-full max-w-md px-8 pt-6 pb-8 mb-4">
         <div className="mb-4 mt-4 cursor-pointer" onClick={handleBackClick}>
           <ArrowUp />
         </div>

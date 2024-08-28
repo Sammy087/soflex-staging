@@ -3,7 +3,36 @@ import { useNavigate } from "react-router-dom";
 import { getAuth, sendPasswordResetEmail } from "firebase/auth";
 import { ArrowUp } from "../../component/Icons/ArrowUp";
 import { Paths } from "../../AppConstants";
-
+const InputField = ({
+  label,
+  value,
+  type = "text",
+  icon,
+  onChange,
+  placeholder,
+  onIconClick,
+}) => (
+  <div className="mb-4">
+    <label className="block text-black text-sm font-bold mb-2">{label}</label>
+    <div className="relative">
+      <input
+        type={type}
+        value={value}
+        onChange={onChange}
+        placeholder={placeholder}
+        className="shadow appearance-none border border-gray-300 rounded-lg w-full py-2 px-3 text-gray-700 focus:outline-none focus:shadow-outline focus:border-[#50B498]"
+      />
+      {icon && (
+        <img
+          className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer"
+          alt={label}
+          src={icon}
+          onClick={onIconClick}
+        />
+      )}
+    </div>
+  </div>
+);
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
@@ -34,7 +63,7 @@ const ForgotPassword = () => {
 
   return (
     <div className="flex items-center justify-center h-screen bg-gray-100">
-      <div className="w-full h-full max-w-md bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+      <div className="w-full h-full max-w-md rounded px-8 pt-6 pb-8 mb-4">
         <div className="mb-4 mt-4 cursor-pointer" onClick={handleBackClick}>
           <ArrowUp />
         </div>
@@ -49,23 +78,13 @@ const ForgotPassword = () => {
           </h2>
         </div>
         <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2">
-            Email
-          </label>
-          <div className="relative">
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="@mail.com"
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            />
-            <img
-              className="absolute right-3 top-1/2 transform -translate-y-1/2"
-              alt="Email Icon"
-              src="static/img/email-svgrepo-com.svg"
-            />
-          </div>
+          <InputField
+            label="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="Enter your email"
+            icon="static/img/email-com-green.svg"
+          />
         </div>
         {message && (
           <div className="text-green-500 text-xs italic">{message}</div>
