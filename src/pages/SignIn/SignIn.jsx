@@ -25,16 +25,14 @@ const InputField = ({
   onIconClick,
 }) => (
   <div className="mb-4">
-    <label className="block text-gray-700 text-sm font-bold mb-2">
-      {label}
-    </label>
+    <label className="block text-black text-sm font-bold mb-2">{label}</label>
     <div className="relative">
       <input
         type={type}
         value={value}
         onChange={onChange}
         placeholder={placeholder}
-        className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        className="shadow appearance-none border border-gray-300 rounded-lg w-full py-2 px-3 text-gray-700 focus:outline-none focus:shadow-outline focus:border-[#50B498]"
       />
       {icon && (
         <img
@@ -116,16 +114,18 @@ const SignIn = () => {
   if (loading) return <Loading />;
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
-      <div className="w-full max-w-md bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+    <div className="flex flex-col items-center justify-between min-h-screen bg-gray-100">
+      <div className="w-full max-w-md rounded px-8 pt-6 pb-8 mb-4">
         <div className="mb-4 cursor-pointer" onClick={handleBackClick}>
-          <ArrowUp />
+          <ArrowUp className="absolute left-0 mt-5 ml-5" />
         </div>
         <img
-          className="mx-auto h-40 w-auto"
+          className="mx-auto h-3/5 w-3/5 mt-10"
           alt="Logo"
           src="static/img/image-1.png"
         />
+      </div>
+      <div className="p-8 w-full max-w-md flex-none">
         <div className="text-center mb-6">
           <h2 className="mt-6 text-center text-3xl font-extrabold text-[#50B498]">
             Welcome to Med
@@ -140,7 +140,7 @@ const SignIn = () => {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="Enter your email"
-            icon="static/img/email-svgrepo-com.svg"
+            icon="static/img/email-com.svg"
           />
           {errors.email && (
             <div className="text-red-500 text-xs italic">{errors.email}</div>
@@ -159,7 +159,7 @@ const SignIn = () => {
           )}
           <div className="text-right">
             <a
-              className="text-balck hover:text-blue-700 cursor-pointer"
+              className="text-black hover:text-blue-700 cursor-pointer underline"
               onClick={() => navigate(Paths.FORGOT_PASSWORD)}
             >
               Forgot Password?
@@ -177,7 +177,7 @@ const SignIn = () => {
         <p className="mt-2 text-center text-sm text-gray-600">
           Don't have an account?{" "}
           <a
-            className="text-blue-500 hover:text-blue-700 cursor-pointer"
+            className="text-[#50B498] hover:text-[#50B498] cursor-pointer font-bold"
             onClick={handleSignUp}
           >
             Sign Up

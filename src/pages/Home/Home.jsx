@@ -46,17 +46,19 @@ const Home = () => {
 
   return (
     <div className="flex flex-col items-center justify-between min-h-screen bg-gray-100">
-      <img
-        className="mx-auto w-40 mb-8 pt-4 mt-10"
-        alt="Logo"
-        src="static/img/image-1.png"
-      />
-      <div className="w-full max-w-md bg-white shadow-md rounded-lg px-8 pb-4 mb-4 absolute bottom-0">
+      <div className="flex flex-col items-center justify-center flex-grow">
+        <img
+          className="mx-auto h-[50%] w-[50%]"
+          alt="Logo"
+          src="static/img/image-1.png"
+        />
+      </div>
+      <div className="w-full max-w-md bg-white px-8 pb-2 mb-2 flex-none">
         <div className="text-center mb-4">
-          <h2 className="mt-6 text-center text-3xl font-extrabold text-[#50B498]">
+          <h2 className="text-center text-[32px] font-extrabold text-[#50B498]">
             Welcome to Med
           </h2>
-          <p className="mt-2 text-center text-sm text-gray-600">
+          <p className="mt-2 text-center text-[14px] text-black font-medium leading-[17.07px]">
             Lorem IpsumLorem IpsumLorem IpsumLorem IpsumLorem IpsumLorem
           </p>
         </div>
@@ -70,7 +72,7 @@ const Home = () => {
               alt="Sign up with Email"
               src="static/img/email-svgrepo-com.svg"
             />
-            <div className="text-lg font-semibold">Sign up with Email</div>
+            <div className="text-[16px]">Sign up with Email</div>
           </div>
           <div
             className="flex items-center justify-center mb-4 cursor-pointer bg-[#50B498] text-white py-2 px-4 rounded"
@@ -81,7 +83,7 @@ const Home = () => {
               alt="Continue with Google"
               src="static/img/google-svgrepo-com.svg"
             />
-            <div className="text-lg font-semibold">Continue with Google</div>
+            <div className="text-[16px]">Continue with Google</div>
           </div>
           <div
             className="flex items-center justify-center mb-4 cursor-pointer bg-[#50B498] text-white py-2 px-4 rounded"
@@ -92,19 +94,19 @@ const Home = () => {
               alt="Continue with Apple"
               src="static/img/apple-173-svgrepo-com.svg"
             />
-            <div className="text-lg font-semibold">Continue with Apple</div>
+            <div className="text-[16px]">Continue with Apple</div>
           </div>
           <div
             className="flex items-center justify-center mb-4 cursor-pointer bg-[#50B498] text-white py-2 px-4 rounded"
             onClick={handleSignIn}
           >
-            <div className="text-lg font-semibold">Join as Guest</div>
+            <div className="text-[16px]">Join as Guest</div>
           </div>
         </div>
-        <div className="text-center text-sm text-gray-600">
+        <div className="text-center text-[14px] text-black leading-[17.07px]">
           Already has an account?{" "}
           <a
-            className="text-blue-500 hover:text-blue-700 cursor-pointer"
+            className="text-[#50B498] font-semibold hover:text-[#50B498] cursor-pointer"
             onClick={handleSignIn}
           >
             Sign in
