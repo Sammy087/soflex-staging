@@ -15,6 +15,10 @@ const Home = () => {
   };
 
   const handleSignIn = () => {
+    navigate(Paths.SIGNIN);
+  };
+
+  const handleGuestSignIn = () => {
     setUid("8Qw8d1u3HNgz6yXXTw694FD8Vc62");
     navigate(Paths.MANAGEMENT);
   };
@@ -101,7 +105,7 @@ const Home = () => {
           </div>
           <div
             className="flex items-center justify-center mb-4 cursor-pointer bg-[#50B498] text-white py-2 px-4 rounded"
-            onClick={handleSignIn}
+            onClick={handleGuestSignIn}
           >
             <div className="text-[16px]">Join as Guest</div>
           </div>
