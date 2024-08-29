@@ -5,9 +5,13 @@ import { auth, firestore } from "../../firebase";
 import { collection, doc, serverTimestamp, setDoc } from "firebase/firestore";
 import { Paths } from "../../AppConstants";
 import { UserContext } from "../../contexts/UserContext";
+import { GlobalContext } from "../../contexts/GlobalContext";
+import { checkHealthConnection } from "../../firebaseApis/healthApis";
+import Loading from "../Loading/Loading";
 
 const Home = () => {
   const { setUid } = useContext(UserContext);
+  const { loading, setLoading } = useContext(GlobalContext);
   const navigate = useNavigate();
 
   const handleSignUp = () => {
@@ -18,12 +22,27 @@ const Home = () => {
     navigate(Paths.SIGNIN);
   };
 
-  const handleGuestSignIn = () => {
-    setUid("8Qw8d1u3HNgz6yXXTw694FD8Vc62");
-    navigate(Paths.MANAGEMENT);
+  const handleGuestSignIn = async () => {
+    setLoading(true);
+    try {
+      setUid("8Qw8d1u3HNgz6yXXTw694FD8Vc62");
+      sessionStorage.setItem("uid", "8Qw8d1u3HNgz6yXXTw694FD8Vc62");
+      const { data } = await checkHealthConnection({
+        uid: "8Qw8d1u3HNgz6yXXTw694FD8Vc62",
+      });
+      if (data.result) {
+        navigate(Paths.MANAGEMENT);
+      } else {
+        navigate(Paths.WELCOME);
+      }
+    } catch (err) {
+      console.error(err);
+    }
+    setLoading(false);
   };
 
   const handleGoogleSignUp = async () => {
+    setLoading(true);
     const provider = new GoogleAuthProvider();
     try {
       const result = await signInWithPopup(auth, provider);
@@ -45,11 +64,14 @@ const Home = () => {
     } catch (error) {
       console.error("Error signing in with Google: ", error);
     }
+    setLoading(false);
   };
 
   const handleAppleSignUp = () => {
     console.log("Apple Sign Up");
   };
+
+  if (loading) return <Loading />;
 
   return (
     <div className="flex flex-col items-center justify-between min-h-screen bg-gray-100">

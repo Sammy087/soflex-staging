@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 
 const Summary = ({
+  daysLeft,
   currentWeight,
   startWeight,
   dreamWeight,
@@ -104,7 +105,7 @@ const Summary = ({
             </div>
             <div className="flex justify-center items-center">
               <div className="text-center text-2xl text-[#50B498] font-bold mb-2 px-1">
-                9
+                {daysLeft}
               </div>
               <div className="text-center text-2xl font-bold mb-2">Days</div>
             </div>

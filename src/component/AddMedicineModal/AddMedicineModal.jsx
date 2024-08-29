@@ -84,6 +84,7 @@ const AddMedicineModal = ({
       shot_name: medicineName,
       last_shot_date: date,
       time: newTimes,
+      shoted: true,
     });
     onRequestClose();
     onConfirm();

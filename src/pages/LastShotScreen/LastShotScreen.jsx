@@ -78,6 +78,7 @@ function LastShotScreen() {
       shot_name: shots.shot_name,
       last_shot_date: clickedDate,
       time: currentTime,
+      shoted: true,
     });
     setLoading(false);
     // setSelectedDate(date);

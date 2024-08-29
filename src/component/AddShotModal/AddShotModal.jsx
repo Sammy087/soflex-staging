@@ -69,6 +69,7 @@ const AddShotModal = ({ isOpen, onRequestClose, onConfirm, medicinesList }) => {
       shot_name: medicineName,
       last_shot_date: date,
       time: times,
+      shoted: true,
     });
     setIsAddMedicineModalOpen(false);
     onConfirm();
@@ -196,7 +197,9 @@ const AddShotModal = ({ isOpen, onRequestClose, onConfirm, medicinesList }) => {
         </div>
       </Modal>
       <AddNewMedicineModal
+        date={date}
         frequency={frequency}
+        setFrequency={setFrequency}
         medicineName={medicineName}
         setMedicineName={setMedicineName}
         dosage={dosage}

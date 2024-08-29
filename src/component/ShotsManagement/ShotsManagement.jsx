@@ -5,8 +5,7 @@ import WeekCalendar from "../WeekCalendar/WeekCalendar";
 import WeightModal from "../WeightModal/WeightModal";
 
 const ShotsManagement = ({
-  schedule,
-  daysLeft,
+  nextShot,
   medLog,
   shotscolumns,
   openMedicineModal,
@@ -75,17 +74,22 @@ const ShotsManagement = ({
         Days Left for next Shot
       </div>
       <div className="text-center text-2xl text-[#50B498] font-bold mb-4">
-        {daysLeft} Days
+        {nextShot.days_left} Days
       </div>
       <div className="mb-4">
         <div className="flex flex-col items-start p-4 bg-white rounded-lg border">
-          <span className="text-lg font-semibold mb-2">Name</span>
+          <div className="flex w-full items-center justify-around ">
+            <span className="text-lg font-semibold mb-2">Name :</span>
+            <span className="text-lg font-semibold mb-2">
+              {nextShot.shot_name}
+            </span>
+          </div>
           <div className="flex justify-between w-full">
             <span className="bg-gray-100 text-sm text-gray-500 p-2 rounded-lg">
-              Dosage: {schedule.dosage}
+              Dosage: {nextShot.dosage} {nextShot.dosage_unit}
             </span>
             <span className="bg-gray-100 text-sm text-gray-500 p-2 rounded-lg">
-              Frequency: {schedule.frequency}
+              Frequency: {nextShot.frequency}
             </span>
           </div>
         </div>

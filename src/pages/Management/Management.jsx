@@ -34,6 +34,14 @@ const Management = () => {
   const { loading, setLoading, activeTab, setActiveTab } =
     useContext(GlobalContext);
   const [medLog, setMedLog] = useState([]);
+  const [nextShot, setNextShot] = useState({
+    days_left: null,
+    dosage: null,
+    dosage_unit: null,
+    frequency: null,
+    next_shot_date: null,
+    shot_name: null,
+  });
   const navigate = useNavigate();
 
   const closeMedicineModal = () => {
@@ -98,11 +106,6 @@ const Management = () => {
     weights: [70, 71, 69],
   });
 
-  const schedule = {
-    dosage: "50mg",
-    frequency: "Everyday",
-  };
-
   const columns = [
     { header: "Date", accessor: "date" },
     { header: "Weight", accessor: "weight" },
@@ -115,12 +118,71 @@ const Management = () => {
     { header: "Dosage", accessor: "dosage" },
   ];
 
+  function getNextShotDate(lastShotDate, frequency) {
+    const date = new Date(lastShotDate);
+    switch (frequency) {
+      case "Daily":
+        date.setDate(date.getDate() + 1);
+        break;
+      case "Weekly":
+        date.setDate(date.getDate() + 7);
+        break;
+      case "Monthly":
+        date.setMonth(date.getMonth() + 1);
+        break;
+      case "Yearly":
+        date.setFullYear(date.getFullYear() + 1);
+        break;
+      default:
+        throw new Error("Unknown frequency: " + frequency);
+    }
+    return date.toISOString().split("T")[0];
+  }
+
+  function calculateDaysBetween(date1, date2) {
+    const diffTime = Math.abs(new Date(date2) - new Date(date1));
+    return Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+  }
+
+  function findEarliestNextShot(data) {
+    const shots = data.data.data.shots;
+    let earliestShot = null;
+
+    shots.forEach((shot) => {
+      const nextShotDate = getNextShotDate(shot.last_shot_date, shot.frequency);
+      if (
+        !earliestShot ||
+        new Date(nextShotDate) < new Date(earliestShot.next_shot_date)
+      ) {
+        earliestShot = {
+          shot_name: shot.shot_name,
+          next_shot_date: nextShotDate,
+          dosage: shot.dosage,
+          dosage_unit: shot.dosage_unit,
+          frequency: shot.frequency,
+        };
+      }
+    });
+
+    if (earliestShot) {
+      const today = new Date().toISOString().split("T")[0];
+      earliestShot.days_left = calculateDaysBetween(
+        today,
+        earliestShot.next_shot_date
+      );
+    }
+
+    setNextShot(earliestShot);
+    return earliestShot;
+  }
+
   const fetchData = async () => {
     setLoading(true);
     try {
       const f_user_weights = await getUserWeights({ uid });
       const f_user_shots = await getUserShots({ uid });
       const f_medicines_list = await getAllMedicines({ uid });
+      findEarliestNextShot(f_user_shots);
 
       if (f_user_weights.data && f_user_weights.data.data) {
         const userWeightData = f_user_weights.data.data.today_weight;
@@ -231,6 +293,7 @@ const Management = () => {
           >
             {activeTab === "summary" && (
               <Summary
+                daysLeft={nextShot.days_left}
                 currentWeight={currentWeight}
                 startWeight={startWeight}
                 dreamWeight={dreamWeight}
@@ -256,8 +319,7 @@ const Management = () => {
 
             {activeTab === "shots" && (
               <ShotsManagement
-                schedule={schedule}
-                daysLeft={9}
+                nextShot={nextShot}
                 medLog={medLog}
                 shotscolumns={shotsColumns}
                 openMedicineModal={openMedicineModal}
