@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ArrowUp } from "../../component/Icons/ArrowUp";
-import { auth, firestore } from "../../firebase";
+import { firestore } from "../../firebase";
 import {
   createUserWithEmailAndPassword,
   sendEmailVerification,
@@ -10,6 +10,7 @@ import { setDoc, doc, collection } from "firebase/firestore";
 import { Paths } from "../../AppConstants";
 import { GlobalContext } from "../../contexts/GlobalContext";
 import Loading from "../Loading/Loading";
+import { UserContext } from "../../contexts/UserContext";
 
 const InputField = ({
   label,
@@ -43,10 +44,11 @@ const InputField = ({
 );
 
 const SignUp = () => {
+  const { auth } = useContext(UserContext);
   const navigate = useNavigate();
   const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState(auth?.email);
+  const [password, setPassword] = useState(auth?.password);
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errors, setErrors] = useState({});
   const [showPassword, setShowPassword] = useState(false);
@@ -114,7 +116,6 @@ const SignUp = () => {
           type: "success",
         });
         setShowModal(true);
-        setLoading(false);
       } catch (error) {
         if (error.code === "auth/email-already-in-use") {
           setAlert({
@@ -128,9 +129,9 @@ const SignUp = () => {
           });
         }
         setShowModal(true);
-        setLoading(false);
       }
     }
+    setLoading(false);
   };
 
   const handleSignIn = () => {
@@ -217,12 +218,12 @@ const SignUp = () => {
         </div>
         <p className="mt-2 text-center text-sm text-gray-600">
           Don't have an account?{" "}
-          <a
-            className="text-[#50B498] hover:text-[#50B498] cursor-pointer font-bold"
+          <button
+            className="text-[#50B498] hover:text-[#50B498] cursor-pointer font-bold bg-transparent border-none p-0"
             onClick={handleSignIn}
           >
             Sign In
-          </a>
+          </button>
         </p>
       </div>
       {showModal && (

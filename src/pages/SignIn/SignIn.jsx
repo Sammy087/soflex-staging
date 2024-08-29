@@ -56,7 +56,7 @@ const SignIn = () => {
   const navigate = useNavigate();
   const auth = getAuth();
   const { loading, setLoading } = useContext(GlobalContext);
-  const { setUid } = useContext(UserContext);
+  const { setUid, setAuth } = useContext(UserContext);
 
   const handleBackClick = () => {
     navigate(Paths.HOME);
@@ -160,12 +160,12 @@ const SignIn = () => {
             <div className="text-red-500 text-xs italic">{errors.password}</div>
           )}
           <div className="text-right">
-            <a
-              className="text-black hover:text-blue-700 cursor-pointer underline"
+            <button
+              className="text-black hover:text-blue-700 cursor-pointer underline bg-transparent border-none p-0"
               onClick={() => navigate(Paths.FORGOT_PASSWORD)}
             >
               Forgot Password?
-            </a>
+            </button>
           </div>
         </div>
         <div className="flex items-center justify-center mb-4 cursor-pointer bg-[#50B498] text-white py-1 px-4 rounded">
@@ -178,12 +178,12 @@ const SignIn = () => {
         </div>
         <p className="mt-2 text-center text-sm text-gray-600">
           Don't have an account?{" "}
-          <a
-            className="text-[#50B498] hover:text-[#50B498] cursor-pointer font-bold"
+          <button
+            className="text-[#50B498] hover:text-[#50B498] cursor-pointer font-bold bg-transparent border-none p-0"
             onClick={handleSignUp}
           >
             Sign Up
-          </a>
+          </button>
         </p>
       </div>
       {showAlert && (
@@ -191,12 +191,23 @@ const SignIn = () => {
           <div className="bg-white p-6 rounded shadow-md">
             <h2 className="text-xl font-bold mb-4">Error</h2>
             <p>{alertMessage}</p>
-            <button
-              className="mt-4 bg-red-500 text-white py-2 px-4 rounded"
-              onClick={() => setShowAlert(false)}
-            >
-              Close
-            </button>
+            <div className="flex justify-between mt-4">
+              <button
+                className="bg-red-500 text-white py-2 px-4 rounded"
+                onClick={() => {
+                  setAuth({ email, password });
+                  navigate(Paths.SIGNUP);
+                }}
+              >
+                Sign Up
+              </button>
+              <button
+                className="bg-red-500 text-white py-2 px-4 rounded"
+                onClick={() => setShowAlert(false)}
+              >
+                Close
+              </button>
+            </div>
           </div>
         </div>
       )}

@@ -12,6 +12,7 @@ export const UserContext = createContext();
 export const UserProvider = ({ children }) => {
   const { setAllowed } = useContext(GlobalContext);
   const [username, setUsername] = useState("");
+  const [auth, setAuth] = useState(null);
   const [uid, setUid] = useState();
 
   useEffect(() => {
@@ -20,8 +21,8 @@ export const UserProvider = ({ children }) => {
   }, [uid, setAllowed]);
 
   const memorizedValues = useMemo(() => {
-    return { username, setUsername, uid, setUid };
-  }, [username, setUsername, uid, setUid]);
+    return { username, setUsername, uid, setUid, auth, setAuth };
+  }, [username, setUsername, uid, setUid, auth, setAuth]);
 
   return (
     <UserContext.Provider value={memorizedValues}>
