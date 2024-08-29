@@ -121,8 +121,10 @@ export const mutationShotsInfoTimes = defaultFunctions.https.onCall(
     shot_name: string;
     time: string | string[]; // Accept either a string or an array of strings
     last_shot_date: string;
+    shoted: boolean;
   }) => {
     const { uid, shot_name, time, last_shot_date } = data;
+    const shoted = data.shoted ?? false;
     // Convert time to an array if it's a string
     const times = Array.isArray(time) ? time : [time];
     const shotsInfoRef = admin.firestore().collection("shots_info").doc(uid);
@@ -148,7 +150,10 @@ export const mutationShotsInfoTimes = defaultFunctions.https.onCall(
           shoted_dates: [
             {
               date: last_shot_date,
-              times: times.map((time) => ({ time, shoted: false })),
+              times: times.map((time) => ({
+                time,
+                shoted,
+              })),
             },
           ],
           times: times,
@@ -190,18 +195,18 @@ export const mutationShotsInfoTimes = defaultFunctions.https.onCall(
             if (timeEntryIndex !== -1) {
               shots[shotIndex].shoted_dates[dateIndex].times[
                 timeEntryIndex
-              ].shoted = false;
+              ].shoted = shoted;
             } else {
               shots[shotIndex].shoted_dates[dateIndex].times.push({
-                time: time,
-                shoted: false,
+                time,
+                shoted,
               });
             }
           }
         } else {
           shots[shotIndex].shoted_dates.push({
             date: last_shot_date,
-            times: times.map((time) => ({ time, shoted: false })),
+            times: times.map((time) => ({ time, shoted })),
           });
         }
       }
