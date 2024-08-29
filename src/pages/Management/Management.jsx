@@ -12,13 +12,12 @@ import {
   getAllMedicines,
   getUserShots,
   getUserWeights,
+  mutationShotsInfoTimes,
   mutationUserWeights,
 } from "../../firebaseApis/healthApis";
 import Loading from "../Loading/Loading";
 import { timestampToDate } from "../../component/dateConverter";
 import ManagementLayout from "./ManagementLayout";
-import { useNavigate } from "react-router-dom";
-import { Paths } from "../../AppConstants";
 
 const Management = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -42,7 +41,6 @@ const Management = () => {
     next_shot_date: null,
     shot_name: null,
   });
-  const navigate = useNavigate();
 
   const closeMedicineModal = () => {
     setIsAddMedicineModalOpen(false);
@@ -247,6 +245,31 @@ const Management = () => {
     fetchData();
   }, []);
 
+  function getCurrentTime() {
+    const now = new Date();
+    return now.toLocaleTimeString("en-GB", {
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+  }
+
+  const onMarkAsTaken = async () => {
+    setLoading(true);
+    try {
+      await mutationShotsInfoTimes({
+        uid,
+        shot_name: nextShot.shot_name,
+        last_shot_date: nextShot.next_shot_date,
+        time: getCurrentTime(),
+        shoted: true,
+      });
+      await fetchData();
+    } catch (err) {
+      console.error(err);
+    }
+    setLoading(false);
+  };
+
   if (loading) return <Loading />;
 
   return (
@@ -302,6 +325,7 @@ const Management = () => {
                 openMedicineModal={openMedicineModal}
                 openModal={openModal}
                 seeMore={seeMore}
+                onMarkAsTaken={onMarkAsTaken}
               />
             )}
             {activeTab === "weight" && (
@@ -327,6 +351,7 @@ const Management = () => {
                 startWeight={startWeight}
                 dreamWeight={dreamWeight}
                 openShotModal={openShotModal}
+                onMarkAsTaken={onMarkAsTaken}
               />
             )}
             {activeTab === "more" && (

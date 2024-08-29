@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 
 const Summary = ({
   daysLeft,
@@ -10,6 +10,7 @@ const Summary = ({
   openMedicineModal,
   openModal,
   seeMore,
+  onMarkAsTaken,
 }) => {
   return (
     <div>
@@ -112,7 +113,10 @@ const Summary = ({
             <div className="text-center text-sm text-gray-500 mb-4">
               Days Left for next Shot
             </div>
-            <button className="w-full bg-[#50B498] text-white py-2 rounded-lg">
+            <button
+              className="w-full bg-[#50B498] text-white py-2 rounded-lg"
+              onClick={onMarkAsTaken}
+            >
               Mark as Taken
             </button>
           </div>

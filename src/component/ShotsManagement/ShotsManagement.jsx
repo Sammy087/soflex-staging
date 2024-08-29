@@ -13,6 +13,7 @@ const ShotsManagement = ({
   currentWeight,
   startWeight,
   dreamWeight,
+  onMarkAsTaken,
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isWeightModalOpen, setIsWeightModalOpen] = useState(false);
@@ -78,10 +79,9 @@ const ShotsManagement = ({
       </div>
       <div className="mb-4">
         <div className="flex flex-col items-start p-4 bg-white rounded-lg border">
-          <div className="flex w-full items-center justify-around ">
-            <span className="text-lg font-semibold mb-2">Name :</span>
+          <div className="flex w-full items-center justify-center ">
             <span className="text-lg font-semibold mb-2">
-              {nextShot.shot_name}
+              Name : {nextShot.shot_name}
             </span>
           </div>
           <div className="flex justify-between w-full">
@@ -93,7 +93,10 @@ const ShotsManagement = ({
             </span>
           </div>
         </div>
-        <button className="w-full bg-[#50B498] text-white py-2 rounded-lg mb-2 mt-2">
+        <button
+          className="w-full bg-[#50B498] text-white py-2 rounded-lg mb-2 mt-2"
+          onClick={onMarkAsTaken}
+        >
           Mark as Taken
         </button>
         <button
