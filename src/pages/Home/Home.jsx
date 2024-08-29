@@ -1,11 +1,13 @@
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
-import React from "react";
+import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { auth, firestore } from "../../firebase";
 import { collection, doc, serverTimestamp, setDoc } from "firebase/firestore";
 import { Paths } from "../../AppConstants";
+import { UserContext } from "../../contexts/UserContext";
 
 const Home = () => {
+  const { setUid } = useContext(UserContext);
   const navigate = useNavigate();
 
   const handleSignUp = () => {
@@ -13,7 +15,8 @@ const Home = () => {
   };
 
   const handleSignIn = () => {
-    navigate(Paths.SIGNIN);
+    setUid("8Qw8d1u3HNgz6yXXTw694FD8Vc62");
+    navigate(Paths.MANAGEMENT);
   };
 
   const handleGoogleSignUp = async () => {
