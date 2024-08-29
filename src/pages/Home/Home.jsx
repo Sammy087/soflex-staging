@@ -134,12 +134,12 @@ const Home = () => {
         </div>
         <div className="text-center text-[14px] text-black leading-[17.07px]">
           Already has an account?{" "}
-          <a
-            className="text-[#50B498] font-semibold hover:text-[#50B498] cursor-pointer"
+          <button
+            className="text-[#50B498] font-semibold hover:text-[#50B498] cursor-pointer bg-transparent border-none p-0"
             onClick={handleSignIn}
           >
             Sign in
-          </a>
+          </button>
         </div>
       </div>
     </div>

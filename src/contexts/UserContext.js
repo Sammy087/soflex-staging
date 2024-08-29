@@ -17,7 +17,7 @@ export const UserProvider = ({ children }) => {
   useEffect(() => {
     const sessionUid = sessionStorage.getItem("uid");
     if (uid === sessionUid) setAllowed(true);
-  }, [uid]);
+  }, [uid, setAllowed]);
 
   const memorizedValues = useMemo(() => {
     return { username, setUsername, uid, setUid };
