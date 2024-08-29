@@ -148,7 +148,7 @@ export const mutationShotsInfoTimes = defaultFunctions.https.onCall(
           shoted_dates: [
             {
               date: last_shot_date,
-              times: times.map((time) => ({ time, shoted: true })),
+              times: times.map((time) => ({ time, shoted: false })),
             },
           ],
           times: times,
@@ -190,18 +190,18 @@ export const mutationShotsInfoTimes = defaultFunctions.https.onCall(
             if (timeEntryIndex !== -1) {
               shots[shotIndex].shoted_dates[dateIndex].times[
                 timeEntryIndex
-              ].shoted = true;
+              ].shoted = false;
             } else {
               shots[shotIndex].shoted_dates[dateIndex].times.push({
                 time: time,
-                shoted: true,
+                shoted: false,
               });
             }
           }
         } else {
           shots[shotIndex].shoted_dates.push({
             date: last_shot_date,
-            times: times.map((time) => ({ time, shoted: true })),
+            times: times.map((time) => ({ time, shoted: false })),
           });
         }
       }
