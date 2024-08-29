@@ -66,6 +66,7 @@ const Management = () => {
         if (res.data.result) console.log(res.data.result);
       })
       .catch((err) => console.error(err));
+    await fetchData();
     setLoading(false);
     closeModal();
   };
