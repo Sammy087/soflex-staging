@@ -25,7 +25,7 @@ function UserInfoScreen() {
       setErrors(validationErrors);
     } else {
       setUsername(name);
-      navigate(Paths.REMINDER);
+      navigate(Paths.HEALTH_CONNECT);
     }
   };
 

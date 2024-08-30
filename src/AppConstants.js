@@ -13,7 +13,7 @@ export const REACT_APP_FIREBASE_MEASUREMENT_ID =
   process.env.REACT_APP_FIREBASE_MEASUREMENT_ID;
 
 export const Paths = {
-  HOME: "/",
+  WELCOME: "/",
   USER_INFO: "/a1b2c3d4",
   REMINDER: "/e5f6g7h8",
   WEIGHT_LOSS: "/i9j0k1l2",
@@ -31,7 +31,7 @@ export const Paths = {
   LAST_REMINDER: "/e7f8g9h0",
   FORGOT_PASSWORD: "/i1j2k3l4",
   MANAGEMENT: "/m5n6o7p8",
-  WELCOME: "/q9r0s1t2",
+  HOME: "/q9r0s1t2",
   SIGNUP: "/u3v4w5x6",
   SIGNIN: "/y7z8a9b0",
   CHANGE_PASSWORD: "/c1d2e3f4",

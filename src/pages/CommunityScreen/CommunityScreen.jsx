@@ -7,7 +7,7 @@ function CommunityScreen() {
   const navigate = useNavigate();
 
   const handleNext = () => {
-    navigate(Paths.HEALTH_CONNECT);
+    navigate(Paths.HOME);
   };
 
   return (

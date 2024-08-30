@@ -101,7 +101,7 @@ const SignIn = () => {
         sessionStorage.setItem("uid", user?.uid);
         setLoading(false);
         if (data.result) {
-          navigate(Paths.MANAGEMENT);
+          navigate(Paths.USER_INFO);
         } else {
           navigate(Paths.WELCOME);
         }

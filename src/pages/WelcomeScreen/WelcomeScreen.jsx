@@ -7,7 +7,7 @@ function WelcomeScreen() {
   const navigate = useNavigate();
 
   const handleNext = () => {
-    navigate(Paths.USER_INFO);
+    navigate(Paths.REMINDER);
   };
 
   return (
