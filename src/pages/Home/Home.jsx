@@ -2,7 +2,14 @@ import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { auth, firestore } from "../../firebase";
-import { collection, doc, getDoc, serverTimestamp, setDoc, updateDoc } from "firebase/firestore";
+import {
+  collection,
+  doc,
+  getDoc,
+  serverTimestamp,
+  setDoc,
+  updateDoc,
+} from "firebase/firestore";
 import { Paths } from "../../AppConstants";
 import { UserContext } from "../../contexts/UserContext";
 import { GlobalContext } from "../../contexts/GlobalContext";
@@ -68,6 +75,7 @@ const Home = () => {
           { merge: true }
         );
       }
+      navigate(Paths.SIGNIN);
     } catch (error) {
       console.error("Error signing in with Google: ", error);
     }

@@ -129,6 +129,7 @@ const SignIn = () => {
       const { data } = await checkHealthConnection({
         uid: user?.uid,
       });
+
       setUid(user?.uid);
       sessionStorage.setItem("uid", user?.uid);
       setLoading(false);
@@ -138,8 +139,12 @@ const SignIn = () => {
         navigate(Paths.WELCOME);
       }
     } catch (error) {
-      const errorMessage = FirebaseErrorMessages[error.code];
-      setAlertMessage(errorMessage);
+      if (FirebaseErrorMessages[error.code]) {
+        const errorMessage = FirebaseErrorMessages[error.code];
+        setAlertMessage(errorMessage);
+      } else {
+        setAlertMessage("No user found with this email.");
+      }
       setShowAlert(true);
       setLoading(false);
     }
