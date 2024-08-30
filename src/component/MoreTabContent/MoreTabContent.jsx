@@ -90,6 +90,9 @@ const MoreTabContent = ({
     setLoading(false);
     toggleModal("updateWeight", false);
   };
+  const handleMeasurement = async () => {
+    toggleModal("measurement", false);
+  };
 
   const handleNavigation = (path) => {
     navigate(path);
@@ -193,6 +196,7 @@ const MoreTabContent = ({
       <MeasurementSystemModal
         isOpen={modals.measurement}
         onClose={() => toggleModal("measurement", false)}
+        onConfirm={handleMeasurement}
       />
       {medicinesList.length > 0 && (
         <AddMedicineModal

@@ -1,6 +1,6 @@
 import React from "react";
 
-const MeasurementSystemModal = ({ isOpen, onClose }) => {
+const MeasurementSystemModal = ({ isOpen, onClose, onConfirm }) => {
   if (!isOpen) return null;
 
   return (
@@ -22,7 +22,10 @@ const MeasurementSystemModal = ({ isOpen, onClose }) => {
             <input type="radio" name="measurement" value="imperial" />
           </div>
         </div>
-        <button className="w-full py-2 bg-[#50B498] text-white rounded-lg">
+        <button
+          className="w-full py-2 bg-[#50B498] text-white rounded-lg"
+          onClick={onConfirm}
+        >
           Confirm
         </button>
       </div>
