@@ -99,14 +99,14 @@ const MoreTabContent = ({
 
   return (
     <div className="bg-white p-4 w-full">
-      <div className="flex flex-col items-center">
+      {/* <div className="flex flex-col items-center">
         <img
           className="inline-block h-24 w-24 rounded-full ring-2 ring-white"
           alt="Profile"
           src="static/img/avatar.svg"
         />
         <h2 className="text-xl font-bold mt-4">{username}</h2>
-      </div>
+      </div> */}
       <div className="mt-4">
         <div className="bg-gray-100 p-4 rounded-lg">
           {PrimaryButtons.map((item, index) => (
