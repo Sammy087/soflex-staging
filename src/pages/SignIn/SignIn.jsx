@@ -1,6 +1,11 @@
 import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import {
+  getAuth,
+  GoogleAuthProvider,
+  signInWithEmailAndPassword,
+  signInWithPopup,
+} from "firebase/auth";
 import { ArrowUp } from "../../component/Icons/ArrowUp";
 import {
   collection,
@@ -109,6 +114,38 @@ const SignIn = () => {
     }
   };
 
+  const handleGoogleSignIn = async () => {
+    setLoading(true);
+    const provider = new GoogleAuthProvider();
+    try {
+      const result = await signInWithPopup(auth, provider);
+      const { user } = result;
+      const userProfile = doc(collection(firestore, "users"), user?.uid);
+
+      await updateDoc(userProfile, {
+        last_login_at: serverTimestamp(),
+      });
+
+      const { data } = await checkHealthConnection({
+        uid: user?.uid,
+      });
+      setUid(user?.uid);
+      sessionStorage.setItem("uid", user?.uid);
+      setLoading(false);
+      if (data.result) {
+        navigate(Paths.MANAGEMENT);
+      } else {
+        navigate(Paths.WELCOME);
+      }
+    } catch (error) {
+      const errorMessage = FirebaseErrorMessages[error.code];
+      setAlertMessage(errorMessage);
+      setShowAlert(true);
+      setLoading(false);
+    }
+    setLoading(false);
+  };
+
   const handleSignUp = () => {
     navigate(Paths.SIGNUP);
   };
@@ -175,6 +212,17 @@ const SignIn = () => {
           >
             Sign In
           </button>
+        </div>
+        <div
+          className="flex items-center justify-center mb-4 cursor-pointer bg-[#50B498] text-white py-2 px-4 rounded"
+          onClick={handleGoogleSignIn}
+        >
+          <img
+            className="h-6 w-6 mr-2"
+            alt="Continue with Google"
+            src="static/img/google-svgrepo-com.svg"
+          />
+          <div className="text-[16px]">Continue with Google</div>
         </div>
         <p className="mt-2 text-center text-sm text-gray-600">
           Don't have an account?{" "}

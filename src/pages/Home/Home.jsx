@@ -2,7 +2,7 @@ import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { auth, firestore } from "../../firebase";
-import { collection, doc, serverTimestamp, setDoc } from "firebase/firestore";
+import { collection, doc, getDoc, serverTimestamp, setDoc, updateDoc } from "firebase/firestore";
 import { Paths } from "../../AppConstants";
 import { UserContext } from "../../contexts/UserContext";
 import { GlobalContext } from "../../contexts/GlobalContext";
@@ -49,18 +49,25 @@ const Home = () => {
       const { user } = result;
       const userProfile = doc(collection(firestore, "users"), user?.uid);
 
-      await setDoc(
-        userProfile,
-        {
-          uid: user.uid,
-          email: user.email,
-          name: user.displayName,
-          provider: "Google",
-          created_at: serverTimestamp(),
+      const userDoc = await getDoc(userProfile);
+      if (userDoc.exists()) {
+        await updateDoc(userProfile, {
           last_login_at: serverTimestamp(),
-        },
-        { merge: true }
-      );
+        });
+      } else {
+        await setDoc(
+          userProfile,
+          {
+            uid: user.uid,
+            email: user.email,
+            name: user.displayName,
+            provider: "Google",
+            created_at: serverTimestamp(),
+            last_login_at: serverTimestamp(),
+          },
+          { merge: true }
+        );
+      }
     } catch (error) {
       console.error("Error signing in with Google: ", error);
     }
