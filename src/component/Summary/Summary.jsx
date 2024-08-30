@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 const Summary = ({
   daysLeft,
@@ -11,7 +11,11 @@ const Summary = ({
   openModal,
   seeMore,
   onMarkAsTaken,
+  onNextMark,
+  shotTaken,
+  shotTakenTime,
 }) => {
+  const [rating, setRating] = useState(0);
   return (
     <div>
       <div className="flex flex-col items-start max-w-md mx-auto">
@@ -104,21 +108,61 @@ const Summary = ({
                 Edit schedule
               </button>
             </div>
-            <div className="flex justify-center items-center">
-              <div className="text-center text-2xl text-[#50B498] font-bold mb-2 px-1">
-                {daysLeft}
+            {shotTaken ? (
+              <div className="text-center">
+                <div className="text-[#50B498] text-2xl font-bold mb-2">
+                  Nice Job!
+                </div>
+                <div className="flex justify-center mb-2">
+                  {[...Array(5)].map((_, index) => (
+                    <span
+                      key={index}
+                      className={`text-2xl cursor-pointer ${
+                        index < rating ? "text-yellow-500" : "text-gray-300"
+                      }`}
+                      onClick={() => setRating(index + 1)}
+                    >
+                      ★
+                    </span>
+                  ))}
+                </div>
+                <div className="text-sm text-gray-500 mb-4">
+                  Shot taken today at {shotTakenTime}
+                </div>
+                <button
+                  className="w-full bg-[#50B498] text-white py-2 rounded-lg"
+                  onClick={onMarkAsTaken}
+                >
+                  Enter Today's Data
+                </button>
               </div>
-              <div className="text-center text-2xl font-bold mb-2">Days</div>
-            </div>
-            <div className="text-center text-sm text-gray-500 mb-4">
-              Days Left for next Shot
-            </div>
-            <button
-              className="w-full bg-[#50B498] text-white py-2 rounded-lg"
-              onClick={onMarkAsTaken}
-            >
-              Mark as Taken
-            </button>
+            ) : (
+              <>
+                <div className="flex justify-center items-center">
+                  <div className="text-center text-2xl text-[#50B498] font-bold mb-2 px-1">
+                    {daysLeft}
+                  </div>
+                  <div className="text-center text-2xl font-bold mb-2 text-[#50B498]">
+                    Days
+                  </div>
+                </div>
+                <div className="text-center text-sm text-gray-500 mb-4">
+                  {daysLeft > 0
+                    ? "Days Left for next Shot"
+                    : "It's time to make a shot!"}
+                </div>
+                <button
+                  className={`w-full py-2 rounded-lg ${
+                    daysLeft > 0
+                      ? "bg-[#50B498] text-white"
+                      : "bg-red-500 text-white"
+                  }`}
+                  onClick={onNextMark}
+                >
+                  Mark as Taken
+                </button>
+              </>
+            )}
           </div>
         </div>
       </div>

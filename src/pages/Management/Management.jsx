@@ -41,6 +41,8 @@ const Management = () => {
     next_shot_date: null,
     shot_name: null,
   });
+  const [shotTaken, setShotTaken] = useState(false);
+  const [shotTakenTime, setShotTakenTime] = useState();
 
   const closeMedicineModal = () => {
     setIsAddMedicineModalOpen(false);
@@ -253,6 +255,11 @@ const Management = () => {
     });
   }
 
+  const onNextMark = () => {
+    setShotTaken(true);
+    setShotTakenTime(getCurrentTime());
+  };
+
   const onMarkAsTaken = async () => {
     setLoading(true);
     try {
@@ -264,6 +271,7 @@ const Management = () => {
         shoted: true,
       });
       await fetchData();
+      setShotTaken(false); // Set shotTaken to true when the shot is marked as taken
     } catch (err) {
       console.error(err);
     }
@@ -333,6 +341,9 @@ const Management = () => {
                 openModal={openModal}
                 seeMore={seeMore}
                 onMarkAsTaken={onMarkAsTaken}
+                onNextMark={onNextMark}
+                shotTaken={shotTaken}
+                shotTakenTime={shotTakenTime}
               />
             )}
             {activeTab === "weight" && (
@@ -350,6 +361,7 @@ const Management = () => {
 
             {activeTab === "shots" && (
               <ShotsManagement
+                daysLeft={nextShot.daysLeft}
                 nextShot={nextShot}
                 medLog={medLog}
                 shotscolumns={shotsColumns}
@@ -359,6 +371,9 @@ const Management = () => {
                 dreamWeight={dreamWeight}
                 openShotModal={openShotModal}
                 onMarkAsTaken={onMarkAsTaken}
+                onNextMark={onNextMark}
+                shotTaken={shotTaken}
+                shotTakenTime={shotTakenTime}
               />
             )}
             {activeTab === "more" && (

@@ -14,7 +14,11 @@ const ShotsManagement = ({
   startWeight,
   dreamWeight,
   onMarkAsTaken,
+  onNextMark,
+  shotTaken,
+  shotTakenTime,
 }) => {
+  const [rating, setRating] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isWeightModalOpen, setIsWeightModalOpen] = useState(false);
   const [selectedMonth, setSelectedMonth] = useState("");
@@ -72,8 +76,10 @@ const ShotsManagement = ({
         currentDate={currentDate}
         handleOpenWeightModal={handleOpenWeightModal}
       />
-      <div className="text-center text-sm text-gray-500 mb-4">
-        Days Left for next Shot
+      <div className="text-center text-sm text-gray-500 mb-4 mt-4">
+        {nextShot.days_left > 0
+          ? "Days Left for next Shot"
+          : "It's time to make a shot!"}
       </div>
       <div className="text-center text-2xl text-[#50B498] font-bold mb-4">
         {nextShot.days_left} Days
@@ -94,12 +100,48 @@ const ShotsManagement = ({
             </span>
           </div>
         </div>
-        <button
-          className="w-full bg-[#50B498] text-white py-2 rounded-lg mb-2 mt-2"
-          onClick={onMarkAsTaken}
-        >
-          Mark as Taken
-        </button>
+        {shotTaken ? (
+          <div className="text-center">
+            <div className="text-[#50B498] text-2xl font-bold mb-2">
+              Nice Job!
+            </div>
+            <div className="flex justify-center mb-2">
+              {[...Array(5)].map((_, index) => (
+                <span
+                  key={index}
+                  className={`text-2xl cursor-pointer ${
+                    index < rating ? "text-yellow-500" : "text-gray-300"
+                  }`}
+                  onClick={() => setRating(index + 1)}
+                >
+                  ★
+                </span>
+              ))}
+            </div>
+            <div className="text-sm text-gray-500 mb-4">
+              Shot taken today at {shotTakenTime}
+            </div>
+            <button
+              className="w-full bg-[#50B498] text-white py-2 rounded-lg mb-2"
+              onClick={onMarkAsTaken}
+            >
+              Enter Today's Data
+            </button>
+          </div>
+        ) : (
+          <>
+            <button
+              className={`w-full py-2 rounded-lg ${
+                nextShot.days_left > 0
+                  ? "bg-[#50B498] text-white mb-2"
+                  : "bg-red-500 text-white mb-2"
+              }`}
+              onClick={onNextMark}
+            >
+              Mark as Taken
+            </button>
+          </>
+        )}
         <button
           className="w-full border border-[#50B498] text-[#50B498] py-2 rounded-lg"
           onClick={openShotModal}
