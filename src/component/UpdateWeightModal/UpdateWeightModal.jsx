@@ -24,7 +24,10 @@ const UpdateWeightModal = ({
         <span></span>
       </div>
       <div className="text-center text-sm text-gray-500 mb-4">
-        Today, July 16
+        {new Date().toLocaleString(undefined, {
+          month: "long",
+          day: "numeric",
+        })}
       </div>
       <div className="flex items-center mb-4">
         <input
