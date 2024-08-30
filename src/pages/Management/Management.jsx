@@ -20,6 +20,9 @@ import { timestampToDate } from "../../component/dateConverter";
 import ManagementLayout from "./ManagementLayout";
 
 const Management = () => {
+  const { uid } = useContext(UserContext);
+  const { loading, setLoading, activeTab, setActiveTab } =
+    useContext(GlobalContext);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [startWeight, setStartWeight] = useState("102");
   const [dreamWeight, setDreamWeight] = useState("62");
@@ -29,9 +32,6 @@ const Management = () => {
   const [medicinesList, setMedicinesList] = useState([]);
   const [isAddMedicineModalOpen, setIsAddMedicineModalOpen] = useState(false);
   const [isAddShotModalOpen, setIsAddShotModalOpen] = useState(false);
-  const { uid } = useContext(UserContext);
-  const { loading, setLoading, activeTab, setActiveTab } =
-    useContext(GlobalContext);
   const [medLog, setMedLog] = useState([]);
   const [nextShot, setNextShot] = useState({
     days_left: null,
@@ -61,12 +61,12 @@ const Management = () => {
     setIsAddMedicineModalOpen(false);
   };
 
-  const handleConfirm = async () => {
+  const handleConfirm = async (key, value) => {
     setLoading(true);
     await mutationUserWeights({
       uid,
-      key: "current_weight",
-      value: currentWeight,
+      key,
+      value,
     })
       .then((res) => {
         if (res.data.result) console.log(res.data.result);
@@ -356,6 +356,7 @@ const Management = () => {
             )}
             {activeTab === "more" && (
               <MoreTabContent
+                onConfirm={handleConfirm}
                 medicinesList={medicinesList}
                 handleMedicineConfirm={handleMedicineConfirm}
               />

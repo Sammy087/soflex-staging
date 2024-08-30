@@ -37,7 +37,7 @@ const UpdateWeightModal = ({
       </div>
       <button
         className="w-full bg-[#50B498] text-white py-2 rounded-lg"
-        onClick={onConfirm}
+        onClick={() => onConfirm("current_weight", startWeight)}
       >
         Confirm
       </button>

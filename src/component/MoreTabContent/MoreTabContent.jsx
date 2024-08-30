@@ -6,14 +6,17 @@ import { useNavigate } from "react-router-dom";
 import ContactUsModal from "../ContactUsModal/ContactUsModal";
 import RateUsModal from "../RateUsModal/RateUsModal";
 import { Paths } from "../../AppConstants";
-import { mutationUserWeights } from "../../firebaseApis/healthApis";
 import { GlobalContext } from "../../contexts/GlobalContext";
 import { UserContext } from "../../contexts/UserContext";
 import Loading from "../../pages/Loading/Loading";
 import { signOut } from "firebase/auth";
 import { auth } from "../../firebase";
 
-const MoreTabContent = ({ medicinesList, handleMedicineConfirm }) => {
+const MoreTabContent = ({
+  medicinesList,
+  handleMedicineConfirm,
+  onConfirm,
+}) => {
   const { setUid, username } = useContext(UserContext);
 
   const handleSignOut = async () => {
@@ -74,7 +77,6 @@ const MoreTabContent = ({ medicinesList, handleMedicineConfirm }) => {
   });
 
   const [dreamWeight, setDreamWeight] = useState("70");
-  const { uid } = useContext(UserContext);
   const { loading, setLoading } = useContext(GlobalContext);
   const navigate = useNavigate();
 
@@ -84,16 +86,7 @@ const MoreTabContent = ({ medicinesList, handleMedicineConfirm }) => {
 
   const handleConfirm = async () => {
     setLoading(true);
-    try {
-      const res = await mutationUserWeights({
-        uid,
-        key: "dream_weight",
-        value: dreamWeight,
-      });
-      if (res.data.result) console.log(res.data.result);
-    } catch (err) {
-      console.error(err);
-    }
+    await onConfirm("dream_weight", dreamWeight);
     setLoading(false);
     toggleModal("updateWeight", false);
   };
