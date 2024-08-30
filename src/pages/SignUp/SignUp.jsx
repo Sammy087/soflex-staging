@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ArrowUp } from "../../component/Icons/ArrowUp";
-import { firestore } from "../../firebase";
+import { auth, firestore } from "../../firebase";
 import {
   createUserWithEmailAndPassword,
   sendEmailVerification,
@@ -44,11 +44,11 @@ const InputField = ({
 );
 
 const SignUp = () => {
-  const { auth } = useContext(UserContext);
+  const { authData } = useContext(UserContext);
   const navigate = useNavigate();
   const [name, setName] = useState("");
-  const [email, setEmail] = useState(auth?.email);
-  const [password, setPassword] = useState(auth?.password);
+  const [email, setEmail] = useState(authData?.email);
+  const [password, setPassword] = useState(authData?.password);
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errors, setErrors] = useState({});
   const [showPassword, setShowPassword] = useState(false);
@@ -237,7 +237,7 @@ const SignUp = () => {
               className="bg-[#50B498] hover:bg-[#50B498] text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline"
               onClick={() => {
                 setShowModal(false);
-                navigate(Paths.SIGNIN);
+                alert.type === "success" && navigate(Paths.SIGNIN);
               }}
             >
               Close
