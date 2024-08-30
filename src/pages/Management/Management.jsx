@@ -295,7 +295,7 @@ const Management = () => {
               <button
                 className={`w-1/3 py-2 mt-2 mb-2 ml-2 ${
                   activeTab === "weight"
-                    ? "bg-[#50B498] text-white rounded-lg"
+                    ? "bg-[#50B498] text-white rounded-lg text-[16px]"
                     : "text-gray-700"
                 }`}
                 onClick={() => setActiveTab("weight")}
@@ -305,7 +305,7 @@ const Management = () => {
               <button
                 className={`w-1/3 py-2 mt-2 mb-2 ${
                   activeTab === "shots"
-                    ? "bg-[#50B498] text-white rounded-lg"
+                    ? "bg-[#50B498] text-white rounded-lg text-[16px]"
                     : "text-gray-700"
                 }`}
                 onClick={() => setActiveTab("shots")}
@@ -315,13 +315,35 @@ const Management = () => {
             </div>
           )}
           {activeTab === "weight" && (
-            <h2 className="text-xl font-bold mb-4 ml-4 flex items-center justify-between w-full">
+            <h2 className="text-[20px] font-bold mb-4 ml-4 flex items-center justify-between w-full">
               <span>Weight Management</span>
-              <img
-                src="static/img/share-ico.svg"
-                alt="share"
-                className="ml-auto mr-10"
-              ></img>
+              <div className="ml-auto mr-10">
+                <button
+                  onClick={() => {
+                    const shareData = {
+                      title: "Weight Management",
+                      text: `Current Weight: ${currentWeight}\nStart Weight: ${startWeight}\nDream Weight: ${dreamWeight}`,
+                      url: window.location.href,
+                    };
+                    if (navigator.share) {
+                      navigator.share(shareData).catch(console.error);
+                    } else {
+                      const redditUrl = `https://www.reddit.com/submit?url=${encodeURIComponent(
+                        shareData.url
+                      )}&title=${encodeURIComponent(
+                        shareData.title
+                      )}&text=${encodeURIComponent(shareData.text)}`;
+                      const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
+                        shareData.url
+                      )}`;
+                      window.open(redditUrl, "_blank");
+                      window.open(facebookUrl, "_blank");
+                    }
+                  }}
+                >
+                  <img src="static/img/share-ico.svg" alt="share" />
+                </button>
+              </div>
             </h2>
           )}
           <div

@@ -56,21 +56,23 @@ const CurrentWeight = ({
         className="flex justify-between items-center bg-gray-200 rounded-lg"
         onClick={openModal}
       >
-        <div className="text-2xm font-bold ml-4 mt-2 mb-2">
-          {currentWeight} KG
-        </div>
+        <div className="text-2xm ml-4 mt-2 mb-2">{currentWeight} KG</div>
         <div className="text-right text-sm text-[#50B498] mr-4">KG</div>
       </div>
       <div className="flex justify-between items-center mt-2 bg-gray-100 p-4 rounded-lg">
         <div className="text-center">
-          <div className="text-[#50B498] font-bold">{currentWeight - lastRead} KG</div>
+          <div className="text-[#50B498] font-bold">
+            {currentWeight - lastRead} KG
+          </div>
           <div className="text-xs text-gray-500">
             Progress than your last read
           </div>
         </div>
         <div className="border-l-2 border-gray-400 h-full mx-4"></div>
         <div className="text-center">
-          <div className="text-[#50B498] font-bold">{currentWeight - dreamWeight} KG</div>
+          <div className="text-[#50B498] font-bold">
+            {currentWeight - dreamWeight} KG
+          </div>
           <div className="text-xs text-gray-500">
             Between you and your dream weight
           </div>
@@ -78,25 +80,25 @@ const CurrentWeight = ({
       </div>
       <div className="flex justify-between items-center mt-2">
         <div className="text-center">
-          <div className="text-xs text-gray-500">Start Weight</div>
+          <div className="text-xs text-[#8E8E93]">Start Weight</div>
           <div className="font-bold bg-gray-100 p-2 rounded-lg">
             {startWeight} KG
           </div>
         </div>
         <div className="text-center">
-          <div className="text-xs text-gray-500">Dream Weight</div>
+          <div className="text-xs text-[#8E8E93]">Dream Weight</div>
           <div className="font-bold bg-gray-100 p-2 rounded-lg">
             {dreamWeight} KG
           </div>
         </div>
         <div className="text-center">
-          <div className="text-xs text-gray-500">Last Read</div>
+          <div className="text-xs text-[#8E8E93]">Last Read</div>
           <div className="font-bold bg-gray-100 p-2 rounded-lg">
             {lastRead} KG
           </div>
         </div>
         <div className="text-center">
-          <div className="text-xs text-gray-500">Since Start</div>
+          <div className="text-xs text-[#8E8E93]">Since Start</div>
           <div className="font-bold bg-gray-100 p-2 rounded-lg">
             {startWeight - lastRead} KG
           </div>

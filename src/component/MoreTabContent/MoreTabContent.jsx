@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import MeasurementSystemModal from "../MeasurementSystemModal/MeasurementSystemModal";
 import AddMedicineModal from "../AddMedicineModal/AddMedicineModal";
 import UpdateWeightModal from "../UpdateWeightModal/UpdateWeightModal";
@@ -75,7 +75,7 @@ const MoreTabContent = ({
     contactUs: false,
     rateUs: false,
   });
-
+  const [notifications, setNotifications] = useState(false);
   const [dreamWeight, setDreamWeight] = useState("70");
   const { loading, setLoading } = useContext(GlobalContext);
   const navigate = useNavigate();
@@ -93,6 +93,38 @@ const MoreTabContent = ({
 
   const handleNavigation = (path) => {
     navigate(path);
+  };
+
+  const handleNotificationsToggle = async (event) => {
+    const isChecked = event.target.checked;
+    setNotifications(isChecked);
+
+    if (isChecked) {
+      // Turn on phone system notification
+      if (
+        Notification.permission === "default" ||
+        Notification.permission === "denied"
+      ) {
+        const permission = await Notification.requestPermission();
+        if (permission === "granted") {
+          new Notification("Notification", {
+            body: "You will receive notifications for your shots.",
+          });
+        } else {
+          setNotifications(false);
+          console.log("Notifications permission denied");
+        }
+      } else if (Notification.permission === "granted") {
+        new Notification("Notification", {
+          body: "You will receive notifications for your shots.",
+        });
+      }
+    } else {
+      // Turn off phone system notification
+      console.log("Notifications turned off");
+    }
+
+    console.log(`Notifications turned ${isChecked ? "on" : "off"}`);
   };
 
   if (loading) return <Loading />;
@@ -126,7 +158,12 @@ const MoreTabContent = ({
           <div className="flex justify-between items-center py-2 border-b">
             <span>Notifications</span>
             <label className="relative inline-flex items-center cursor-pointer">
-              <input type="checkbox" className="sr-only peer" />
+              <input
+                type="checkbox"
+                className="sr-only peer"
+                checked={notifications}
+                onChange={handleNotificationsToggle}
+              />
               <div className="w-11 h-6 bg-gray-200 rounded-full peer peer-checked:bg-[#50B498] peer-focus:ring-4 peer-focus:ring-[#50B498]"></div>
               <div className="absolute left-1 top-1 bg-white w-4 h-4 rounded-full transition-transform peer-checked:translate-x-full"></div>
             </label>
