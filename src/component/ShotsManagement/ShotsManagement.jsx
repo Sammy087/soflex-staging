@@ -27,6 +27,7 @@ const ShotsManagement = ({
     DreamWeight: dreamWeight,
     SinceStart: startWeight - currentWeight,
   });
+  const [pickedMonth, setPickedMonth] = useState("Select a month");
 
   const handleOpenModal = () => {
     setIsModalOpen(true);
@@ -109,10 +110,7 @@ const ShotsManagement = ({
       <div className="flex justify-between items-center mb-4 mt-4">
         <h2 className="text-xl font-bold">Med Entry Log</h2>
         <div className="text-[#50B498] text-sm" onClick={handleOpenModal}>
-          {new Date().toLocaleDateString("en-US", {
-            month: "long",
-            day: "numeric",
-          })}
+          {pickedMonth}
         </div>
       </div>
       <Table
@@ -131,7 +129,10 @@ const ShotsManagement = ({
           <select
             className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
             value={selectedMonth}
-            onChange={(e) => setSelectedMonth(e.target.value)}
+            onChange={(e) => {
+              setSelectedMonth(e.target.value);
+              setPickedMonth(e.target.value);
+            }}
           >
             <option value="">Select a month</option>
             <option>January</option>
