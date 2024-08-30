@@ -277,7 +277,7 @@ const Management = () => {
       <div
         className={
           activeTab === "summary"
-            ? "bg-gradient-to-b from-[#FEC180] via-[#F5F0F0] to-[#F5F0F0]"
+            ? "bg-gradient-to-b from-[#50B498] via-[#FEB389] to-[#FFFFFF] h-screen"
             : "bg-gray-100"
         }
       >
@@ -307,7 +307,14 @@ const Management = () => {
             </div>
           )}
           {activeTab === "weight" && (
-            <h2 className="text-xl font-bold mb-4 ml-4">Weight Management</h2>
+            <h2 className="text-xl font-bold mb-4 ml-4 flex items-center justify-between w-full">
+              <span>Weight Management</span>
+              <img
+                src="static/img/share-ico.svg"
+                alt="share"
+                className="ml-auto mr-10"
+              ></img>
+            </h2>
           )}
           <div
             className={`${

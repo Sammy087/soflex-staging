@@ -12,6 +12,7 @@ function HealthConnectScreen() {
   const { username, uid } = useContext(UserContext);
   const { loading, setLoading } = useContext(GlobalContext);
   const [connected, setConnected] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     setLoading(true);
@@ -28,11 +29,7 @@ function HealthConnectScreen() {
   };
 
   const handleConnect = () => {
-    if (connected) {
-      navigate(Paths.CHECK_CURRENT_WEIGHT);
-    } else {
-      navigate(Paths.START_WEIGHT);
-    }
+    setShowModal(true);
   };
 
   if (loading) return <Loading />;
@@ -62,6 +59,24 @@ function HealthConnectScreen() {
           Connect to Health
         </button>
       </div>
+      {showModal && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="bg-white p-6 rounded shadow-md text-center">
+            <h2 className="text-2xl font-bold mb-4">
+              Feature Not Available Yet
+            </h2>
+            <p className="mb-4">
+              This feature is not available yet. Please check back later.
+            </p>
+            <button
+              className="bg-[#50B498] hover:bg-[#50B498] text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline"
+              onClick={() => setShowModal(false)}
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

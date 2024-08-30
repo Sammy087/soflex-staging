@@ -19,7 +19,7 @@ const Summary = ({
           <h2 className="text-xl font-bold text-white">Summary</h2>
           <img alt="Frame" src="static/img/frame-932.svg" className="w-6 h-6" />
         </div>
-        <div className="max-w-md mx-auto bg-white rounded-lg shadow-md p-4 pb-10 mb-2">
+        <div className="max-w-md mx-auto bg-white rounded-lg p-4 pb-10 mb-2">
           <div className="p-4 rounded-lg mb-6 ">
             <div className="flex justify-between items-center mb-2">
               <h3 className="text-lg font-semibold">Current Weight</h3>
